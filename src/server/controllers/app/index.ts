@@ -1,7 +1,9 @@
-export { forms } from "./forms";
+export { cardImage } from "./card-image";
 export { home } from "./home";
+export { list } from "./list";
+export { lists } from "./lists";
 export { llmsTxt } from "./llms-txt";
-export { projects } from "./projects";
+export { newList } from "./new";
 export { robotsTxt } from "./robots-txt";
 export { securityTxt } from "./security-txt";
 export { sitemap } from "./sitemap";

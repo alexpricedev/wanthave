@@ -98,6 +98,10 @@ interface LayoutProps {
   description?: string;
   canonicalPath?: string;
   noindex?: boolean;
+  // Per-page OG/Twitter image path (made absolute against SITE_URL). Defaults to
+  // the site-wide card. Public trade lists pass their own rendered OG image.
+  ogImagePath?: string;
+  ogImageAlt?: string;
 }
 
 export function Layout({
@@ -109,7 +113,12 @@ export function Layout({
   description = SITE_DESCRIPTION,
   canonicalPath,
   noindex,
+  ogImagePath,
+  ogImageAlt = "wanthave — build and share your Pokémon TCG Pocket trade list",
 }: LayoutProps) {
+  const ogImage = ogImagePath
+    ? new URL(ogImagePath, SITE_URL).href
+    : `${SITE_URL}/og-image.png`;
   return (
     <html lang="en" style={{ colorScheme: "dark" }}>
       <head>
@@ -125,15 +134,22 @@ export function Layout({
             fallback for browsers that ignore preconnect. */}
         <link rel="preconnect" href="https://esm.sh" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://esm.sh" />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:locale" content="en_US" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={`${SITE_URL}/og-image.png`} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:alt" content={ogImageAlt} />
         <meta property="og:url" content={canonicalUrl(canonicalPath)} />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${SITE_URL}/og-image.png`} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={ogImageAlt} />
         {!noindex && (
           <script
             type="application/ld+json"

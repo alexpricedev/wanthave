@@ -1,15 +1,12 @@
-import { projectsApi, statsApi } from "../controllers/api";
+import { cardsApi, listsApi, statsApi } from "../controllers/api";
 import { createRouteHandler } from "../utils/route-handler";
 
 export const apiRoutes = {
   "/api/stats": statsApi.index,
-  "/api/projects": createRouteHandler({
-    GET: projectsApi.index,
-    POST: projectsApi.create,
-  }),
-  "/api/projects/:id": createRouteHandler({
-    GET: projectsApi.show,
-    PUT: projectsApi.update,
-    DELETE: projectsApi.destroy,
+  "/api/cards": cardsApi.index,
+  "/api/cards/search": cardsApi.search,
+  "/api/lists": createRouteHandler({ POST: listsApi.create }),
+  "/api/lists/:slug": createRouteHandler({
+    PUT: listsApi.update<"/api/lists/:slug">,
   }),
 };

@@ -9,7 +9,7 @@ export const SITE_DESCRIPTION =
 
 // Public, indexable routes included in the sitemap. Private or noindex routes
 // (/login, /admin), API endpoints, and auth callbacks are intentionally omitted.
-export const SITEMAP_PATHS = ["/", "/forms", "/projects"] as const;
+export const SITEMAP_PATHS = ["/", "/new"] as const;
 
 const absolute = (path: string): string => new URL(path, SITE_URL).href;
 
@@ -111,9 +111,9 @@ export const buildWebManifest = (): string =>
     ],
   });
 
-// Site-level JSON-LD (WebSite + Organization) injected into every public page's
-// <head>. Gives search engines and AI agents a machine-readable description of
-// the site using the schema.org vocabulary.
+// Site-level JSON-LD (WebSite + Organization + WebApplication) injected into
+// every public page's <head>. Gives search engines and AI agents a
+// machine-readable description of the site using the schema.org vocabulary.
 export const siteStructuredData = (): string =>
   JSON.stringify({
     "@context": "https://schema.org",
@@ -131,7 +131,39 @@ export const siteStructuredData = (): string =>
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
         url: `${SITE_URL}/`,
-        logo: absolute("/og-image.png"),
+        logo: absolute("/android-chrome-512x512.png"),
+      },
+      {
+        "@type": "WebApplication",
+        "@id": `${SITE_URL}/#app`,
+        name: SITE_NAME,
+        url: `${SITE_URL}/`,
+        description: SITE_DESCRIPTION,
+        applicationCategory: "UtilitiesApplication",
+        operatingSystem: "Any",
+        browserRequirements: "Requires JavaScript.",
+        isAccessibleForFree: true,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        publisher: { "@id": `${SITE_URL}/#organization` },
       },
     ],
+  });
+
+// FAQPage JSON-LD for the home page's FAQ section — eligible for rich results
+// and read by AI answer engines.
+export const faqStructuredData = (
+  items: { question: string; answer: string }[],
+): string =>
+  JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
   });

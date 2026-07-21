@@ -68,6 +68,11 @@
           }
         }
       }
+    },
+    {
+      "includes": ["src/server/data/**"],
+      "formatter": { "enabled": false },
+      "linter": { "enabled": false }
     }
   ],
   "formatter": {

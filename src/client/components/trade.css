@@ -1,0 +1,246 @@
+/* Shared trade primitives — used on the public list page and the builder.
+   WANT is always amber, HAVE always ice (DESIGN.md §1). */
+
+/* Inline vertical-ish section label (small, upright — the OG carries the truly
+   rotated one). Forque display voice, hue-coded. */
+.vlabel-inline {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9375rem;
+
+  .count-want {
+    color: var(--color-want);
+  }
+
+  .count-have {
+    color: var(--color-have);
+  }
+
+  .count-sep {
+    color: var(--color-text-quaternary);
+  }
+}
+
+/* ── Trade sections (public page) ─────────────────────────────────────────── */
+.trade-section {
+  margin-bottom: 2.5rem;
+}
+
+.trade-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-edge-soft);
+}
+
+.trade-section-title {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.trade-want .trade-section-title {
+  color: var(--color-want);
+}
+
+.trade-have .trade-section-title {
+  color: var(--color-have);
+}
+
+.trade-section-count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+.rarity-group {
+  margin-bottom: 1.5rem;
+}
+
+.rarity-label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  margin-bottom: 0.625rem;
+  letter-spacing: 0.02em;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+
+  @media (width >= 640px) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 14px;
+  }
+}
+
+.card-tile {
+  position: relative;
+  margin: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 367 / 512;
+  background: var(--color-well);
+  box-shadow: 0 4px 14px #0000004d;
+}
+
+.card-tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-qty {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: #0c0b0edd;
+  color: var(--color-bone);
+  backdrop-filter: blur(2px);
+}
+
+/* ── Friend ID ────────────────────────────────────────────────────────────── */
+.friend-id-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 2.5rem 0;
+  padding: 1.25rem;
+  background: var(--color-ground);
+  border: 1px solid var(--color-edge-soft);
+  border-radius: var(--radius);
+}
+
+.friend-id-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.friend-id-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 150ms ease;
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-primary);
+  }
+
+  &.copied {
+    border-color: var(--color-success);
+  }
+}
+
+.friend-id-value {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-bone);
+  letter-spacing: 0.04em;
+}
+
+.friend-id-action {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.friend-id-copy.copied .friend-id-action {
+  color: var(--color-success);
+}
+
+/* ── Flywheel CTA ─────────────────────────────────────────────────────────── */
+.flywheel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  margin: 2rem 0;
+}
+
+.flywheel-primary {
+  background: radial-gradient(
+    140% 120% at 50% 0%,
+    #1b1720 0%,
+    var(--color-ground) 70%
+  );
+  border: 1px solid var(--color-edge);
+}
+
+.flywheel-quiet {
+  border: 1px dashed var(--color-edge);
+}
+
+.flywheel-copy {
+  margin: 0;
+  max-width: 30rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+
+  .want {
+    font-family: var(--font-display);
+  }
+
+  .have {
+    font-family: var(--font-display);
+  }
+}
+
+.flywheel-btn {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  text-decoration: none;
+  transition: background 150ms ease;
+
+  &:hover,
+  &:focus {
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
+    text-decoration: none;
+  }
+}

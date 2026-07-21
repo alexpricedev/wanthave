@@ -1,0 +1,32 @@
+[data-page="new"] {
+  main {
+    max-width: 1200px;
+  }
+
+  .builder-intro {
+    margin-bottom: 1.5rem;
+  }
+
+  .builder-heading {
+    font-family: var(--font-body);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .builder-intro .lead {
+    margin: 0;
+    max-width: 42rem;
+  }
+
+  .builder-noscript {
+    padding: 1rem;
+    border: 1px solid var(--color-warning);
+    border-radius: var(--radius-sm);
+    color: var(--color-warning);
+  }
+
+  .builder-loading {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+}

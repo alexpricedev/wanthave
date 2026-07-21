@@ -22,16 +22,10 @@ const PAGES: LlmsPage[] = [
       "Landing page for WantHave — build a Pokémon TCG Pocket trade list and share it as a link.",
   },
   {
-    path: "/forms",
-    title: "Forms",
+    path: "/new",
+    title: "Build a trade list",
     description:
-      "Server-rendered form handling with validation, CSRF protection, and progressive enhancement.",
-  },
-  {
-    path: "/projects",
-    title: "Projects",
-    description:
-      "A CRUD example backed by a shared service layer, exposed as both HTML pages and a JSON API.",
+      "The builder — browse Pokémon TCG Pocket cards by set or slang-aware search, add wants and haves, and generate a shareable link. No account needed.",
   },
 ];
 

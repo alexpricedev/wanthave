@@ -7,25 +7,12 @@ import type { SQL } from "bun";
  * @param db - The database connection to use (should be the mocked testDb from each test file)
  */
 export const cleanupTestData = async (db: SQL): Promise<void> => {
+  // trade_list is truncated explicitly: truncating users only cascades to
+  // account-owned lists, not anonymous ones (user_id NULL).
+  await db`TRUNCATE TABLE trade_list CASCADE`;
   await db`TRUNCATE TABLE user_tokens CASCADE`;
   await db`TRUNCATE TABLE sessions CASCADE`;
   await db`TRUNCATE TABLE users CASCADE`;
-  await db`TRUNCATE TABLE project CASCADE`;
-
-  try {
-    await db`ALTER SEQUENCE project_id_seq RESTART WITH 1`;
-  } catch {}
-};
-
-/**
- * Seed the database with test data for project table
- *
- * @param db - The database connection to use (should be the mocked testDb from each test file)
- */
-export const seedTestData = async (db: SQL): Promise<void> => {
-  await db`INSERT INTO project (title, created_by) VALUES (${"Test Project 1"}, ${"alice@example.com"})`;
-  await db`INSERT INTO project (title, created_by) VALUES (${"Test Project 2"}, ${null})`;
-  await db`INSERT INTO project (title, created_by) VALUES (${"Test Project 3"}, ${"bob@example.com"})`;
 };
 
 /**

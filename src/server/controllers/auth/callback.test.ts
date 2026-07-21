@@ -15,6 +15,7 @@ mock.module("../../services/database", () => ({
 
 import { createMagicLink } from "../../services/auth";
 import { db } from "../../services/database";
+import { SESSION_COOKIE_NAME } from "../../services/sessions";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
 import { callback } from "./callback";
 
@@ -40,10 +41,10 @@ describe("Callback Controller", () => {
       const response = await callback.index(request);
 
       expect(response.status).toBe(303);
-      expect(response.headers.get("location")).toBe("/");
+      expect(response.headers.get("location")).toBe("/lists");
 
-      const setCookie = findSetCookie(request, "session_id");
-      expect(setCookie).toContain("session_id=");
+      const setCookie = findSetCookie(request, SESSION_COOKIE_NAME);
+      expect(setCookie).toContain(`${SESSION_COOKIE_NAME}=`);
       expect(setCookie).toContain("HttpOnly");
       expect(setCookie).toContain("SameSite=Lax");
     });
@@ -75,8 +76,10 @@ describe("Callback Controller", () => {
 
       await callback.index(request);
 
-      const setCookie = findSetCookie(request, "session_id");
-      const sessionMatch = setCookie?.match(/session_id=([^;]+)/);
+      const setCookie = findSetCookie(request, SESSION_COOKIE_NAME);
+      const sessionMatch = setCookie?.match(
+        new RegExp(`${SESSION_COOKIE_NAME}=([^;]+)`),
+      );
       const sessionId = sessionMatch?.[1];
 
       expect(sessionId).toBeDefined();

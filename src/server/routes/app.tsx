@@ -1,8 +1,10 @@
 import {
-  forms,
+  cardImage,
   home,
+  list,
+  lists,
   llmsTxt,
-  projects,
+  newList,
   robotsTxt,
   securityTxt,
   sitemap,
@@ -13,22 +15,20 @@ import { createRouteHandler } from "../utils/route-handler";
 
 export const appRoutes = {
   "/": home.index,
+  "/new": newList.index,
+  "/lists": createRouteHandler({ GET: lists.index }),
+  "/lists/:slug/edit": lists.edit<"/lists/:slug/edit">,
+  "/lists/:slug/delete": createRouteHandler({
+    POST: lists.destroy<"/lists/:slug/delete">,
+  }),
+  "/l/:slug": list.index<"/l/:slug">,
+  "/l/:slug/og.png": list.og<"/l/:slug/og.png">,
+  "/img/card/:id": cardImage.show<"/img/card/:id">,
   "/robots.txt": robotsTxt.index,
   "/site.webmanifest": webmanifest.index,
   "/sitemap.xml": sitemap.index,
   "/llms.txt": llmsTxt.index,
   "/.well-known/security.txt": securityTxt.index,
-  "/forms": createRouteHandler({
-    GET: forms.index,
-    POST: forms.create,
-  }),
-  "/projects": createRouteHandler({
-    GET: projects.index,
-    POST: projects.create,
-  }),
-  "/projects/:id/delete": createRouteHandler({
-    POST: projects.destroy<"/projects/:id/delete">,
-  }),
   "/login": createRouteHandler({
     GET: login.index,
     POST: login.create,

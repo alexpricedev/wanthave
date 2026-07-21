@@ -1,0 +1,185 @@
+#!/usr/bin/env bun
+/**
+ * Generates the wanthave brand assets in public/ from the Forque display face:
+ * the "WH" favicon/icon set (two-hue W amber / H ice, per DESIGN.md) and the
+ * default marketing OG image (the home page + expired-list fallback).
+ *
+ * Text is converted to vector paths with opentype.js so nothing depends on a
+ * system font. Run: `bun run scripts/build-brand.ts`.
+ */
+import { readFileSync } from "node:fs";
+import opentype from "opentype.js";
+import pngToIco from "png-to-ico";
+import sharp from "sharp";
+import { getCardImageBytes } from "../src/server/services/card-images";
+
+const WANT = "#e5b35b";
+const HAVE = "#7fcbd9";
+const BONE = "#ece9e2";
+const MUTED = "#8b8794";
+const EDGE = "#2c2934";
+
+// The icon set reads at tiny sizes (favicon tab, home-screen), so it drops the
+// two-hue branding for maximum contrast: white letters on a black sleeve.
+const ICON_INK = "#ffffff";
+const ICON_SLEEVE = "#000000";
+
+const parse = (p: string): opentype.Font =>
+  opentype.parse(readFileSync(p).buffer as ArrayBuffer);
+const forque = parse("public/Forque.ttf");
+const mono = parse("src/server/assets/fonts/IBMPlexMono-SemiBold.ttf");
+
+const has = (font: opentype.Font, ch: string): boolean =>
+  font.charToGlyphIndex(ch) > 0;
+// Fall back to an unaccented "e" if a face lacks é (Forque is a small display set).
+const poke = (font: opentype.Font): string =>
+  has(font, "é") ? "Pokémon" : "Pokemon";
+
+const textPath = (
+  font: opentype.Font,
+  text: string,
+  size: number,
+  x: number,
+  baseline: number,
+  color: string,
+): string =>
+  `<path d="${font.getPath(text, x, baseline, size).toPathData(2)}" fill="${color}"/>`;
+const advance = (font: opentype.Font, text: string, size: number): number =>
+  font.getAdvanceWidth(text, size);
+
+// ── "WH" icon ──────────────────────────────────────────────────────────────
+const whIcon = (size: number): string => {
+  const fs = size * 0.6;
+  const wW = advance(forque, "W", fs);
+  const pW = forque.getPath("W", 0, 0, fs);
+  const pH = forque.getPath("H", wW, 0, fs);
+  const bbW = pW.getBoundingBox();
+  const bbH = pH.getBoundingBox();
+  const minX = Math.min(bbW.x1, bbH.x1);
+  const maxX = Math.max(bbW.x2, bbH.x2);
+  const minY = Math.min(bbW.y1, bbH.y1);
+  const maxY = Math.max(bbW.y2, bbH.y2);
+  const tx = (size - (maxX - minX)) / 2 - minX;
+  const ty = (size - (maxY - minY)) / 2 - minY;
+  const rx = size * 0.22;
+  const stroke = size >= 64 ? `<rect x="1" y="1" width="${size - 2}" height="${size - 2}" rx="${rx}" fill="none" stroke="${EDGE}" stroke-width="2"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <rect width="${size}" height="${size}" rx="${rx}" fill="${ICON_SLEEVE}"/>
+    ${stroke}
+    <g transform="translate(${tx} ${ty})">
+      <path d="${pW.toPathData(2)}" fill="${ICON_INK}"/>
+      <path d="${pH.toPathData(2)}" fill="${ICON_INK}"/>
+    </g>
+  </svg>`;
+};
+
+const iconPng = (size: number): Promise<Buffer> =>
+  sharp(Buffer.from(whIcon(size))).png().toBuffer();
+
+const buildIcons = async (): Promise<void> => {
+  await Bun.write("public/favicon.svg", whIcon(64));
+  await Bun.write("public/logo.svg", whIcon(48));
+  await Bun.write("public/apple-touch-icon.png", await iconPng(180));
+  await Bun.write("public/android-chrome-192x192.png", await iconPng(192));
+  await Bun.write("public/android-chrome-512x512.png", await iconPng(512));
+  await Bun.write("public/favicon-32x32.png", await iconPng(32));
+  await Bun.write("public/favicon-16x16.png", await iconPng(16));
+  const ico = await pngToIco([
+    await iconPng(16),
+    await iconPng(32),
+    await iconPng(48),
+  ]);
+  await Bun.write("public/favicon.ico", ico);
+  console.log("icons: favicon.svg, logo.svg, apple-touch, android-chrome, 16/32, .ico");
+};
+
+// ── Marketing OG (1200×630) ──────────────────────────────────────────────────
+const HEROES = ["a1-036", "a1-129", "a1-096", "a1-004", "b1-073"];
+
+const buildOg = async (): Promise<void> => {
+  const W = 1200;
+  const H = 630;
+  const cardH = 372;
+  const cardW = Math.round((cardH * 367) / 512);
+  const gap = 18;
+  const cardTop = 300;
+
+  const composites: sharp.OverlayOptions[] = [];
+  let x = -46; // bleed off the left edge
+  for (const id of HEROES) {
+    if (x >= W) break;
+    const bytes = await getCardImageBytes(id);
+    if (!bytes) continue;
+    let buf = await sharp(bytes).resize(cardW, cardH).png().toBuffer();
+    let left = x;
+    let width = cardW;
+    if (left < 0) {
+      const cut = -left;
+      buf = await sharp(buf)
+        .extract({ left: cut, top: 0, width: cardW - cut, height: cardH })
+        .png()
+        .toBuffer();
+      width = cardW - cut;
+      left = 0;
+    }
+    if (left + width > W) {
+      const vis = W - left;
+      buf = await sharp(buf)
+        .extract({ left: 0, top: 0, width: vis, height: cardH })
+        .png()
+        .toBuffer();
+      width = vis;
+    }
+    composites.push({ input: buf, left: Math.round(left), top: cardTop });
+    x += cardW + gap;
+  }
+
+  const eyebrow = `${poke(mono).toUpperCase()} TCG POCKET`;
+  const wordSize = 116;
+  const wy = 196;
+  const wWx = advance(forque, "want", wordSize);
+  const tagSize = 34;
+
+  const base = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#18151c"/><stop offset="0.6" stop-color="#0c0b0e"/>
+      </linearGradient>
+      <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0c0b0e" stop-opacity="0"/>
+        <stop offset="1" stop-color="#0c0b0e" stop-opacity="0.55"/>
+      </linearGradient>
+    </defs>
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>
+    ${textPath(mono, eyebrow, 22, 74, 96, MUTED)}
+    ${textPath(forque, "want", wordSize, 70, wy, WANT)}
+    ${textPath(forque, "have", wordSize, 70 + wWx, wy, HAVE)}
+    ${textPath(forque, "SHARE YOUR TRADE LIST", 40, 74, 250, BONE)}
+    ${textPath(mono, `wants + haves + friend id, ready for discord`, tagSize - 4, 74, 292, MUTED)}
+  </svg>`;
+
+  // A soft bottom scrim over the card strip keeps the row grounded without
+  // competing with the art.
+  const scrim = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <rect y="${H - 70}" width="${W}" height="70" fill="url(#scrim2)"/>
+    <defs><linearGradient id="scrim2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0b0e" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0c0b0e" stop-opacity="0.7"/>
+    </linearGradient></defs>
+    ${textPath(mono, "wanthave.trade", 26, W - 74 - advance(mono, "wanthave.trade", 26), H - 34, BONE)}
+  </svg>`;
+
+  const png = await sharp(Buffer.from(base))
+    .composite([
+      ...composites,
+      { input: Buffer.from(scrim), left: 0, top: 0 },
+    ])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  await Bun.write("public/og-image.png", png);
+  console.log(`og-image.png: ${png.length} bytes`);
+};
+
+await buildIcons();
+await buildOg();
+console.log("Brand assets rebuilt.");

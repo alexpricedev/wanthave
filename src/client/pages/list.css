@@ -1,0 +1,262 @@
+[data-page="list"] {
+  .list-page {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── Viewer header ────────────────────────────────────────────────────── */
+  .list-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .list-head-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  /* ── Share panel (creator, ?created=1) ────────────────────────────────── */
+  .share-panel {
+    background: radial-gradient(
+      130% 130% at 0% 0%,
+      #1a1720 0%,
+      var(--color-ground) 65%
+    );
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .share-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .share-tick {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-success) 20%, transparent);
+    color: var(--color-success);
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .share-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .share-sub {
+    color: var(--color-text-secondary);
+    margin: 0.5rem 0 1.25rem;
+  }
+
+  .share-url-row {
+    display: flex;
+    gap: 0.5rem;
+
+    @media (width <= 480px) {
+      flex-direction: column;
+    }
+  }
+
+  .share-url {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    min-width: 0;
+  }
+
+  .share-copy {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    white-space: nowrap;
+
+    &.copied {
+      background: var(--color-success);
+    }
+  }
+
+  /* ── Account nudge ────────────────────────────────────────────────────── */
+  .nudge {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-edge);
+  }
+
+  .nudge-copy {
+    margin: 0 0 1rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .nudge-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nudge-btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      background: var(--color-primary-hover);
+      color: var(--color-on-primary);
+      text-decoration: none;
+    }
+  }
+
+  .nudge-dismiss {
+    background: transparent;
+    color: var(--color-text-tertiary);
+    padding: 8px 12px;
+
+    &:hover,
+    &:focus {
+      background: transparent;
+      color: var(--color-bone);
+    }
+  }
+
+  /* ── Owner bar ────────────────────────────────────────────────────────── */
+  .owner-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    background: var(--color-ground);
+    border: 1px solid var(--color-edge-soft);
+    border-radius: var(--radius-sm);
+  }
+
+  .owner-note {
+    font-size: 0.875rem;
+  }
+
+  /* ── Unavailable / expired ────────────────────────────────────────────── */
+  .list-unavailable {
+    text-align: center;
+    max-width: 560px;
+    margin: 3rem auto;
+
+    .unavailable-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .flywheel {
+      margin-top: 2rem;
+    }
+  }
+}
+
+/* ── Account: My lists ─────────────────────────────────────────────────── */
+[data-page="lists"] {
+  .lists-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+  }
+
+  .lists-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    border: 1px dashed var(--color-edge);
+    border-radius: var(--radius);
+
+    .lead {
+      max-width: 34rem;
+      margin: 0 auto 1.5rem;
+    }
+  }
+
+  .lists-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.25rem;
+    background: var(--color-ground);
+    border: 1px solid var(--color-edge-soft);
+    border-radius: var(--radius);
+  }
+
+  .list-row-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .list-row-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-bone);
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+  }
+
+  .list-row-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .list-row-date {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .list-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    form {
+      margin: 0;
+    }
+  }
+}

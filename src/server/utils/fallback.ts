@@ -33,7 +33,16 @@ export const handleFallback = async (req: Request): Promise<Response> => {
     if (cached) return cached;
 
     const file = Bun.file(`dist${url.pathname}`);
-    if (await file.exists()) return serveFile(req, file);
+    if (await file.exists()) {
+      const res = serveFile(req, file);
+      // Dev serves un-fingerprinted bundles; force revalidation so an edited
+      // bundle is picked up on the next reload instead of sitting in the
+      // browser cache for an hour. Production uses immutable hashed assets.
+      if (Bun.env.NODE_ENV !== "production") {
+        res.headers.set("Cache-Control", "no-cache");
+      }
+      return res;
+    }
     return new Response("Asset not found", { status: 404 });
   }
 

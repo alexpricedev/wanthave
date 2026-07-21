@@ -1,7 +1,7 @@
 /* Page styles */
 @import "./pages/home.css";
-@import "./pages/forms.css";
-@import "./pages/projects.css";
+@import "./pages/new.css";
+@import "./pages/list.css";
 @import "./pages/login.css";
 @import "./pages/admin.css";
 @import "./pages/error.css";
@@ -13,6 +13,8 @@
 @import "./components/form-field.css";
 @import "./components/data-table.css";
 @import "./components/badge.css";
+@import "./components/trade.css";
+@import "./components/builder.css";
 
 /* All three faces (Forque display, Archivo body, IBM Plex Mono utility) are
    self-hosted from public/fonts and declared via inline @font-face in the
@@ -234,14 +236,55 @@ img {
 }
 
 .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
   background: transparent;
   border: 1px solid var(--color-edge);
   color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all 150ms ease;
 
   &:hover,
   &:focus {
     background: var(--color-ground);
     color: var(--color-bone);
+    text-decoration: none;
+  }
+}
+
+/* Primary call to action — the filled amber accent. Dark ink on amber for
+   contrast (never white), per DESIGN.md §2. */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  text-decoration: none;
+  transition:
+    transform 120ms ease,
+    background 150ms ease;
+
+  &:hover,
+  &:focus {
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 

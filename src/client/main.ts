@@ -1,8 +1,8 @@
 import { initializePage, registerPage } from "@client/page-lifecycle";
-import { init as initForms } from "@client/pages/forms";
-import { init as initProjects } from "@client/pages/projects";
+import { init as initList } from "@client/pages/list";
+import { init as initNew } from "@client/pages/new";
 
-registerPage("forms", { init: initForms });
-registerPage("projects", { init: initProjects });
+registerPage("new", { init: initNew });
+registerPage("list", { init: initList });
 
 initializePage(document.body.dataset.page);

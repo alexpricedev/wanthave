@@ -5,34 +5,21 @@ import { log } from "../services/logger";
 export const seedIfEmpty = async (): Promise<void> => {
   const [{ count: userCount }] =
     await db`SELECT count(*)::int AS count FROM users`;
-  const [{ count: projectCount }] =
-    await db`SELECT count(*)::int AS count FROM project`;
 
-  if (userCount > 0 || projectCount > 0) return;
+  if (userCount > 0) return;
 
-  log.info("seed", "Empty database detected — seeding starter data");
+  log.info("seed", "Empty database detected — seeding an admin user");
 
+  // A single admin so the /admin dashboard is reachable on a fresh install.
+  // The card catalogue is static data loaded from JSON (see services/cards.ts),
+  // so there's nothing else to seed — trade lists are created by users.
   await db`
     INSERT INTO users (email, role) VALUES
-      ('admin@example.com', 'admin'),
-      ('alice@example.com', 'user'),
-      ('bob@example.com', 'user'),
-      ('carol@example.com', 'admin'),
-      ('dave@example.com', 'user')
+      ('admin@example.com', 'admin')
     ON CONFLICT (email) DO NOTHING
   `;
 
-  await db`
-    INSERT INTO project (title, created_by)
-    SELECT title, created_by FROM (VALUES
-      ('Hello World', 'alice@example.com'),
-      ('Server-Side Rendering', NULL),
-      ('Magic Link Auth', 'admin@example.com')
-    ) AS v(title, created_by)
-    WHERE NOT EXISTS (SELECT 1 FROM project WHERE project.title = v.title)
-  `;
-
-  log.info("seed", "Seeded 5 users and 3 projects");
+  log.info("seed", "Seeded admin user");
 };
 
 // Allow running directly via `bun run seed`

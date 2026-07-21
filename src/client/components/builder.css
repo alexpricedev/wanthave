@@ -1,0 +1,581 @@
+/* The trade-list builder island. Mobile-first: single column, picker above the
+   working lists. Desktop widens to two columns with the lists sticky alongside. */
+
+/* The builder benefits from far more horizontal room than the 960px reading
+   column other pages use — a wider picker fits more card columns per row. Same
+   specificity as layout.css's `[data-component="layout"] > main`; builder.css is
+   imported later, so source order lets this win. */
+[data-page="new"] > main {
+  max-width: 1440px;
+}
+
+.builder {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (width >= 900px) {
+    grid-template-columns: 1fr minmax(360px, 400px);
+    align-items: start;
+  }
+}
+
+/* ── Top meta row: list name + friend ID ────────────────────────────────── */
+/* Spans the full width above both columns so the list's identity is the first
+   thing you set. Fields sit side by side, stacking on narrow screens. */
+.builder-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media (width >= 900px) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Picker ─────────────────────────────────────────────────────────────── */
+.builder-picker {
+  min-width: 0;
+}
+
+/* Search box and set filter, inline (they wrap to full width on narrow
+   screens). The set is a filter next to search, not a separate mode. */
+.picker-controls {
+  display: flex;
+  align-items: end;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+/* Each control stacks its label above the input, matching the meta row fields. */
+.picker-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.picker-field--search {
+  flex: 2 1 220px;
+}
+
+.picker-field--set {
+  flex: 1 1 190px;
+  min-width: 170px;
+}
+
+.search-input {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+}
+
+.set-select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 40px 10px 14px;
+  background-color: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius-sm);
+  color: var(--color-bone);
+  cursor: pointer;
+  appearance: none;
+  /* Chevron drawn as an inline SVG so it inherits the dark theme. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%238b8794' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+
+  &:hover {
+    border-color: var(--color-text-tertiary);
+  }
+
+  &:focus-visible {
+    border-color: var(--color-primary);
+  }
+
+  /* Options render with the OS palette; force dark so they aren't white. */
+  option {
+    background: var(--color-ground);
+    color: var(--color-bone);
+  }
+}
+
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.sort-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.sort-toggle {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius-sm);
+
+  button {
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 5px;
+
+    /* biome-ignore lint/style/noDescendingSpecificity: hover of an unrelated
+       component (.set-select) sits earlier in the file; these don't overlap. */
+    &:hover {
+      color: var(--color-bone);
+    }
+
+    /* Comes last so an active button keeps its style while hovered. */
+    &.active {
+      background: var(--color-sleeve);
+      color: var(--color-bone);
+    }
+  }
+}
+
+.sort-dir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-sleeve);
+    color: var(--color-bone);
+    border-color: var(--color-text-tertiary);
+  }
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+  min-height: 120px;
+
+  @media (width >= 640px) {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 10px;
+  }
+}
+
+.picker-hint {
+  grid-column: 1 / -1;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.browse-card {
+  position: relative;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-well);
+  aspect-ratio: 367 / 512;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    background: var(--color-well);
+  }
+
+  &.in-want {
+    border-color: var(--color-want);
+  }
+
+  &.in-have {
+    border-color: var(--color-have);
+  }
+}
+
+.browse-card-flag {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-void);
+}
+
+.in-want .browse-card-flag {
+  background: var(--color-want);
+}
+
+.in-have .browse-card-flag {
+  background: var(--color-have);
+}
+
+/* ── Working lists ──────────────────────────────────────────────────────── */
+/* The lists sit in normal document flow and scroll with the page. A previous
+   sticky column with its own `overflow-y: auto` created a second, nested
+   scrollbar next to the page's — the "weird scrolling." One scroll only. */
+.builder-lists {
+  min-width: 0;
+}
+
+.builder-section {
+  margin-bottom: 1.25rem;
+}
+
+.builder-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .section-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+}
+
+.list-empty {
+  padding: 1rem;
+  border: 1px dashed var(--color-edge);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.trade-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 6px 8px;
+  background: var(--color-ground);
+  border: 1px solid var(--color-edge-soft);
+  border-radius: var(--radius-sm);
+}
+
+.list-item-img {
+  width: 34px;
+  height: auto;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.list-item-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.list-item-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-item-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-text-tertiary);
+}
+
+.qty-stepper,
+.reorder {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  button {
+    background: var(--color-well);
+    color: var(--color-text-secondary);
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1;
+
+    &:hover:not(:disabled) {
+      background: var(--color-sleeve);
+      color: var(--color-bone);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+}
+
+.qty-stepper {
+  gap: 0.25rem;
+}
+
+.qty-value {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  min-width: 1.25rem;
+  text-align: center;
+}
+
+.reorder {
+  gap: 0.15rem;
+}
+
+.remove-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-quaternary);
+  font-size: 18px;
+  line-height: 1;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+    color: var(--color-danger);
+  }
+}
+
+/* ── Friend ID + submit ─────────────────────────────────────────────────── */
+.builder-friend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 1.25rem 0;
+}
+
+/* In the top meta row the fields share a line and the row gap handles spacing. */
+.builder-meta .builder-friend {
+  flex: 1 1 260px;
+  margin: 0;
+}
+
+.friend-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.friend-input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+
+  &.invalid {
+    border-color: var(--color-danger);
+  }
+}
+
+.friend-warn {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+}
+
+.builder-error {
+  color: var(--color-danger);
+  font-size: 0.9375rem;
+  margin: 0 0 0.75rem;
+}
+
+/* The primary "create/save" CTA is green (success), not the amber accent — it
+   reads as "go" and stays distinct from the WANT/HAVE brand hues. Dark ink on
+   the light green for contrast, mirroring .btn-primary. */
+.builder-submit {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px;
+  background: var(--color-success);
+  color: var(--color-void);
+
+  &:hover,
+  &:focus {
+    background: color-mix(in srgb, var(--color-success) 85%, white);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.builder-hint {
+  text-align: center;
+  font-size: 0.8125rem;
+  margin: 0.6rem 0 0;
+}
+
+/* ── Fixed mode bar ─────────────────────────────────────────────────────────
+   The want/have switch, pinned to the bottom of the viewport as a persistent
+   "mode": every card you tap lands in the active list, so the bar is coloured
+   by the current mode (amber = looking for, ice = for trade) and glows along
+   its top edge to make the mode unmistakable without reading. */
+.builder-modebar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-ground) 92%, transparent);
+  border-top: 1px solid var(--color-edge);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+
+  &.mode-want {
+    border-top-color: color-mix(in srgb, var(--color-want) 55%, transparent);
+    box-shadow: 0 -8px 24px
+      color-mix(in srgb, var(--color-want) 12%, transparent);
+  }
+
+  &.mode-have {
+    border-top-color: color-mix(in srgb, var(--color-have) 55%, transparent);
+    box-shadow: 0 -8px 24px
+      color-mix(in srgb, var(--color-have) 12%, transparent);
+  }
+}
+
+.modebar-inner {
+  display: flex;
+  /* Mobile: the switch and the create action stack full-width so both stay
+     tappable and neither overflows a narrow screen. */
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (width >= 900px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+.modebar-label {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+
+  @media (width >= 900px) {
+    display: inline;
+  }
+}
+
+/* Segmented control — the two mode buttons sit in one inset track. */
+.mode-seg {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius-sm);
+
+  @media (width >= 900px) {
+    flex: 0 1 420px;
+  }
+}
+
+.mode-opt {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+
+  &:hover:not(.active) {
+    background: var(--color-sleeve);
+    color: var(--color-bone);
+  }
+
+  &.want.active {
+    background: var(--color-want);
+    color: var(--color-void);
+  }
+
+  &.have.active {
+    background: var(--color-have);
+    color: var(--color-void);
+  }
+}
+
+/* Keep page content clear of the fixed bar. */
+[data-page="new"] main {
+  padding-bottom: 6rem;
+}
