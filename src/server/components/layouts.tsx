@@ -8,12 +8,25 @@ import {
   siteStructuredData,
 } from "../services/seo";
 import type { User } from "../services/users";
-import { Logo } from "./logo";
 import { Nav } from "./nav";
+import { Wordmark } from "./wordmark";
 
 // The site is dark-only (see `colorScheme: "dark"` on <html>), so theme-color
-// matches --color-bg from style.css rather than shipping light/dark variants.
-const THEME_COLOR = "#0a0a0b";
+// matches --color-void from style.css rather than shipping light/dark variants.
+const THEME_COLOR = "#0c0b0e";
+
+// Self-hosted @font-face declarations (latin subset), injected inline so the
+// CSS bundler leaves the absolute /fonts URLs untouched and nothing loads
+// cross-origin. Forque = display, Archivo (variable) = body, IBM Plex Mono =
+// utility. Keep these font-family names in sync with the --font-* tokens in
+// style.css. See DESIGN.md.
+const FONT_FACES = [
+  "@font-face{font-family:'Forque';src:url('/Forque.ttf') format('truetype');font-display:swap}",
+  "@font-face{font-family:'Archivo';font-weight:400 700;src:url('/fonts/archivo-latin-var.woff2') format('woff2');font-display:swap}",
+  "@font-face{font-family:'IBM Plex Mono';font-weight:400;src:url('/fonts/ibm-plex-mono-latin-400.woff2') format('woff2');font-display:swap}",
+  "@font-face{font-family:'IBM Plex Mono';font-weight:500;src:url('/fonts/ibm-plex-mono-latin-500.woff2') format('woff2');font-display:swap}",
+  "@font-face{font-family:'IBM Plex Mono';font-weight:600;src:url('/fonts/ibm-plex-mono-latin-600.woff2') format('woff2');font-display:swap}",
+].join("");
 
 const canonicalUrl = (path?: string): string =>
   path ? new URL(path, SITE_URL).href : SITE_URL;
@@ -65,6 +78,12 @@ function HeadMeta({
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
+      {/* All three faces are self-hosted from public/fonts (latin subset) so
+          nothing is fetched cross-origin — the hardened CSP only allows
+          font-src 'self'. Declared inline (not in the bundled CSS) so the CSS
+          bundler doesn't try to resolve the absolute /fonts URLs. Forque is the
+          display voice, Archivo the body, IBM Plex Mono the utility face. */}
+      <style dangerouslySetInnerHTML={{ __html: FONT_FACES }} />
       <link rel="stylesheet" href={getAssetUrl("/assets/main.css")} />
     </>
   );
@@ -140,8 +159,7 @@ export function Layout({
       <body data-page={name} data-component="layout">
         <header>
           <a href="/" className="logo">
-            <Logo />
-            <span>WantHave</span>
+            <Wordmark />
           </a>
           <Nav page={name} user={user} csrfToken={csrfToken} />
         </header>
@@ -157,7 +175,7 @@ export function Layout({
 function SiteFooter() {
   return (
     <footer>
-      <span>WantHave</span>
+      <Wordmark />
     </footer>
   );
 }
@@ -182,9 +200,8 @@ export function ErrorLayout({ title, children, nav = true }: ErrorLayoutProps) {
       </head>
       <body data-page="error" data-component="layout">
         <header>
-          <a href="/" className="logo">
-            <Logo />
-            <span>{SITE_NAME}</span>
+          <a href="/" className="logo" aria-label={SITE_NAME}>
+            <Wordmark />
           </a>
           {nav && <Nav page="" user={null} />}
         </header>
