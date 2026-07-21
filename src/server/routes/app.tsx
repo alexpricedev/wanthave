@@ -6,7 +6,6 @@ import {
   robotsTxt,
   securityTxt,
   sitemap,
-  stack,
   webmanifest,
 } from "../controllers/app";
 import { callback, login, logout } from "../controllers/auth";
@@ -19,7 +18,6 @@ export const appRoutes = {
   "/sitemap.xml": sitemap.index,
   "/llms.txt": llmsTxt.index,
   "/.well-known/security.txt": securityTxt.index,
-  "/stack": stack.index,
   "/forms": createRouteHandler({
     GET: forms.index,
     POST: forms.create,

@@ -2,14 +2,14 @@
 // (sitemap, structured data). Templates and controllers import from here so the
 // canonical host, name, and description can't drift across the codebase.
 
-export const SITE_URL = "https://billet.alexprice.dev";
-export const SITE_NAME = "Billet";
+export const SITE_URL = "https://wanthave.trade";
+export const SITE_NAME = "WantHave";
 export const SITE_DESCRIPTION =
-  "Full-stack TypeScript starter — designed to be built on by AI coding agents";
+  "Build a Pokémon TCG Pocket trade list and share it as a link — it unfurls in Discord with an OG image showing what you're looking for.";
 
 // Public, indexable routes included in the sitemap. Private or noindex routes
 // (/login, /admin), API endpoints, and auth callbacks are intentionally omitted.
-export const SITEMAP_PATHS = ["/", "/stack", "/forms", "/projects"] as const;
+export const SITEMAP_PATHS = ["/", "/forms", "/projects"] as const;
 
 const absolute = (path: string): string => new URL(path, SITE_URL).href;
 
@@ -48,9 +48,9 @@ const ROBOTS_DISALLOW = ["/admin", "/api/", "/auth/"] as const;
 // declares downstream-use consent explicitly for crawlers that honour it.
 const CONTENT_SIGNAL = "Content-Signal: search=yes, ai-input=yes, ai-train=yes";
 
-// Builds the /robots.txt body. Billet is designed to be built on by AI coding
-// agents, so the posture is deliberately open: search engines and the major AI
-// crawlers are all allowed, with only private surfaces disallowed.
+// Builds the /robots.txt body. The posture is deliberately open: search
+// engines and the major AI crawlers are all allowed, with only private
+// surfaces disallowed.
 export const buildRobotsTxt = (): string => {
   const group = (agents: readonly string[]): string =>
     [
@@ -61,8 +61,8 @@ export const buildRobotsTxt = (): string => {
     ].join("\n");
 
   return [
-    "# Billet is designed to be built on by AI coding agents, so search engines",
-    "# and AI crawlers are welcome. Only private surfaces are disallowed.",
+    "# Search engines and AI crawlers are welcome. Only private surfaces are",
+    "# disallowed.",
     "",
     group(["*"]),
     "",
@@ -74,8 +74,8 @@ export const buildRobotsTxt = (): string => {
 };
 
 // Web app manifest (spec: resilience/pwa-manifest). `name`/`short_name` follow
-// SITE_NAME so a fork is never stuck advertising "Billet" as its installed-app
-// name — updating the one constant renames it everywhere. Colours match the
+// SITE_NAME so renaming the site never leaves the installed-app name stuck on
+// an old value — updating the one constant renames it everywhere. Colours match the
 // dark theme (--color-bg in style.css / THEME_COLOR in layouts.tsx). The 512px
 // icon doubles as the maskable icon; swap in a purpose-built, safe-zone-padded
 // asset if you need edge-to-edge Android adaptive icons.

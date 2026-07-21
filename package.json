@@ -1,6 +1,6 @@
 {
-  "name": "billet",
-  "description": "A full-stack TypeScript starter designed to be built on by AI coding agents",
+  "name": "wanthave",
+  "description": "Build and share Pokémon TCG Pocket trade lists as links that unfurl with your want-list in Discord",
   "version": "1.0.0",
   "scripts": {
     "build": "bun run build:client && bun run build:css",

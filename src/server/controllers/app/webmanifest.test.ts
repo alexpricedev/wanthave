@@ -12,7 +12,7 @@ describe("webmanifest Controller", () => {
     );
   });
 
-  test("names the app from SITE_NAME so a fork is never stuck as Billet", async () => {
+  test("names the app from SITE_NAME", async () => {
     const manifest = await webmanifest.index().json();
 
     expect(manifest.name).toBe(SITE_NAME);

@@ -1,61 +1,12 @@
-<p align="center">
-  <img src="public/logo.svg" alt="Billet Logo" width="48" />
-</p>
+# WantHave
 
-<h1 align="center">Billet</h1>
-
-<p align="center">
-  <b>Full-stack TypeScript starter designed to be built on by AI coding agents</b>
-  <br />
-  Server-rendered JSX, light-touch JS, custom CSS — one codebase, one deploy target.<br />
-  Deterministic templates with strong types that AI agents can reason about and test with confidence.
-</p>
-
-<p align="center">
-  <a href="https://bun.sh"><img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white" alt="Bun" /></a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals"><img src="https://img.shields.io/badge/JSX/TSX-20232a?style=for-the-badge&logo=javascript&logoColor=yellow" alt="JSX/TSX" /></a>
-  <a href="https://typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
-  <a href="https://railway.com?referralCode=XB1wns"><img src="https://img.shields.io/badge/Deploy%20on-Railway-131415?style=for-the-badge&logo=railway&logoColor=white" alt="Railway" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" /></a>
-</p>
-
-> **TLDR:** Full-stack TypeScript starter built for AI coding agents. Server-rendered JSX (not React), custom CSS, PostgreSQL via Bun — one process, one test runner, one deploy target. Ships with magic-link auth, CSRF protection, rate limiting, auto-migrations, and 30+ test files. The architecture is deliberately simple (services → controllers → templates) so AI agents get fast, unambiguous feedback from strict types, zero-warning linting, and a test suite that runs in seconds. Deploy anywhere you can run `bun run start`.
->
-> — *Claude Opus 4.6*
-
-<p align="center"><a href="https://github.com/alexpricedev/Billet?tab=readme-ov-file#quick-start"><b>Get started →</b></a></p>
-
----
-
-## Why Billet?
-
-> **Billet** (noun): A semi-finished piece of steel, shaped and ready to be worked into something specific. Named for Sheffield — the Steel City, where crucible steel was invented.
-
-Left to their own choices, AI coding agents will reach for what they know best: React with Next.js. The result is a thick-frontend app split across client and server, locked into a specific ecosystem, requiring multiple test systems to simulate browser state, and unnecessarily complex and costly to deploy.
-
-Billet takes the opposite approach. It's a single-instance server-rendered app with light-touch client-side JavaScript. Templates are deterministic functions of their props — given the same input, they produce the same HTML. This makes them trivial to test in a single unified system without browser simulation. One codebase, one test runner, one deploy target.
-
-This isn't a limitation. It's a deliberate architectural choice that plays to AI's strengths: strong type information to reason about, functional input/output patterns, and a feedback loop (write code → run tests → see results) that works in seconds, not minutes.
-
-> 📝 For the longer story behind why Billet works this way — the fat front-end, RLS, and the case for a real server — read [**Boring on purpose**](https://alexprice.dev/writing/boring-on-purpose).
-
-### Capture your backpressure
-
-AI agents work best when they get told they're wrong immediately. Not by you — by the toolchain. Type errors, failing tests, lint warnings, broken builds — that's [backpressure](https://latentpatterns.com/principles), and it's the single most important thing you can invest in when working with agents. Every automated check that catches a mistake is one less time you have to context-switch back in to fix something a machine should have caught.
-
-When you do have to step in and rescue an agent, don't just fix the output and move on. Ask why it went wrong and close that gap. Add a type. Write a test. Tighten a schema. The goal isn't zero failures — it's zero repeat failures. Every rescue you engineer away is time you get back.
-
-Billet is built around this idea: strict TypeScript, zero-warning linting, deterministic templates, and a test suite that runs in seconds. The architecture itself is the feedback loop.
-
-### When Billet isn't the right fit
-
-Billet is built for server-rendered apps with light client-side interactivity. If your project needs a highly reactive, state-driven UI — real-time collaborative editing, complex drag-and-drop interfaces, rich data visualisations — you're better off with a full client-side framework like React or Svelte from the start. Billet lets you opt in to client-side frameworks per page, but if most of your pages need one, the thin-frontend approach is working against you rather than for you.
+Build a Pokémon TCG Pocket trade list and share it as a link — posted in Discord, it unfurls with an OG image showing the cards you're looking for. See [PRD.md](PRD.md) for the full spec.
 
 ---
 
 ## What's Included
 
-Auth, security, database, testing, linting — these are the rails. They're solved so the agent can focus on your custom logic instead of bugging you with questions about tech choices and security fundamentals.
+Auth, security, database, testing, linting — these are the rails. They're solved so you can focus on your custom logic instead of tech choices and security fundamentals.
 
 ### Authentication
 
@@ -86,14 +37,11 @@ PostgreSQL through Bun's built-in `Bun.SQL` — no ORM, no driver dependency.
 
 ### Testing
 
-The "deterministic templates, test with confidence" tagline isn't a marketing claim — it's backed by infrastructure.
-
 - **220+ tests across 28 files** covering controllers, services, middleware, utilities, and client scripts
 - **No browser simulation needed** — server-rendered templates are pure functions of props, testable with `renderToString()` and string assertions
 - **Real database testing** for services — tests run against PostgreSQL with table truncation for isolation
 - **Mock-based controller tests** that verify HTTP responses (status codes, headers, HTML content) without touching the database
 - **Client script tests** using happy-dom for DOM globals, with page lifecycle isolation
-
 
 Run the full suite: `bun run test`
 
@@ -118,87 +66,12 @@ Run the full suite: `bun run test`
 
 ---
 
-## Built for AI Agents
-
-The "designed for AI agents" tagline is the reason Billet exists, so here's what that means in practice.
-
-### CLAUDE.md — the agent's guide
-
-The repo includes a 200-line [`CLAUDE.md`](CLAUDE.md) that serves as an onboarding document for AI coding agents. It covers the full architecture: directory layout, naming conventions, routing patterns, service layer design, testing strategies by module type, and a step-by-step walkthrough for adding a new page. When an agent opens this project, it knows where everything goes and how everything connects — before writing a single line of code.
-
-### Why this architecture works for agents
-
-AI agents are good at following patterns with fast, unambiguous feedback. Billet is designed around that:
-
-- **Deterministic templates.** Given the same props, a template produces the same HTML. Agents can write a template, call `renderToString()`, and assert on the output — no browser, no async rendering, no timing issues.
-- **Strong types as context.** Types flow from service to controller to template. When an agent's code doesn't typecheck, it gets an error with a file path, line number, and expected type — enough to self-correct without human intervention.
-- **Fast feedback loops.** `bun run test` completes in seconds. `bun run check` (lint + typecheck) catches issues before they compound. Agents can write-test-fix in tight cycles.
-- **Separation of concerns.** Services own data, controllers orchestrate, templates render. Each layer is independently testable. An agent working on a controller doesn't need to understand the database schema — it works against typed service functions.
-- **Zero-ambiguity conventions.** File naming, export patterns, route registration — everything follows documented conventions. There's one right way to add a page, one right way to add an API endpoint, and it's written down.
-
-### The feedback stack
-
-Every layer catches a different class of error before a human has to:
-
-| Layer | What it catches |
-|---|---|
-| TypeScript strict mode | Type mismatches, missing properties, unused code |
-| Biome linting | Style violations, unsafe patterns, console usage |
-| Pre-commit hooks | Anything that slipped past the editor |
-| Test suite | Behavioural regressions, broken templates, bad responses |
-
-
-This is the [backpressure](#capture-your-backpressure) that keeps agents on the rails.
-
----
-
-## Built to a public standard
-
-[**specification.website**](https://specification.website) is an open, platform-agnostic checklist of the technical features a good website should have — 168 specs across foundations, SEO, accessibility, security, performance, and more. Billet works through it section by section, so the boring-but-critical baseline is in place before you write a line of product code.
-
-| Section | What Billet covers |
-|---|---|
-| **Foundations** | Doctype, charset, viewport, canonical URLs, Open Graph, favicons, theme-color |
-| **SEO** | robots.txt, XML sitemap, JSON-LD, per-page metadata, an explicit indexing policy |
-| **Accessibility** | Semantic landmarks, labelled forms, focus rings, reduced motion, captioned tables |
-| **Security** | Security headers on every response, a Content Security Policy, HSTS, security.txt, Subresource Integrity, Clear-Site-Data |
-| **Agent readiness** | An llms.txt index, AI-crawler rules and Content-Signal in robots.txt, machine-readable Link headers, structured data, stable URLs |
-| **Performance** | Brotli and gzip compression, fingerprinted immutable assets, ETag revalidation with 304s, preconnect resource hints, minified bundles |
-
-[Read the full standard →](https://specification.website)
-
----
-
 ## Quick Start
 
-You'll need [Bun](https://bun.sh) and a local [PostgreSQL](https://www.postgresql.org/) instance running. If you need help getting PostgreSQL set up, ask Claude — it'll walk you through the install for your OS.
-
-Click **[Use this template](https://github.com/new?template_name=Billet&template_owner=alexpricedev)** on GitHub to create your own repo, then:
+You'll need [Bun](https://bun.sh) and a local [PostgreSQL](https://www.postgresql.org/) instance running.
 
 ```bash
-git clone <your-new-repo-url>
-cd <your-project>
 bun install
-```
-
-### First-time setup
-
-Open [`START_PROMPT.md`](START_PROMPT.md) with your AI coding agent. It will walk through creating your `.env` files, renaming the project, stripping the Billet starter content, and verifying everything works.
-
-Once setup is complete you can delete `START_PROMPT.md`.
-
-### Manual setup
-
-If you'd prefer to set up manually:
-
-```bash
-cp .env.example .env
-bun run generate:pepper      # copy the output into CRYPTO_PEPPER in .env
-```
-
-Add your `DATABASE_URL` to `.env` (e.g. `postgresql://localhost/myapp`), then:
-
-```bash
 bun run dev
 ```
 
@@ -221,33 +94,24 @@ src/
 │   ├── main.ts                 # Server entry point
 │   ├── routes/
 │   │   ├── app.tsx             # View routes (HTML)
-│   │   ├── api.ts              # API routes (JSON)
+│   │   ├── api.ts               # API routes (JSON)
 │   │   └── admin.tsx           # Admin routes (protected)
 │   ├── controllers/            # Route handlers
 │   │   ├── app/                # View controllers — return HTML
 │   │   ├── api/                # API controllers — return JSON
 │   │   └── auth/               # Auth controllers — login/logout
-│   ├── templates/              # Full-page JSX templates
+│   ├── templates/               # Full-page JSX templates
 │   ├── components/             # Reusable server JSX components
-│   ├── services/               # Business logic & data access
-│   ├── middleware/             # Auth, CSRF, rate limiting, admin
-│   ├── utils/                  # Response helpers, crypto, env validation
+│   ├── services/                # Business logic & data access
+│   ├── middleware/              # Auth, CSRF, rate limiting, admin
+│   ├── utils/                   # Response helpers, crypto, env validation
 │   └── database/
-│       ├── cli.ts / migrate.ts # Migration tooling
-│       ├── seed.ts             # Development seed data
-│       └── migrations/         # Numbered migration files
+│       ├── cli.ts / migrate.ts  # Migration tooling
+│       ├── seed.ts              # Development seed data
+│       └── migrations/          # Numbered migration files
 │
-└── types/                      # Global TypeScript declarations
+└── types/                       # Global TypeScript declarations
 ```
-
----
-
-## Works well with
-
-A couple of small, zero-dependency packages built alongside Billet that drop straight in:
-
-- **[billet-cookie-consent](https://github.com/alexpricedev/billet-cookie-consent)** — GDPR-friendly cookie consent banner. Lightweight, framework-agnostic, designed to slot into a server-rendered template.
-- **[log-digest](https://github.com/alexpricedev/log-digest)** — In-memory log buffer with a pluggable digest sink. Batches `error` / `warn` / `info` entries and hands them off on an interval to email, Slack, or any custom sink — a lightweight alternative to a full observability stack for a single Bun process.
 
 ---
 
@@ -259,7 +123,7 @@ Contributions are welcome! Please open issues or PRs.
 
 ## Deploy
 
-Billet is a single Bun process — no containers, no serverless adapters, no platform-specific runtime. Anywhere you can run `bun run start`, it'll work: Railway, Fly.io, Render, a VPS, or your own machine.
+WantHave is a single Bun process — no containers, no serverless adapters, no platform-specific runtime. Anywhere you can run `bun run start`, it'll work: Railway, Fly.io, Render, a VPS, or your own machine.
 
 ### Railway
 
@@ -296,7 +160,7 @@ A `railway.json` is included with build and start commands pre-configured. Deplo
 
 ### Database
 
-Billet uses PostgreSQL through Bun's built-in `Bun.SQL` — no ORM, no driver dependency. Migrations run automatically on server startup — pending migrations are applied before the server accepts requests. If a migration fails, the server won't start (fail-safe).
+WantHave uses PostgreSQL through Bun's built-in `Bun.SQL` — no ORM, no driver dependency. Migrations run automatically on server startup — pending migrations are applied before the server accepts requests. If a migration fails, the server won't start (fail-safe).
 
 A lightweight CLI is also available for manual operations:
 
@@ -312,10 +176,4 @@ If you don't need a database, remove the `src/server/database/` and `src/server/
 
 ## License
 
-MIT — free for personal and commercial use.
-
----
-
-<p align="center">
-  <i>Made with ❤️ in Sheffield, UK</i>
-</p>
+This project is not currently licensed for public use. All rights reserved.

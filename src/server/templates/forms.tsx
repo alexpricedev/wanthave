@@ -25,8 +25,8 @@ export const Forms = ({
   state,
 }: FormsProps) => (
   <Layout
-    title="Forms - Billet"
-    description="Server-rendered form patterns in Billet — CSRF protection, validation, and post-redirect-get flash messages."
+    title="Forms - WantHave"
+    description="Server-rendered form patterns in WantHave — CSRF protection, validation, and post-redirect-get flash messages."
     canonicalPath="/forms"
     name="forms"
     user={user}

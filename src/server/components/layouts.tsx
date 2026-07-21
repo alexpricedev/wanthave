@@ -100,18 +100,12 @@ export function Layout({
           canonicalPath={canonicalPath}
           noindex={noindex}
         />
-        {/* Preact (via the importmap below) loads from esm.sh and Lottie from
-            unpkg. Preconnect opens the TLS connection while the HTML parses so
-            the first cross-origin fetch doesn't pay the handshake; dns-prefetch
-            is the cheaper fallback for browsers that ignore preconnect. */}
+        {/* Preact (via the importmap below) loads from esm.sh. Preconnect opens
+            the TLS connection while the HTML parses so the first cross-origin
+            fetch doesn't pay the handshake; dns-prefetch is the cheaper
+            fallback for browsers that ignore preconnect. */}
         <link rel="preconnect" href="https://esm.sh" crossOrigin="anonymous" />
-        <link
-          rel="preconnect"
-          href="https://unpkg.com"
-          crossOrigin="anonymous"
-        />
         <link rel="dns-prefetch" href="https://esm.sh" />
-        <link rel="dns-prefetch" href="https://unpkg.com" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={`${SITE_URL}/og-image.png`} />
@@ -147,33 +141,23 @@ export function Layout({
         <header>
           <a href="/" className="logo">
             <Logo />
-            <span>Billet</span>
+            <span>WantHave</span>
           </a>
           <Nav page={name} user={user} csrfToken={csrfToken} />
         </header>
         <main>{children}</main>
         <SiteFooter />
-        <script
-          async
-          src="https://unpkg.com/lottie-web@5.13.0/build/player/lottie_light.min.js"
-          integrity="sha384-Gr3FGWSrOz4fzm9bvrWwhuQH87JMUCLlOTaHhpddbnlHHWCZPxMeQ3KUPsomzIii"
-          crossOrigin="anonymous"
-        />
         <script type="module" src={getAssetUrl("/assets/main.js")} />
       </body>
     </html>
   );
 }
 
-// Shared site footer for the full Layout and the ErrorLayout, so the repo-specific
-// links (see START_PROMPT.md §3) live in one place.
+// Shared site footer for the full Layout and the ErrorLayout.
 function SiteFooter() {
   return (
     <footer>
-      <a href="https://github.com/alexpricedev/Billet">GitHub</a>
-      <span>
-        Built by <a href="https://alexprice.dev">alexprice.dev</a>
-      </span>
+      <span>WantHave</span>
     </footer>
   );
 }
