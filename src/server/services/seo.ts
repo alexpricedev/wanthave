@@ -76,7 +76,7 @@ export const buildRobotsTxt = (): string => {
 // Web app manifest (spec: resilience/pwa-manifest). `name`/`short_name` follow
 // SITE_NAME so renaming the site never leaves the installed-app name stuck on
 // an old value — updating the one constant renames it everywhere. Colours match the
-// dark theme (--color-bg in style.css / THEME_COLOR in layouts.tsx). The 512px
+// dark theme (--color-void in style.css / THEME_COLOR in layouts.tsx). The 512px
 // icon doubles as the maskable icon; swap in a purpose-built, safe-zone-padded
 // asset if you need edge-to-edge Android adaptive icons.
 export const buildWebManifest = (): string =>
@@ -87,8 +87,8 @@ export const buildWebManifest = (): string =>
     start_url: "/",
     scope: "/",
     display: "standalone",
-    theme_color: "#0a0a0b",
-    background_color: "#0a0a0b",
+    theme_color: "#0c0b0e",
+    background_color: "#0c0b0e",
     icons: [
       {
         src: "/android-chrome-192x192.png",

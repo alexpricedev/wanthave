@@ -5,13 +5,18 @@
   }
 
   h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.035em;
+    font-size: 3.25rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
     margin-bottom: 1rem;
 
     @media (width >= 768px) {
-      font-size: 3.5rem;
+      font-size: 4.5rem;
+    }
+
+    /* Let the wordmark inherit the hero size instead of its default 1.35rem. */
+    .wordmark {
+      font-size: inherit;
     }
   }
 

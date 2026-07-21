@@ -1,4 +1,5 @@
 import { Layout } from "@server/components/layouts";
+import { Wordmark } from "@server/components/wordmark";
 import type { User } from "@server/services/users";
 
 interface HomeProps {
@@ -16,7 +17,9 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
     csrfToken={csrfToken}
   >
     <section className="hero">
-      <h1>WantHave</h1>
+      <h1>
+        <Wordmark />
+      </h1>
       <p className="hero-sub">
         Build your Pokémon TCG Pocket trade list and share it as a link — no
         account needed. Post it in Discord and it unfurls with an OG image

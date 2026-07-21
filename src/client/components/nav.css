@@ -35,14 +35,14 @@
 
       &:hover,
       &:focus {
-        color: var(--color-text);
+        color: var(--color-bone);
         background: none;
         text-decoration: none;
       }
 
       &.active,
       &[aria-current="page"] {
-        color: var(--color-text);
+        color: var(--color-bone);
         font-weight: 500;
       }
     }

@@ -14,31 +14,67 @@
 @import "./components/data-table.css";
 @import "./components/badge.css";
 
+/* All three faces (Forque display, Archivo body, IBM Plex Mono utility) are
+   self-hosted from public/fonts and declared via inline @font-face in the
+   document head — kept out of this bundle so the bundler doesn't try to resolve
+   the absolute /fonts URLs, and same-origin to satisfy font-src 'self'.
+   See layouts.tsx (FONT_FACES) and DESIGN.md. */
+
+/* WantHave identity system v1 — see DESIGN.md.
+   Forque is the display voice; hue is the only seam between the halves.
+   foil-amber = WANT, holo-ice = HAVE. IBM Plex Mono for counts and utility. */
 :root {
-  --color-bg: #0a0a0b;
-  --color-surface: #141415;
-  --color-surface-hover: #1c1c1e;
-  --color-border: #222224;
-  --color-text: #ededef;
-  --color-text-secondary: #b4b5b9;
-  --color-text-tertiary: #8a8b8e;
-  --color-text-quaternary: #78797c;
-  --color-primary: #7c85f0;
-  --color-primary-hover: #9098f3;
-  --color-success: #34d399;
-  --color-danger: #f87171;
-  --color-warning: #fbbf24;
-  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
-  --radius: 0.5rem;
-  --shadow: none;
+  /* Surfaces — layered lightest-on-top over the void */
+  --color-void: #0c0b0e; /* page background */
+  --color-ground: #121114; /* cards, panels */
+  --color-sleeve: #17161a; /* raised surfaces, hovers, avatar ground */
+  --color-well: #1b1a20; /* insets: badges, chips, inputs */
+  --color-edge: #2c2934; /* borders */
+  --color-edge-soft: #26232c; /* softer panel borders */
+
+  /* Text — bone fading to muted */
+  --color-bone: #ece9e2; /* primary text, light ground */
+  --color-text-secondary: #b5b0ba;
+  --color-text-tertiary: #8b8794;
+  --color-text-quaternary: #6f6a7a;
+
+  /* Brand — the only seam: WANT vs HAVE */
+  --color-want: #e5b35b; /* foil-amber · oklch(0.8 0.11 80) */
+  --color-want-hover: #f0c87e;
+  --color-want-ink: #8a6420; /* WANT on light grounds */
+  --color-have: #7fcbd9; /* holo-ice · oklch(0.8 0.11 200) */
+  --color-have-hover: #a3dbe6;
+  --color-have-ink: #20707e; /* HAVE on light grounds */
+
+  /* Interactive accent = WANT (foil-amber) */
+  --color-primary: var(--color-want);
+  --color-primary-hover: var(--color-want-hover);
+  --color-on-primary: var(--color-void); /* text on a filled amber surface */
+
+  /* Semantic status — kept distinct from the two brand hues */
+  --color-success: #6bd6a0;
+  --color-danger: #f0776b;
+  --color-warning: #e0975a;
+
+  /* Type */
+  --font-display: "Forque", "Archivo", sans-serif;
+  --font-body: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", "Fira Mono", Menlo, monospace;
+
+  /* Radius scale */
+  --radius-sm: 8px; /* controls: buttons, inputs, chips */
+  --radius: 14px; /* cards, panels */
+  --radius-lg: 20px; /* large avatars, hero surfaces */
+  --radius-pill: 999px; /* badges, count pills */
+
+  --shadow: 0 12px 40px #00000066;
 }
 
 html {
-  background: var(--color-bg);
+  background: var(--color-void);
   box-sizing: border-box;
-  color: var(--color-text);
+  color: var(--color-bone);
   font-size: 16px;
   /* Reserve the scrollbar's space so pages that grow past one viewport don't
      shift horizontally when the scrollbar appears (classic scrollbars only). */
@@ -95,7 +131,7 @@ a:not([class]):focus-visible {
 }
 
 body {
-  font-family: var(--font-main);
+  font-family: var(--font-body);
   margin: 0;
   /* 100vh first as the fallback; 100dvh tracks the actually-visible viewport on
      mobile so the page isn't sized to include a retracted browser toolbar. */
@@ -103,8 +139,8 @@ body {
   /* biome-ignore lint/suspicious/noDuplicateProperties: dvh override is a
      deliberate progressive-enhancement fallback over the vh baseline. */
   min-height: 100dvh;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-void);
+  color: var(--color-bone);
   line-height: 1.6;
 }
 
@@ -114,9 +150,26 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
   margin: 0 0 0.5em 0;
   line-height: 1.2;
+}
+
+/* Forque is a display face — it only reads well at display scale, so it's
+   reserved for the wordmark and the two largest heading levels. Never set
+   Forque below ~1.5rem/24px; smaller headings use Archivo (the fallthrough
+   below) so titles like the login card stay legible. See DESIGN.md. */
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-body);
+  font-weight: 600;
 }
 
 h1 {
@@ -125,6 +178,7 @@ h1 {
 }
 
 h2 {
+  font-size: 1.6rem;
   letter-spacing: -0.01em;
 }
 
@@ -149,12 +203,12 @@ a {
 button {
   font-family: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 8px 16px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-primary);
   cursor: pointer;
   transition: all 150ms ease;
 
@@ -170,8 +224,8 @@ img {
 }
 
 .card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-ground);
+  border: 1px solid var(--color-edge);
   border-radius: var(--radius);
   display: inline-block;
   margin-bottom: 2rem;
@@ -181,13 +235,13 @@ img {
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-edge);
   color: var(--color-text-secondary);
 
   &:hover,
   &:focus {
-    background: var(--color-surface);
-    color: var(--color-text);
+    background: var(--color-ground);
+    color: var(--color-bone);
   }
 }
 
@@ -197,17 +251,17 @@ img {
 
   &:hover,
   &:focus {
-    background: rgba(248, 113, 113, 0.1);
+    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
   }
 }
 
 input,
 textarea,
 select {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  color: var(--color-text);
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius-sm);
+  color: var(--color-bone);
   font-family: inherit;
   /* 16px keeps iOS Safari from zooming the viewport on focus. */
   font-size: 16px;
@@ -240,4 +294,49 @@ select {
   font-weight: 400;
   color: var(--color-text-tertiary);
   line-height: 1.7;
+}
+
+/* ── Identity ────────────────────────────────────────────────────────────
+   The two brand hues are the only seam. Use .want / .have to tint any text;
+   .wordmark renders the lockup in Forque with no space between the halves. */
+.want {
+  color: var(--color-want);
+}
+
+.have {
+  color: var(--color-have);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+
+  .want {
+    color: var(--color-want);
+  }
+
+  .have {
+    color: var(--color-have);
+  }
+}
+
+/* Vertical WANT/HAVE section label — the product's dividing architecture. */
+.vlabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-display);
+  letter-spacing: 0.12em;
+}
+
+.vlabel-want {
+  color: var(--color-want);
+}
+
+.vlabel-have {
+  color: var(--color-have);
 }

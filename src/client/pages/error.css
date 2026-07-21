@@ -31,11 +31,11 @@
   .error-actions .btn-primary {
     align-items: center;
     background: var(--color-primary);
-    border-radius: var(--radius);
-    color: #fff;
+    border-radius: var(--radius-sm);
+    color: var(--color-on-primary);
     display: inline-flex;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 10px 22px;
     text-decoration: none;
     transition: all 150ms ease;
@@ -43,7 +43,7 @@
     &:hover,
     &:focus {
       background: var(--color-primary-hover);
-      color: #fff;
+      color: var(--color-on-primary);
       text-decoration: none;
     }
   }
