@@ -5,10 +5,8 @@ interface ErrorPageProps {
   status: number;
   heading: string;
   message: string;
-  // 503 maintenance drops the nav (its links would only 503 too) and the home
-  // button (the site is intentionally offline).
+  // 503 maintenance drops the home button (the site is intentionally offline).
   showHome?: boolean;
-  nav?: boolean;
 }
 
 // A plain-language error page: the status, a human heading, an explanation that
@@ -19,9 +17,8 @@ export const ErrorPage = ({
   heading,
   message,
   showHome = true,
-  nav = true,
 }: ErrorPageProps) => (
-  <ErrorLayout title={`${heading} · ${SITE_NAME}`} nav={nav}>
+  <ErrorLayout title={`${heading} · ${SITE_NAME}`}>
     <section className="error-page">
       <p className="error-status">{status}</p>
       <h1>{heading}</h1>

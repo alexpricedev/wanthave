@@ -1,7 +1,7 @@
 import { Flash } from "../components/flash";
 import { FormField } from "../components/form-field";
 import { BaseLayout } from "../components/layouts";
-import { Logo } from "../components/logo";
+import { Wordmark } from "../components/wordmark";
 
 export interface LoginState {
   state?: "email-sent" | "validation-error";
@@ -24,7 +24,7 @@ export const Login = ({ state }: LoginProps) => {
         <div className="login-wrapper">
           <div className="login-header">
             <a href="/">
-              <Logo />
+              <Wordmark />
             </a>
           </div>
 
@@ -61,7 +61,7 @@ export const Login = ({ state }: LoginProps) => {
                   />
                 </FormField>
 
-                <button type="submit" className="login-submit">
+                <button type="submit" className="login-submit btn-primary">
                   Send magic link
                 </button>
               </form>

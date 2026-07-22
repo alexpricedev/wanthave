@@ -182,7 +182,7 @@ export function Layout({
             <a href="/" className="logo">
               <Wordmark />
             </a>
-            <Nav page={name} user={user} csrfToken={csrfToken} />
+            {user && <Nav page={name} user={user} csrfToken={csrfToken} />}
           </header>
         )}
         <main>{children}</main>
@@ -205,7 +205,6 @@ function SiteFooter() {
 interface ErrorLayoutProps {
   title: string;
   children: React.ReactNode;
-  nav?: boolean;
 }
 
 // Layout for error and maintenance pages (404, 500, 503). Deliberately ships NO
@@ -213,8 +212,9 @@ interface ErrorLayoutProps {
 // instantly and stays legible even when the app is degraded or offline, the
 // spec's resilience baseline for error and 503 responses. Reuses the same
 // header/footer chrome as `Layout` for continuity, and is always noindex so
-// crawlers never treat an error body as real content.
-export function ErrorLayout({ title, children, nav = true }: ErrorLayoutProps) {
+// crawlers never treat an error body as real content. No nav — error pages have
+// no session context, and the top nav is guest-hidden anyway.
+export function ErrorLayout({ title, children }: ErrorLayoutProps) {
   return (
     <html lang="en" style={{ colorScheme: "dark" }}>
       <head>
@@ -225,7 +225,6 @@ export function ErrorLayout({ title, children, nav = true }: ErrorLayoutProps) {
           <a href="/" className="logo" aria-label={SITE_NAME}>
             <Wordmark />
           </a>
-          {nav && <Nav page="" user={null} />}
         </header>
         <main>{children}</main>
         <SiteFooter />
