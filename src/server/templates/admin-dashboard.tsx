@@ -19,7 +19,7 @@ export const AdminDashboard = (props: {
 }) => (
   <Layout
     title="Admin"
-    description="WantHave admin dashboard — role-protected routes and server-rendered views."
+    description="WantHave admin dashboard—role-protected routes and server-rendered views."
     canonicalPath="/admin"
     noindex
     name="admin"

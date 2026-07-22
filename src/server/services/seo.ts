@@ -5,7 +5,7 @@
 export const SITE_URL = "https://wanthave.trade";
 export const SITE_NAME = "WantHave";
 export const SITE_DESCRIPTION =
-  "Build a Pokémon TCG Pocket trade list and share it as a link — it unfurls in Discord with an OG image showing what you're looking for.";
+  "Build a Pokémon TCG Pocket trade list and share it as a link—it unfurls in Discord with an OG image showing what you're looking for.";
 
 // Public, indexable routes included in the sitemap. Private or noindex routes
 // (/login, /admin), API endpoints, and auth callbacks are intentionally omitted.

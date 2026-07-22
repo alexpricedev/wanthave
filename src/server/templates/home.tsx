@@ -22,12 +22,12 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "Which cards can I add?",
     answer:
-      "Every tradeable card from the A1 set to the latest — diamonds (◆1–◆4), stars (★1–★2) and shiny (✵1–✵2). Immersive, Crown and promo cards can't be traded in Pokémon TCG Pocket, so they don't appear.",
+      "Every tradeable card from the A1 set to the latest—diamonds (◆1–◆4), stars (★1–★2) and shiny (✵1–✵2). Immersive, Crown and promo cards can't be traded in Pokémon TCG Pocket, so they don't appear.",
   },
   {
     question: "What is slang search?",
     answer:
-      "Type how the community talks. “RR chsr EX” finds the rainbow Charizard ex, “shiny pika” the shiny Pikachus, and “FA trainer” full-art trainers — plus abbreviations and small typos still resolve. You can also browse visually, set by set.",
+      "Type how the community talks. “RR chsr EX” finds the rainbow Charizard ex, “shiny pika” the shiny Pikachus, and “FA trainer” full-art trainers—plus abbreviations and small typos still resolve. You can also browse visually, set by set.",
   },
   {
     question: "How long does my link last?",
@@ -81,8 +81,8 @@ const CardRow = ({ ids }: { ids: string[] }) => (
 
 export const Home = ({ user, csrfToken }: HomeProps) => (
   <Layout
-    title="wanthave — share your Pokémon Pocket trade list"
-    description="Build a Pokémon TCG Pocket trade list and share it as a link — it unfurls in Discord with an OG image showing what you're looking for."
+    title="wanthave—share your Pokémon Pocket trade list"
+    description="Build a Pokémon TCG Pocket trade list and share it as a link—it unfurls in Discord with an OG image showing what you're looking for."
     canonicalPath="/"
     name="home"
     user={user}
@@ -104,7 +104,7 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         </h1>
         <p className="home-lead">
           Pick what you're looking for and what you'll trade. Post one link in
-          any server — your cards show up right in the chat. No screenshots, no
+          any server—your cards show up right in the chat. No screenshots, no
           re-typing, no account.
         </p>
         <div className="home-hero-cta">
@@ -151,8 +151,8 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         <p className="home-step-eyebrow">02 · Link</p>
         <h2>Grab your URL</h2>
         <p className="text-secondary">
-          One permanent link, always current. Edit your lists any time — the
-          link never changes.
+          One permanent link, always current. Edit your lists any time—the link
+          never changes.
         </p>
         <code className="home-step-url">
           wanthave.trade/<span className="want">you</span>
@@ -162,8 +162,8 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         <p className="home-step-eyebrow">03 · Post</p>
         <h2>Trades come to you</h2>
         <p className="text-secondary">
-          Drop it in any trading channel. Your wants show up front and center —
-          matches DM you, not the other way round.
+          Drop it in any trading channel. Your wants show up front and
+          center—matches DM you, not the other way round.
         </p>
       </div>
     </section>
