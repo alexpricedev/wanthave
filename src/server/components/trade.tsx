@@ -1,5 +1,5 @@
 import type { Card } from "../services/cards";
-import { rarityLabel } from "../services/cards";
+import { getSet, rarityLabel, rarityName } from "../services/cards";
 import type { ListCardRow, ListKind } from "../services/lists";
 import { groupByRarity } from "../services/lists";
 import { formatFriendId } from "../utils/friend-id";
@@ -15,8 +15,19 @@ interface CardTileProps {
 
 // A single card: full-bleed art in a fixed-ratio frame, with an optional
 // quantity chip. Used read-only on the public page.
-export const CardTile = ({ card, quantity }: CardTileProps) => (
-  <figure className="card-tile">
+export const CardTile = ({ card, quantity, kind }: CardTileProps) => (
+  <button
+    type="button"
+    className="card-tile"
+    data-card-tile
+    data-card-name={card.name}
+    data-card-set={getSet(card.set)?.name ?? card.set}
+    data-card-set-code={card.set}
+    data-card-rarity={rarityLabel(card.rarity)}
+    data-card-rarity-name={rarityName(card.rarity)}
+    data-card-img={cardImageSrc(card)}
+    data-card-kind={kind}
+  >
     <img
       className="card-tile-img"
       src={cardImageSrc(card)}
@@ -28,7 +39,7 @@ export const CardTile = ({ card, quantity }: CardTileProps) => (
     {quantity && quantity > 1 ? (
       <span className="card-qty">×{quantity}</span>
     ) : null}
-  </figure>
+  </button>
 );
 
 interface RaritySectionProps {
@@ -56,7 +67,7 @@ export const RaritySection = ({ kind, cards }: RaritySectionProps) => {
       </header>
       {groups.map((group) => (
         <div key={group.rarity} className="rarity-group">
-          <div className="rarity-label">{rarityLabel(group.rarity)}</div>
+          <div className="rarity-label">Rarity {rarityLabel(group.rarity)}</div>
           <div className="card-grid">
             {group.cards.map((c) => (
               <CardTile
@@ -117,9 +128,10 @@ export const FlywheelCta = ({
 }) => (
   <aside className={`flywheel flywheel-${variant}`}>
     <p className="flywheel-copy">
-      Trade Pokémon TCG Pocket cards? Build your own{" "}
+      Looks like you trade Pokémon TCG Pocket cards? You should build your own{" "}
       <span className="want">want</span>
-      <span className="have">have</span> in under two minutes—no account needed.
+      <span className="have">have</span> list, it takes less than two minutes
+      and you don't need an account.
     </p>
     <a className="btn-primary flywheel-btn" href="/new">
       Create your own trade list

@@ -23,6 +23,10 @@ interface Item {
 
 type Kind = "want" | "have";
 
+// The onboarding intro is dismissable; remember the choice for the session so
+// returning visitors don't see it again on every new list.
+const INTRO_KEY = "wanthave:introDismissed";
+
 export interface BuilderConfig {
   sets: SetDto[];
   csrfToken: string;
@@ -398,6 +402,40 @@ export function Builder(config: BuilderConfig) {
     }
   }, [sort]);
 
+  // The onboarding banner lives outside the Preact root (server-rendered, so
+  // it's visible before hydration). Keep it in sync with phase: always hidden
+  // on the details step, restored to its dismissed/shown state on cards.
+  useEffect(() => {
+    const intro = document.getElementById("builder-intro");
+    if (!intro) return;
+
+    if (phase === "details") {
+      intro.hidden = true;
+      return;
+    }
+
+    let dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem(INTRO_KEY) === "1";
+    } catch {
+      // sessionStorage may be unavailable (private mode) — treat as not dismissed.
+    }
+    intro.hidden = dismissed;
+
+    const close = document.getElementById("builder-intro-close");
+    if (!close) return;
+    const onClose = () => {
+      intro.hidden = true;
+      try {
+        sessionStorage.setItem(INTRO_KEY, "1");
+      } catch {
+        // sessionStorage may be unavailable — non-fatal.
+      }
+    };
+    close.addEventListener("click", onClose);
+    return () => close.removeEventListener("click", onClose);
+  }, [phase]);
+
   // Remember the friend ID for the session so it prefills future lists.
   useEffect(() => {
     try {
@@ -599,6 +637,18 @@ export function Builder(config: BuilderConfig) {
       >
         <span aria-hidden="true">{sort.dir === "asc" ? "↑" : "↓"}</span>
       </button>
+      {query.trim().length > 0 || activeSet !== "all" ? (
+        <button
+          type="button"
+          class="sort-clear"
+          onClick={() => {
+            setQuery("");
+            setActiveSet("all");
+          }}
+        >
+          Clear
+        </button>
+      ) : null}
     </div>
   );
 
@@ -631,16 +681,19 @@ export function Builder(config: BuilderConfig) {
     return (
       <div class="builder">
         <div class="builder-details">
-          <button
-            type="button"
-            class="builder-back"
-            onClick={() => setPhase("cards")}
-          >
-            ← Back to cards
-          </button>
-          <p class="builder-details-summary text-tertiary">
-            {`${wants.length} looking for · ${haves.length} for trade`}
-          </p>
+          {/* Replaces the dismissable onboarding banner (hidden on this step —
+              see the intro-sync effect above) with a fixed, non-closable note
+              scoped to what this step actually asks for. */}
+          <div class="builder-details-note">
+            Give your list a name so you know what in it at a later date and add
+            your Friend ID so people can easily add you and initiate trades
+          </div>
+
+          <span class="count-badge">
+            <span class="count-want">LF {wants.length}</span>
+            <span class="count-sep">·</span>
+            <span class="count-have">FT {haves.length}</span>
+          </span>
 
           {/* List name + Friend ID — optional details, collected on this step
               so they don't crowd the card picker. */}
@@ -700,13 +753,53 @@ export function Builder(config: BuilderConfig) {
                 ? "Save changes"
                 : "Create link"}
           </button>
+
+          <button
+            type="button"
+            class="btn-ghost builder-back"
+            onClick={() => setPhase("cards")}
+          >
+            ← Back to cards
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div class="builder">
+    <div class={`builder mode-${target}`}>
+      {/* Full-viewport mode frame: a coloured border around the whole screen so
+          the active list is unmistakable (amber = WANT, ice = HAVE). Decorative
+          and non-interactive. */}
+      <div class="builder-frame" aria-hidden="true" />
+
+      {/* Mode switch, pinned to the top. The builder is always in one "mode" —
+          every card you tap lands in the active list — so this is the first
+          thing you choose and it stays in reach while you scroll the cards. */}
+      <div class="builder-modebar">
+        <div class="modebar-inner">
+          <span class="modebar-label">Tap cards to add to</span>
+          <div class="mode-seg">
+            <button
+              type="button"
+              class={`mode-opt want${target === "want" ? " active" : ""}`}
+              onClick={() => setTarget("want")}
+              aria-pressed={target === "want"}
+            >
+              WANT
+            </button>
+            <button
+              type="button"
+              class={`mode-opt have${target === "have" ? " active" : ""}`}
+              onClick={() => setTarget("have")}
+              aria-pressed={target === "have"}
+            >
+              HAVE
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="builder-picker">
         <div class="picker-controls">
           <div class="picker-field picker-field--search">
@@ -807,36 +900,8 @@ export function Builder(config: BuilderConfig) {
         <p class="builder-hint text-tertiary">
           {totalCards === 0
             ? "Add at least one card to continue."
-            : `${wants.length} looking for · ${haves.length} for trade`}
+            : `${wants.length} in WANT · ${haves.length} in HAVE`}
         </p>
-      </div>
-
-      {/* Fixed mode bar. The builder is always in one "mode" — every card you
-          tap lands in the active list — so the switch stays pinned to the
-          bottom, coloured by mode, and within reach at the foot of a long card
-          browser. */}
-      <div class={`builder-modebar mode-${target}`}>
-        <div class="modebar-inner">
-          <span class="modebar-label">List mode</span>
-          <div class="mode-seg">
-            <button
-              type="button"
-              class={`mode-opt want${target === "want" ? " active" : ""}`}
-              onClick={() => setTarget("want")}
-              aria-pressed={target === "want"}
-            >
-              Looking for
-            </button>
-            <button
-              type="button"
-              class={`mode-opt have${target === "have" ? " active" : ""}`}
-              onClick={() => setTarget("have")}
-              aria-pressed={target === "have"}
-            >
-              For trade
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

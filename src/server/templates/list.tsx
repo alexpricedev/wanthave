@@ -52,13 +52,11 @@ export const ListPage = ({
             aria-label="Your link is ready"
           >
             <div className="share-head">
-              <span className="share-tick" aria-hidden="true">
-                ✓
-              </span>
               <h1 className="share-title">Your link is ready</h1>
             </div>
             <p className="share-sub">
-              Drop it in Discord—it unfurls with your want-list.
+              Paste this link into Discord and it'll show a previous of your
+              list.
             </p>
             <div className="share-url-row">
               <input
@@ -81,8 +79,8 @@ export const ListPage = ({
             {canClaim ? (
               <div className="nudge" data-nudge>
                 <p className="nudge-copy">
-                  This link expires in 90 days. Create a free account to keep it
-                  forever and edit it anytime.
+                  BTW: This link expires in 90 days. Create a free account to
+                  keep it forever and edit it anytime.
                 </p>
                 <div className="nudge-actions">
                   <a className="btn-primary nudge-btn" href="/login">
@@ -104,6 +102,10 @@ export const ListPage = ({
             <h1 className="list-head-title">
               {list.title ?? "Pokémon Pocket trade list"}
             </h1>
+            <p className="list-head-hint">
+              This page has a list of cards your buddy is looking for and a list
+              of the cards he has to trade.
+            </p>
             <CountBadge wantCount={wantCount} haveCount={haveCount} />
           </header>
         )}
@@ -117,8 +119,6 @@ export const ListPage = ({
           </div>
         ) : null}
 
-        {!created ? <FlywheelCta variant="primary" /> : null}
-
         {wantCount > 0 ? (
           <RaritySection kind="want" cards={list.wants} />
         ) : null}
@@ -128,7 +128,7 @@ export const ListPage = ({
 
         {list.friendId ? <FriendIdBlock friendId={list.friendId} /> : null}
 
-        <FlywheelCta variant={created ? "primary" : "quiet"} />
+        {!created ? <FlywheelCta variant="quiet" /> : null}
       </article>
     </Layout>
   );

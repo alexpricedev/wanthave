@@ -54,7 +54,15 @@ export const BuilderPage = ({
     csrfToken={csrfToken}
     chrome={false}
   >
-    <section className="builder-intro">
+    <section className="builder-intro" id="builder-intro">
+      <button
+        type="button"
+        className="builder-intro-close"
+        id="builder-intro-close"
+        aria-label="Dismiss"
+      >
+        ×
+      </button>
       <h1 className="builder-heading">{heading}</h1>
       <p className="lead">{sub}</p>
     </section>
