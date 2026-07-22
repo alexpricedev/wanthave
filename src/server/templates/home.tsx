@@ -103,15 +103,14 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
           for the ones you <span className="have">have</span>.
         </h1>
         <p className="home-lead">
-          Pick what you're looking for and what you'll trade. Post one link in
-          any server—your cards show up right in the chat. No screenshots, no
-          re-typing, no account.
+          Pick what you're looking for and what you have for trade. Post one
+          link in any server and your cards show up right in the chat. No
+          screenshots and no typing needed.
         </p>
         <div className="home-hero-cta">
           <a className="btn-primary" href="/new">
             Build your list
           </a>
-          <span className="home-cta-note">free · under 2 min</span>
         </div>
       </div>
 
