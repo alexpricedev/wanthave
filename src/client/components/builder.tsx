@@ -270,6 +270,10 @@ export function Builder(config: BuilderConfig) {
   const [title, setTitle] = useState<string>(initial?.title ?? "");
   const [target, setTarget] = useState<Kind>("want");
 
+  // Two-step flow: pick cards first, then an optional details step (list name +
+  // friend ID) shown only after the primary button is pressed.
+  const [phase, setPhase] = useState<"cards" | "details">("cards");
+
   // One unified picker: a search box plus a set filter ("all" = every set). A
   // bare set browses it; a query searches (within the set if one is chosen).
   const [query, setQuery] = useState("");
@@ -451,6 +455,17 @@ export function Builder(config: BuilderConfig) {
     }
   };
 
+  // Step 1 primary action: guard on at least one card, then advance to the
+  // optional details step rather than submitting straight away.
+  const goToDetails = () => {
+    setError(null);
+    if (totalCards === 0) {
+      setError("Add at least one card before creating a link.");
+      return;
+    }
+    setPhase("details");
+  };
+
   // Shared sort control for both pickers: field toggle (Number / Rarity) plus a
   // direction button (ascending / descending — descending shows the highest set
   // numbers and rarest cards first).
@@ -519,45 +534,86 @@ export function Builder(config: BuilderConfig) {
     );
   };
 
+  if (phase === "details") {
+    return (
+      <div class="builder">
+        <div class="builder-details">
+          <button
+            type="button"
+            class="builder-back"
+            onClick={() => setPhase("cards")}
+          >
+            ← Back to cards
+          </button>
+          <p class="builder-details-summary text-tertiary">
+            {`${wants.length} looking for · ${haves.length} for trade`}
+          </p>
+
+          {/* List name + Friend ID — optional details, collected on this step
+              so they don't crowd the card picker. */}
+          <div class="builder-meta builder-meta--stack">
+            <section class="builder-friend">
+              <label class="friend-label" for="list-title-input">
+                List name <span class="text-tertiary">(optional)</span>
+              </label>
+              <input
+                id="list-title-input"
+                type="text"
+                class="friend-input"
+                placeholder="Everyday Wonders Wants, All Spares"
+                maxLength={80}
+                value={title}
+                onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
+              />
+            </section>
+
+            <section class="builder-friend">
+              <label class="friend-label" for="friend-id-input">
+                Friend ID{" "}
+                <span class="text-tertiary">(optional, 16 digits)</span>
+              </label>
+              <input
+                id="friend-id-input"
+                type="text"
+                inputMode="numeric"
+                class={`friend-input${friendValid ? "" : " invalid"}`}
+                placeholder="1234567890123456"
+                value={formatFriendId(friendDigits)}
+                onInput={(e) =>
+                  setFriendId((e.target as HTMLInputElement).value)
+                }
+              />
+              {!friendValid ? (
+                <span class="friend-warn">A friend ID is 16 digits.</span>
+              ) : null}
+            </section>
+          </div>
+
+          {error ? (
+            <p class="builder-error" role="alert">
+              {error}
+            </p>
+          ) : null}
+
+          <button
+            type="button"
+            class="builder-submit"
+            onClick={submit}
+            disabled={submitting}
+          >
+            {submitting
+              ? "Creating…"
+              : config.mode === "edit"
+                ? "Save changes"
+                : "Create link"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div class="builder">
-      {/* List name + Friend ID are the list's identity — surfaced up top so
-          they're the first thing set, not buried under the card lists. */}
-      <div class="builder-meta">
-        <section class="builder-friend">
-          <label class="friend-label" for="list-title-input">
-            List name <span class="text-tertiary">(optional)</span>
-          </label>
-          <input
-            id="list-title-input"
-            type="text"
-            class="friend-input"
-            placeholder="Everyday Wonders Wants, All Spares"
-            maxLength={80}
-            value={title}
-            onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
-          />
-        </section>
-
-        <section class="builder-friend">
-          <label class="friend-label" for="friend-id-input">
-            Friend ID <span class="text-tertiary">(optional, 16 digits)</span>
-          </label>
-          <input
-            id="friend-id-input"
-            type="text"
-            inputMode="numeric"
-            class={`friend-input${friendValid ? "" : " invalid"}`}
-            placeholder="1234567890123456"
-            value={formatFriendId(friendDigits)}
-            onInput={(e) => setFriendId((e.target as HTMLInputElement).value)}
-          />
-          {!friendValid ? (
-            <span class="friend-warn">A friend ID is 16 digits.</span>
-          ) : null}
-        </section>
-      </div>
-
       <div class="builder-picker">
         <div class="picker-controls">
           <div class="picker-field picker-field--search">
@@ -650,14 +706,10 @@ export function Builder(config: BuilderConfig) {
         <button
           type="button"
           class="builder-submit"
-          onClick={submit}
-          disabled={submitting || totalCards === 0}
+          onClick={goToDetails}
+          disabled={totalCards === 0}
         >
-          {submitting
-            ? "Creating…"
-            : config.mode === "edit"
-              ? "Save changes"
-              : "Create shareable link"}
+          {config.mode === "edit" ? "Save changes" : "Create shareable link"}
         </button>
         <p class="builder-hint text-tertiary">
           {totalCards === 0
