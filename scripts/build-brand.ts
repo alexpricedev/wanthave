@@ -94,86 +94,109 @@ const buildIcons = async (): Promise<void> => {
 };
 
 // ── Marketing OG (1200×630) ──────────────────────────────────────────────────
-const HEROES = ["a1-036", "a1-129", "a1-096", "a1-004", "b1-073"];
+// Card row mirrors the per-list OG (src/server/services/og.ts): a vertical
+// WANT label, a few want cards, a vertical HAVE label, then have cards
+// bleeding off the right edge under a black fade.
+const WANT_HEROES = ["a1-036", "a1-129", "a1-096"];
+const HAVE_HEROES = ["a1-004", "b1-073"];
+
+const vLabel = async (
+  text: string,
+  color: string,
+  size: number,
+): Promise<{ buffer: Buffer; width: number; height: number }> => {
+  const w = Math.ceil(advance(forque, text, size)) + 8;
+  const h = Math.ceil(size * 1.32);
+  const baseline = Math.round(size * 1.0);
+  const svg = `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">${textPath(
+    forque,
+    text,
+    size,
+    4,
+    baseline,
+    color,
+  )}</svg>`;
+  const buffer = await sharp(Buffer.from(svg)).rotate(-90).png().toBuffer();
+  return { buffer, width: h, height: w };
+};
 
 const buildOg = async (): Promise<void> => {
   const W = 1200;
   const H = 630;
-  const cardH = 372;
+  const cardH = 330;
   const cardW = Math.round((cardH * 367) / 512);
-  const gap = 18;
   const cardTop = 300;
+  const cardGap = 12;
+  const labelGap = 16;
+  const rowStartPad = 74;
+  const edgeFadeW = 180;
 
   const composites: sharp.OverlayOptions[] = [];
-  let x = -46; // bleed off the left edge
-  for (const id of HEROES) {
-    if (x >= W) break;
-    const bytes = await getCardImageBytes(id);
-    if (!bytes) continue;
-    let buf = await sharp(bytes).resize(cardW, cardH).png().toBuffer();
-    let left = x;
-    let width = cardW;
-    if (left < 0) {
-      const cut = -left;
-      buf = await sharp(buf)
-        .extract({ left: cut, top: 0, width: cardW - cut, height: cardH })
-        .png()
-        .toBuffer();
-      width = cardW - cut;
-      left = 0;
+  let x = rowStartPad;
+
+  const segments = [
+    { label: "WANT", color: WANT, ids: WANT_HEROES },
+    { label: "HAVE", color: HAVE, ids: HAVE_HEROES },
+  ];
+  for (const segment of segments) {
+    const label = await vLabel(segment.label, segment.color, 80);
+    composites.push({
+      input: label.buffer,
+      left: Math.round(x),
+      top: cardTop + Math.round((cardH - label.height) / 2),
+    });
+    x += label.width + labelGap;
+
+    for (const id of segment.ids) {
+      if (x >= W) break;
+      const bytes = await getCardImageBytes(id);
+      if (!bytes) continue;
+      const visibleWidth = Math.max(1, Math.min(cardW, W - Math.round(x)));
+      let buf = await sharp(bytes).resize(cardW, cardH).png().toBuffer();
+      if (visibleWidth < cardW) {
+        buf = await sharp(buf)
+          .extract({ left: 0, top: 0, width: visibleWidth, height: cardH })
+          .png()
+          .toBuffer();
+      }
+      composites.push({ input: buf, left: Math.round(x), top: cardTop });
+      x += cardW + cardGap;
     }
-    if (left + width > W) {
-      const vis = W - left;
-      buf = await sharp(buf)
-        .extract({ left: 0, top: 0, width: vis, height: cardH })
-        .png()
-        .toBuffer();
-      width = vis;
-    }
-    composites.push({ input: buf, left: Math.round(left), top: cardTop });
-    x += cardW + gap;
+    x += labelGap - cardGap;
   }
 
   const eyebrow = `${poke(mono).toUpperCase()} TCG POCKET`;
   const wordSize = 116;
   const wy = 196;
   const wWx = advance(forque, "want", wordSize);
-  const tagSize = 34;
 
+  const url = "wanthave.trade";
   const base = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#18151c"/><stop offset="0.6" stop-color="#0c0b0e"/>
       </linearGradient>
-      <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#0c0b0e" stop-opacity="0"/>
-        <stop offset="1" stop-color="#0c0b0e" stop-opacity="0.55"/>
-      </linearGradient>
     </defs>
     <rect width="${W}" height="${H}" fill="url(#bg)"/>
     ${textPath(mono, eyebrow, 22, 74, 96, MUTED)}
+    ${textPath(mono, url, 22, W - 74 - advance(mono, url, 22), 96, BONE)}
     ${textPath(forque, "want", wordSize, 70, wy, WANT)}
     ${textPath(forque, "have", wordSize, 70 + wWx, wy, HAVE)}
     ${textPath(forque, "SHARE YOUR TRADE LIST", 40, 74, 250, BONE)}
-    ${textPath(mono, `wants + haves + friend id, ready for discord`, tagSize - 4, 74, 292, MUTED)}
   </svg>`;
 
-  // A soft bottom scrim over the card strip keeps the row grounded without
-  // competing with the art.
-  const scrim = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-    <rect y="${H - 70}" width="${W}" height="70" fill="url(#scrim2)"/>
-    <defs><linearGradient id="scrim2" x1="0" y1="0" x2="0" y2="1">
+  // Fade the bled-off card into black, drawn last so it sits on top of the
+  // card composites.
+  const overlay = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="${W - edgeFadeW}" width="${edgeFadeW}" height="${H}" fill="url(#fade2)"/>
+    <defs><linearGradient id="fade2" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#0c0b0e" stop-opacity="0"/>
-      <stop offset="1" stop-color="#0c0b0e" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#0c0b0e" stop-opacity="1"/>
     </linearGradient></defs>
-    ${textPath(mono, "wanthave.trade", 26, W - 74 - advance(mono, "wanthave.trade", 26), H - 34, BONE)}
   </svg>`;
 
   const png = await sharp(Buffer.from(base))
-    .composite([
-      ...composites,
-      { input: Buffer.from(scrim), left: 0, top: 0 },
-    ])
+    .composite([...composites, { input: Buffer.from(overlay), left: 0, top: 0 }])
     .png({ compressionLevel: 9 })
     .toBuffer();
   await Bun.write("public/og-image.png", png);
