@@ -1,13 +1,19 @@
 /* Shared trade primitives — used on the public list page and the builder.
    WANT is always amber, HAVE always ice (DESIGN.md §1). */
 
-/* Inline vertical-ish section label (small, upright — the OG carries the truly
-   rotated one). Forque display voice, hue-coded. */
+/* Inline hue-coded tag (small, upright — the OG carries the truly rotated one).
+   Forque display voice, boxed with a hue-tinted border so it reads as a tag.
+   inline-flex + centred so the glyphs align with the heading beside it. */
 .vlabel-inline {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-display);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   line-height: 1;
+  padding: 4px 7px 3px;
+  border: 1px solid color-mix(in srgb, currentColor 60%, transparent);
+  border-radius: var(--radius-sm);
 }
 
 /* Count badge — the identity's signature: hue-coded halves (WANT foil-amber ·
@@ -81,10 +87,10 @@
 
 .rarity-label {
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 700;
   color: var(--color-text-tertiary);
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.75rem;
   letter-spacing: 0.02em;
 }
 
@@ -100,13 +106,20 @@
 }
 
 .card-tile {
+  display: block;
   position: relative;
   margin: 0;
+  padding: 0;
+  width: 100%;
+  border: none;
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 367 / 512;
   background: var(--color-well);
   box-shadow: 0 4px 14px #0000004d;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
 }
 
 .card-tile-img {

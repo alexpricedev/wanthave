@@ -45,7 +45,7 @@ export const newList = {
           mode: "create",
         }}
         heading="Build your trade list"
-        sub="Add what you're looking for and what you've got. Get a link you can drop in to Discord."
+        sub="Search for the cards you want and add them to your WANT list with a tap. Then switch modes to HAVE and repeat for what you have to trade. When you're done, get a link you can drop into Discord."
         user={ctx.user}
         csrfToken={logoutCsrf}
       />,

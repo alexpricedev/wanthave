@@ -41,25 +41,29 @@ interface RarityMeta {
   code: RarityCode;
   /** In-game symbol, e.g. "◆1" / "★1". */
   label: string;
+  /** Official in-game tier name, e.g. "Double Rare" / "Super Rare". */
+  name: string;
   /** Ordering used to group lists (diamonds ascending, then one-star). */
   rank: number;
 }
 
 export const RARITIES: RarityMeta[] = [
-  { code: "d1", label: "◆1", rank: 1 },
-  { code: "d2", label: "◆2", rank: 2 },
-  { code: "d3", label: "◆3", rank: 3 },
-  { code: "d4", label: "◆4", rank: 4 },
-  { code: "s1", label: "★1", rank: 5 },
-  { code: "s2", label: "★2", rank: 6 },
-  { code: "sh1", label: "✵1", rank: 7 },
-  { code: "sh2", label: "✵2", rank: 8 },
+  { code: "d1", label: "◆1", name: "Common", rank: 1 },
+  { code: "d2", label: "◆2", name: "Uncommon", rank: 2 },
+  { code: "d3", label: "◆3", name: "Rare", rank: 3 },
+  { code: "d4", label: "◆4", name: "Double Rare", rank: 4 },
+  { code: "s1", label: "★1", name: "Art Rare", rank: 5 },
+  { code: "s2", label: "★2", name: "Super Rare", rank: 6 },
+  { code: "sh1", label: "✵1", name: "Shiny Rare", rank: 7 },
+  { code: "sh2", label: "✵2", name: "Double Shiny Rare", rank: 8 },
 ];
 
 const RARITY_BY_CODE = new Map(RARITIES.map((r) => [r.code, r]));
 
 export const rarityLabel = (code: RarityCode): string =>
   RARITY_BY_CODE.get(code)?.label ?? code;
+export const rarityName = (code: RarityCode): string =>
+  RARITY_BY_CODE.get(code)?.name ?? code;
 export const rarityRank = (code: RarityCode): number =>
   RARITY_BY_CODE.get(code)?.rank ?? 99;
 

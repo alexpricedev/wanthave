@@ -8,8 +8,10 @@
    specificity alone — no dependence on CSS import order. */
 [data-page="new"][data-component="layout"] > main {
   max-width: 1440px;
-  /* Keep page content clear of the fixed mobile mode-toggle bar. */
-  padding-bottom: 6rem;
+  /* Clear the fixed mode bar pinned to the top of the viewport. */
+  padding-top: calc(4.25rem + env(safe-area-inset-top));
+  /* Breathing room inside the full-screen mode frame. */
+  padding-bottom: 2rem;
 }
 
 .builder {
@@ -59,26 +61,25 @@
   flex-direction: column;
 }
 
-.builder-back {
-  align-self: start;
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  font-size: 0.9375rem;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-
-  &:hover,
-  &:focus {
-    color: var(--color-bone);
-    text-decoration: underline;
-  }
+/* Non-closable — replaces the dismissable onboarding banner while on this
+   step, scoped to what the step actually asks for. */
+.builder-details-note {
+  padding: 1rem 1.1rem;
+  background: var(--color-ground);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 1.0625rem;
+  line-height: 1.5;
 }
 
-.builder-details-summary {
-  font-size: 0.8125rem;
-  margin: 0;
+.builder-details .count-badge {
+  align-self: start;
+}
+
+.builder-back {
+  width: 100%;
+  justify-content: center;
 }
 
 /* ── Picker ─────────────────────────────────────────────────────────────── */
@@ -86,14 +87,25 @@
   min-width: 0;
 }
 
-/* Search box and set filter, inline (they wrap to full width on narrow
-   screens). The set is a filter next to search, not a separate mode. */
+/* Search box and set filter. Prominent, boxed panel so first-time visitors
+   spot it immediately. Full-width stack on mobile (search on its own row); the
+   two controls sit side by side once there's room. */
 .picker-controls {
   display: flex;
-  align-items: end;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--color-ground);
+  border: 1px solid var(--color-edge);
+  border-radius: var(--radius);
+
+  @media (width >= 560px) {
+    flex-direction: row;
+    align-items: end;
+    gap: 0.75rem;
+  }
 }
 
 /* Each control stacks its label above the input, matching the meta row fields. */
@@ -104,20 +116,27 @@
   min-width: 0;
 }
 
+/* The flex ratios apply only once the controls sit side by side (row). In the
+   mobile column layout a flex-basis would become a *height*, ballooning the
+   fields — so each just sizes to its content there. */
 .picker-field--search {
-  flex: 2 1 220px;
+  @media (width >= 560px) {
+    flex: 2 1 220px;
+  }
 }
 
 .picker-field--set {
-  flex: 1 1 190px;
-  min-width: 170px;
+  @media (width >= 560px) {
+    flex: 1 1 190px;
+    min-width: 170px;
+  }
 }
 
 .search-input {
   width: 100%;
   min-width: 0;
   margin: 0;
-  padding: 12px 16px;
+  padding: 14px 16px;
   font-size: 16px;
 }
 
@@ -126,7 +145,7 @@
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 500;
-  padding: 10px 40px 10px 14px;
+  padding: 13px 40px 13px 14px;
   background-color: var(--color-well);
   border: 1px solid var(--color-edge);
   border-radius: var(--radius-sm);
@@ -193,8 +212,8 @@
 
     /* Comes last so an active button keeps its style while hovered. */
     &.active {
-      background: var(--color-sleeve);
-      color: var(--color-bone);
+      background: var(--color-bone);
+      color: var(--color-ground);
     }
   }
 }
@@ -225,6 +244,28 @@
   }
 }
 
+.sort-clear {
+  margin-left: auto;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-sleeve);
+    color: var(--color-bone);
+    border-color: var(--color-text-tertiary);
+  }
+
+  &:active {
+    background: var(--color-well);
+  }
+}
+
 .browse-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
@@ -237,10 +278,17 @@
   }
 }
 
+/* Empty/idle/loading states for the card grid. Boxed as its own card so the
+   "start here" prompt is obvious to first-time visitors, not a faint line of
+   text lost in the void. */
 .picker-hint {
   grid-column: 1 / -1;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1.5rem;
   text-align: center;
+  font-size: 1rem;
+  background: var(--color-ground);
+  border: 1px dashed var(--color-edge);
+  border-radius: var(--radius);
 }
 
 .browse-card {
@@ -265,10 +313,12 @@
 
   &.in-want {
     border-color: var(--color-want);
+    padding: 2px;
   }
 
   &.in-have {
     border-color: var(--color-have);
+    padding: 2px;
   }
 }
 
@@ -569,58 +619,70 @@
   margin: 0.6rem 0 0;
 }
 
-/* ── Fixed mode bar ─────────────────────────────────────────────────────────
-   The want/have switch, pinned to the bottom of the viewport as a persistent
-   "mode": every card you tap lands in the active list, so the bar is coloured
-   by the current mode (amber = looking for, ice = for trade) and glows along
-   its top edge to make the mode unmistakable without reading. */
+/* ── Full-screen mode frame ──────────────────────────────────────────────────
+   A coloured border drawn around the whole viewport, keyed to the active mode
+   (amber = WANT, ice = HAVE), so it's obvious which list a tapped card lands in.
+   Sits above the mode bar (higher z-index) so the colour runs unbroken around
+   every edge — the bar tucks neatly inside the frame. */
+.builder-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  border: 3px solid transparent;
+  transition: border-color 180ms ease;
+}
+
+.builder.mode-want .builder-frame {
+  border-color: var(--color-want);
+}
+
+.builder.mode-have .builder-frame {
+  border-color: var(--color-have);
+}
+
+/* ── Fixed mode bar ──────────────────────────────────────────────────────────
+   The WANT/HAVE switch, pinned flush to the top of the viewport. A clean header
+   band — no floating card — that reads as the top of the mode frame. Every card
+   you tap lands in the active list. Page content clears it via main padding-top. */
 .builder-modebar {
   position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: 20;
-  padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--color-ground) 92%, transparent);
-  border-top: 1px solid var(--color-edge);
-  backdrop-filter: blur(8px);
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+  z-index: 16;
+  padding: calc(0.55rem + env(safe-area-inset-top)) 1rem 0.55rem;
+  background: color-mix(in srgb, var(--color-ground) 94%, transparent);
+  border-bottom: 1px solid var(--color-edge);
+  backdrop-filter: blur(10px);
+  transition: border-color 180ms ease;
+}
 
-  &.mode-want {
-    border-top-color: color-mix(in srgb, var(--color-want) 55%, transparent);
-    box-shadow: 0 -8px 24px
-      color-mix(in srgb, var(--color-want) 12%, transparent);
-  }
+.builder.mode-want .builder-modebar {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--color-want) 45%,
+    var(--color-edge)
+  );
+}
 
-  &.mode-have {
-    border-top-color: color-mix(in srgb, var(--color-have) 55%, transparent);
-    box-shadow: 0 -8px 24px
-      color-mix(in srgb, var(--color-have) 12%, transparent);
-  }
+.builder.mode-have .builder-modebar {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--color-have) 45%,
+    var(--color-edge)
+  );
 }
 
 .modebar-inner {
   display: flex;
-  /* Mobile: the switch and the create action stack full-width so both stay
-     tappable and neither overflows a narrow screen. */
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
   max-width: 1440px;
   margin: 0 auto;
-
-  @media (width >= 900px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-  }
 }
 
 .modebar-label {
-  display: none;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
@@ -628,7 +690,11 @@
   color: var(--color-text-tertiary);
   flex-shrink: 0;
 
-  @media (width >= 900px) {
+  /* Hide the label on the narrowest screens so the two buttons keep full
+     tappable width. */
+  display: none;
+
+  @media (width >= 420px) {
     display: inline;
   }
 }
@@ -642,10 +708,6 @@
   background: var(--color-well);
   border: 1px solid var(--color-edge);
   border-radius: var(--radius-sm);
-
-  @media (width >= 900px) {
-    flex: 0 1 420px;
-  }
 }
 
 .mode-opt {
@@ -654,12 +716,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 9px 14px;
+  padding: 10px 14px;
   border: 0;
   border-radius: 6px;
   background: transparent;
   color: var(--color-text-secondary);
   font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
   transition:
     background-color 140ms ease,
     color 140ms ease;

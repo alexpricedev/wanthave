@@ -77,7 +77,7 @@ html {
   background: var(--color-void);
   box-sizing: border-box;
   color: var(--color-bone);
-  font-size: 16px;
+  font-size: 18px;
   /* Reserve the scrollbar's space so pages that grow past one viewport don't
      shift horizontally when the scrollbar appears (classic scrollbars only). */
   scrollbar-gutter: stable;
@@ -208,6 +208,7 @@ button {
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
+  line-height: 1;
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   border: none;

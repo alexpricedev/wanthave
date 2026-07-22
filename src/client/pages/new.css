@@ -1,12 +1,56 @@
 [data-page="new"] {
+  /* Onboarding card: title + what-to-do intro, boxed so first-time visitors get
+     a clear "start here" panel above the builder. Dismissable — see new.ts. */
   .builder-intro {
+    position: relative;
+    margin-top: 1rem;
     margin-bottom: 1.5rem;
+    padding: 1.25rem 1.25rem 1.4rem;
+    background: var(--color-ground);
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius);
+
+    @media (width >= 640px) {
+      margin-top: 1.5rem;
+      padding: 1.75rem 1.75rem 1.9rem;
+    }
+  }
+
+  .builder-intro-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 20px;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-well);
+      color: var(--color-bone);
+    }
   }
 
   .builder-heading {
     font-family: var(--font-body);
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
+    /* Keep the heading clear of the close button. */
+    padding-right: 2rem;
+
+    @media (width >= 640px) {
+      font-size: 2rem;
+    }
   }
 
   .builder-intro .lead {
