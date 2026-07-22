@@ -107,21 +107,10 @@
     gap: 0.75rem;
   }
 
-  .nudge-btn {
+  /* Size delta only — color/hover come from the shared .btn-primary class. */
+  .btn-primary.nudge-btn {
     padding: 8px 18px;
-    border-radius: var(--radius-sm);
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-    font-weight: 600;
     font-size: 0.875rem;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      background: var(--color-primary-hover);
-      color: var(--color-on-primary);
-      text-decoration: none;
-    }
   }
 
   .nudge-dismiss {

@@ -307,7 +307,6 @@ function CardButton({
 
 function ListItem({
   item,
-  kind,
   index,
   total,
   onQty,
@@ -315,7 +314,6 @@ function ListItem({
   onRemove,
 }: {
   item: Item;
-  kind: Kind;
   index: number;
   total: number;
   onQty: (id: string, delta: number) => void;
@@ -377,7 +375,7 @@ function ListItem({
       </div>
       <button
         type="button"
-        class={`remove-btn remove-${kind}`}
+        class="remove-btn"
         onClick={() => onRemove(card.id)}
         aria-label={`Remove ${card.name}`}
       >
@@ -650,7 +648,6 @@ export function Builder(config: BuilderConfig) {
           <ListItem
             key={item.card.id}
             item={item}
-            kind={kind}
             index={i}
             total={items.length}
             onQty={changeQty(setter)}

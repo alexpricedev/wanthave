@@ -85,7 +85,7 @@ export const ListPage = ({
                   forever and edit it anytime.
                 </p>
                 <div className="nudge-actions">
-                  <a className="nudge-btn" href="/login">
+                  <a className="btn-primary nudge-btn" href="/login">
                     Keep it forever
                   </a>
                   <button

@@ -71,7 +71,7 @@
 
   &:hover,
   &:focus {
-    color: var(--color-text-primary, inherit);
+    color: var(--color-bone);
     text-decoration: underline;
   }
 }
@@ -218,6 +218,10 @@
     background: var(--color-sleeve);
     color: var(--color-bone);
     border-color: var(--color-text-tertiary);
+  }
+
+  &:active {
+    background: var(--color-well);
   }
 }
 
