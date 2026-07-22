@@ -9,7 +9,6 @@ interface NavProps {
 
 export const Nav = ({ page, user, csrfToken }: NavProps) => {
   const navLinks = [
-    { href: "/", label: "Home", name: "home" },
     { href: "/new", label: "Build", name: "new" },
     ...(user ? [{ href: "/lists", label: "My lists", name: "lists" }] : []),
   ];
@@ -41,6 +40,11 @@ export const Nav = ({ page, user, csrfToken }: NavProps) => {
               Login
             </a>
           )}
+        </li>
+        <li>
+          <a href="/new" className="btn-primary btn-nav-cta">
+            Start a list
+          </a>
         </li>
       </ul>
     </nav>

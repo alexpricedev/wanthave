@@ -2,11 +2,14 @@
    working lists. Desktop widens to two columns with the lists sticky alongside. */
 
 /* The builder benefits from far more horizontal room than the 960px reading
-   column other pages use — a wider picker fits more card columns per row. Same
-   specificity as layout.css's `[data-component="layout"] > main`; builder.css is
-   imported later, so source order lets this win. */
-[data-page="new"] > main {
+   column other pages use — a wider picker fits more card columns per row.
+   `[data-page]` and `[data-component="layout"]` are both on <body>, so
+   combining them beats layout.css's `[data-component="layout"] > main` on
+   specificity alone — no dependence on CSS import order. */
+[data-page="new"][data-component="layout"] > main {
   max-width: 1440px;
+  /* Keep page content clear of the fixed mobile mode-toggle bar. */
+  padding-bottom: 6rem;
 }
 
 .builder {
@@ -573,9 +576,4 @@
     background: var(--color-have);
     color: var(--color-void);
   }
-}
-
-/* Keep page content clear of the fixed bar. */
-[data-page="new"] main {
-  padding-bottom: 6rem;
 }
