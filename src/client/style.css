@@ -193,8 +193,10 @@ a {
   text-decoration: none;
   transition: color 150ms ease;
 
-  &:hover,
-  &:focus {
+  /* :where() keeps these hover/focus rules at zero specificity so any
+     component-level hover/focus override always wins, regardless of
+     import order — see style.css button rule below for the same pattern. */
+  &:where(:hover, :focus) {
     color: var(--color-primary-hover);
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -214,8 +216,11 @@ button {
   cursor: pointer;
   transition: all 150ms ease;
 
-  &:hover,
-  &:focus {
+  /* Zero-specificity hover/focus (see `a` above) — component classes like
+     .friend-id-copy or .sort-toggle button that only partially override
+     hover state no longer lose the rest of their background/color to this
+     rule on a specificity tie or import-order fluke. */
+  &:where(:hover, :focus) {
     background: var(--color-primary-hover);
   }
 }
@@ -254,6 +259,10 @@ img {
     background: var(--color-ground);
     color: var(--color-bone);
     text-decoration: none;
+  }
+
+  &:active {
+    background: var(--color-well);
   }
 }
 
@@ -295,6 +304,10 @@ img {
   &:hover,
   &:focus {
     background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+  }
+
+  &:active {
+    background: color-mix(in srgb, var(--color-danger) 20%, transparent);
   }
 }
 

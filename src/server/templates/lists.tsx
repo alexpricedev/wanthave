@@ -25,7 +25,7 @@ export const Lists = ({
   deleteCsrfTokens,
 }: ListsProps) => (
   <Layout
-    title="Your lists — wanthave"
+    title="Your lists—wanthave"
     name="lists"
     noindex
     user={user}
@@ -43,7 +43,7 @@ export const Lists = ({
         <div className="lists-empty">
           <p className="lead">
             You haven't saved any lists yet. Account lists never expire and can
-            be edited in place — the link and its Discord unfurl stay current.
+            be edited in place—the link and its Discord unfurl stay current.
           </p>
           <a className="btn-primary" href="/new">
             Build your first list

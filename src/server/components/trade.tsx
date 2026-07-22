@@ -119,10 +119,9 @@ export const FlywheelCta = ({
     <p className="flywheel-copy">
       Trade Pokémon TCG Pocket cards? Build your own{" "}
       <span className="want">want</span>
-      <span className="have">have</span> in under two minutes — no account
-      needed.
+      <span className="have">have</span> in under two minutes—no account needed.
     </p>
-    <a className="flywheel-btn" href="/new">
+    <a className="btn-primary flywheel-btn" href="/new">
       Create your own trade list
     </a>
   </aside>

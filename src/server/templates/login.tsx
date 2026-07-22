@@ -16,7 +16,7 @@ export const Login = ({ state }: LoginProps) => {
   return (
     <BaseLayout
       title="Login - WantHave"
-      description="Log in to WantHave to keep your trade list links permanent and editable — no passwords to remember."
+      description="Log in to WantHave to keep your trade list links permanent and editable—no passwords to remember."
       canonicalPath="/login"
       noindex
     >

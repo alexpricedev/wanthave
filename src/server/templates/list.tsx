@@ -30,8 +30,8 @@ export const ListPage = ({
   const wantCount = list.wants.length;
   const haveCount = list.haves.length;
   const title = list.title
-    ? `${list.title} — wanthave`
-    : `Pokémon Pocket trade list — LF ${wantCount} · FT ${haveCount}`;
+    ? `${list.title}—wanthave`
+    : `Pokémon Pocket trade list—LF ${wantCount} · FT ${haveCount}`;
   const description = `Looking for ${wantCount} card${wantCount === 1 ? "" : "s"}, ${haveCount} up for trade. Built with wanthave.trade.`;
 
   return (
@@ -58,7 +58,7 @@ export const ListPage = ({
               <h1 className="share-title">Your link is ready</h1>
             </div>
             <p className="share-sub">
-              Drop it in Discord — it unfurls with your want-list.
+              Drop it in Discord—it unfurls with your want-list.
             </p>
             <div className="share-url-row">
               <input
@@ -85,7 +85,7 @@ export const ListPage = ({
                   forever and edit it anytime.
                 </p>
                 <div className="nudge-actions">
-                  <a className="nudge-btn" href="/login">
+                  <a className="btn-primary nudge-btn" href="/login">
                     Keep it forever
                   </a>
                   <button

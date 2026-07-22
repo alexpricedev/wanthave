@@ -26,25 +26,10 @@
     margin-top: 2rem;
   }
 
-  /* .btn-primary is scoped to the home hero, so give the error CTA the same
-     filled-primary treatment here (it's an anchor, not a <button>). */
+  /* Size delta only — color/hover come from the shared .btn-primary class. */
   .error-actions .btn-primary {
-    align-items: center;
-    background: var(--color-primary);
-    border-radius: var(--radius-sm);
-    color: var(--color-on-primary);
-    display: inline-flex;
     font-size: 14px;
     font-weight: 600;
     padding: 10px 22px;
-    text-decoration: none;
-    transition: all 150ms ease;
-
-    &:hover,
-    &:focus {
-      background: var(--color-primary-hover);
-      color: var(--color-on-primary);
-      text-decoration: none;
-    }
   }
 }

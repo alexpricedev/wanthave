@@ -43,8 +43,8 @@ export const BuilderPage = ({
   <Layout
     title={
       config.mode === "edit"
-        ? "Edit your list — wanthave"
-        : "Build your trade list — wanthave"
+        ? "Edit your list—wanthave"
+        : "Build your trade list—wanthave"
     }
     description="Build a Pokémon TCG Pocket trade list and share it as a link."
     name="new"

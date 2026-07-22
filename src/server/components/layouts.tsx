@@ -117,7 +117,7 @@ export function Layout({
   canonicalPath,
   noindex,
   ogImagePath,
-  ogImageAlt = "wanthave — build and share your Pokémon TCG Pocket trade list",
+  ogImageAlt = "wanthave—build and share your Pokémon TCG Pocket trade list",
   chrome = true,
 }: LayoutProps) {
   const ogImage = ogImagePath

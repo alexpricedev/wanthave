@@ -16,8 +16,8 @@ export const ListUnavailable = ({ reason, user, csrfToken }: Props) => {
     <Layout
       title={
         expired
-          ? "This trade list has expired — wanthave"
-          : "Trade list not found — wanthave"
+          ? "This trade list has expired—wanthave"
+          : "Trade list not found—wanthave"
       }
       name="list"
       noindex

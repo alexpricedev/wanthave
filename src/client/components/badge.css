@@ -17,32 +17,3 @@
   background: var(--color-well);
   color: var(--color-text-quaternary);
 }
-
-/* Count badge — the identity's signature: hue-coded halves (WANT foil-amber ·
-   HAVE holo-ice) split by an interpunct, always IBM Plex Mono 600. */
-.count-badge {
-  align-items: center;
-  background: var(--color-well);
-  border: 1px solid var(--color-edge);
-  border-radius: var(--radius-pill);
-  display: inline-flex;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
-  gap: 0;
-  padding: 6px 16px;
-  white-space: nowrap;
-
-  .count-want {
-    color: var(--color-want);
-  }
-
-  .count-have {
-    color: var(--color-have);
-  }
-
-  .count-sep {
-    color: var(--color-text-tertiary);
-    padding: 0 0.5ch;
-  }
-}
