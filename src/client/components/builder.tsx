@@ -42,6 +42,126 @@ const RARITY_LABEL: Record<CardDto["rarity"], string> = {
   sh2: "✵2",
 };
 
+const DIAMOND_COUNT: Partial<Record<CardDto["rarity"], number>> = {
+  d1: 1,
+  d2: 2,
+  d3: 3,
+  d4: 4,
+};
+
+const STAR_COUNT: Partial<Record<CardDto["rarity"], number>> = {
+  s1: 1,
+  s2: 2,
+};
+
+const ASTERISK_COUNT: Partial<Record<CardDto["rarity"], number>> = {
+  sh1: 1,
+  sh2: 2,
+};
+
+const DiamondIcon = () => (
+  <svg
+    class="rarity-diamond"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41l-7.59-7.59a2.41 2.41 0 0 0-3.41 0Z" />
+  </svg>
+);
+
+const StarIcon = () => (
+  <svg
+    class="rarity-star"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+  </svg>
+);
+
+const AsteriskIcon = () => (
+  <svg
+    class="rarity-asterisk"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 6v12" />
+    <path d="M17.196 9 6.804 15" />
+    <path d="m6.804 9 10.392 6" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg
+    class="browse-card-check"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
+function RarityDisplay({ rarity }: { rarity: CardDto["rarity"] }) {
+  const diamonds = DIAMOND_COUNT[rarity];
+  if (diamonds) {
+    return (
+      <span class="rarity-icons" role="img" aria-label={RARITY_LABEL[rarity]}>
+        {Array.from({ length: diamonds }, (_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: fixed-count decorative icons, never reordered
+          <DiamondIcon key={i} />
+        ))}
+      </span>
+    );
+  }
+  const stars = STAR_COUNT[rarity];
+  if (stars) {
+    return (
+      <span class="rarity-icons" role="img" aria-label={RARITY_LABEL[rarity]}>
+        {Array.from({ length: stars }, (_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: fixed-count decorative icons, never reordered
+          <StarIcon key={i} />
+        ))}
+      </span>
+    );
+  }
+  const asterisks = ASTERISK_COUNT[rarity];
+  if (asterisks) {
+    return (
+      <span class="rarity-icons" role="img" aria-label={RARITY_LABEL[rarity]}>
+        {Array.from({ length: asterisks }, (_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: fixed-count decorative icons, never reordered
+          <AsteriskIcon key={i} />
+        ))}
+      </span>
+    );
+  }
+  return <>{RARITY_LABEL[rarity]}</>;
+}
+
 // Ordering used by the "Rarity" sort: diamonds ascending, then stars, then shiny.
 const RARITY_RANK: Record<CardDto["rarity"], number> = {
   d1: 1,
@@ -161,18 +281,26 @@ function CardButton({
       onClick={() => onAdd(card)}
       title={`${card.name} · ${card.set} ${RARITY_LABEL[card.rarity]}`}
     >
-      <img
-        src={imgSrc(card.id)}
-        alt={card.name}
-        width={183}
-        height={256}
-        loading="lazy"
-      />
-      {state ? (
-        <span class="browse-card-flag" aria-hidden="true">
-          ✓
+      <span class="browse-card-media">
+        <img
+          src={imgSrc(card.id)}
+          alt={card.name}
+          width={183}
+          height={256}
+          loading="lazy"
+        />
+        {state ? (
+          <span class="browse-card-flag" aria-hidden="true">
+            <CheckIcon />
+          </span>
+        ) : null}
+      </span>
+      <span class="browse-card-caption">
+        <span class="browse-card-name">{card.name}</span>
+        <span class="browse-card-rarity">
+          <RarityDisplay rarity={card.rarity} />
         </span>
-      ) : null}
+      </span>
     </button>
   );
 }
