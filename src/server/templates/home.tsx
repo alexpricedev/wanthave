@@ -138,27 +138,27 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
 
     <section className="home-steps">
       <div className="home-step">
-        <p className="home-step-eyebrow">01 · Pick</p>
-        <h2>Two lists, tap to fill</h2>
+        <p className="home-step-eyebrow">Step 1</p>
+        <h2>Build your lists</h2>
         <p className="text-secondary">
           Search any card. One tap for <span className="want">want</span>, one
           for <span className="have">have</span>. Dupes counted automatically.
         </p>
       </div>
       <div className="home-step">
-        <p className="home-step-eyebrow">02 · Link</p>
-        <h2>Grab your URL</h2>
+        <p className="home-step-eyebrow">Step 2</p>
+        <h2>Share your unique URL</h2>
         <p className="text-secondary">
-          One permanent link, always current. Edit your lists any time—the link
-          never changes.
+          One permanent link, always current, that can include your Friend ID.
+          Edit your lists any time—the link never changes.
         </p>
         <code className="home-step-url">
           wanthave.trade/<span className="want">you</span>
         </code>
       </div>
       <div className="home-step">
-        <p className="home-step-eyebrow">03 · Post</p>
-        <h2>Trades come to you</h2>
+        <p className="home-step-eyebrow">Step 3</p>
+        <h2>Organise your trade</h2>
         <p className="text-secondary">
           Drop it in any trading channel. Your wants show up front and
           center—matches DM you, not the other way round.
@@ -179,11 +179,6 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
       </div>
       <div className="home-demo-panel">
         <CountPill />
-        <h2>A live page, not a screenshot</h2>
-        <p className="text-secondary">
-          Your page updates the second you edit. Old posts always point at your
-          current lists.
-        </p>
       </div>
     </section>
 
@@ -192,7 +187,7 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         Stop typing your list<span className="want">.</span>
       </h2>
       <a className="btn-primary" href="/new">
-        Build your list
+        Create your trade page
       </a>
       <span className="home-cta-note">
         free · no account · works in any server
