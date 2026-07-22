@@ -21,6 +21,10 @@
     display: inline-flex;
     color: var(--color-bone);
   }
+
+  .wordmark {
+    font-size: 2.5rem;
+  }
 }
 
 .login-card {

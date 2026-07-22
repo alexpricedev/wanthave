@@ -110,6 +110,11 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
           <a className="btn-primary" href="/new">
             Build your list
           </a>
+          {!user && (
+            <a className="btn-ghost" href="/login">
+              Login
+            </a>
+          )}
         </div>
       </div>
 

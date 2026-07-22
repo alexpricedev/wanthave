@@ -111,6 +111,13 @@
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
+
+    /* Match .btn-primary's footprint so the ghost login button doesn't read
+       as a smaller, secondary tap target next to it. */
+    .btn-ghost {
+      padding: 14px 28px;
+      font-size: 1rem;
+    }
   }
 
   .home-cta-note {

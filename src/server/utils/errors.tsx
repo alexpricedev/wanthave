@@ -40,8 +40,8 @@ export const render500 = (): Response =>
   );
 
 // 503 — the site is intentionally offline for maintenance. Includes a
-// Retry-After header so clients and crawlers know when to return, and drops the
-// nav/home affordances since every route is offline.
+// Retry-After header so clients and crawlers know when to return, and drops
+// the home affordance since every route is offline.
 export const render503 = (retryAfterSeconds: number): Response =>
   renderError(
     <ErrorPage
@@ -49,7 +49,6 @@ export const render503 = (retryAfterSeconds: number): Response =>
       heading="We'll be right back"
       message="The site is offline for scheduled maintenance. Please check back shortly."
       showHome={false}
-      nav={false}
     />,
     503,
     { "Retry-After": String(retryAfterSeconds) },
