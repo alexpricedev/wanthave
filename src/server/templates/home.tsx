@@ -8,39 +8,6 @@ interface HomeProps {
   csrfToken?: string;
 }
 
-const FEATURES: { title: string; body: string; hue: "want" | "have" }[] = [
-  {
-    title: "Speaks your slang",
-    body: "Search the way the community talks — “RR chsr EX” finds the rainbow Charizard ex, “shiny pika” the shiny Pikachus. Misspellings and abbreviations still resolve.",
-    hue: "want",
-  },
-  {
-    title: "Grouped by rarity",
-    body: "Pocket trades are same-rarity swaps, so your lists group by ◆, ★ and ✵ — viewers see exactly what they can trade against.",
-    hue: "have",
-  },
-  {
-    title: "Only tradeable cards",
-    body: "Every set from A1 to the latest, filtered to the tradeable rarities: ◆1–◆4, ★1–★2 and shiny. Untradeable cards never show up.",
-    hue: "want",
-  },
-  {
-    title: "Built for your phone",
-    body: "One-handed and fast, for when you're mid-Discord with the game open. Desktop is the adaptation, not the target.",
-    hue: "have",
-  },
-  {
-    title: "No account needed",
-    body: "Go from landing to a shared link in under two minutes. Nothing to sign up for, nothing to install.",
-    hue: "want",
-  },
-  {
-    title: "Keep it forever",
-    body: "Create a free account and your links never expire — edit a list in place and its Discord unfurl updates too.",
-    hue: "have",
-  },
-];
-
 const FAQ: { question: string; answer: string }[] = [
   {
     question: "Do I need an account?",
@@ -73,11 +40,11 @@ const FAQ: { question: string; answer: string }[] = [
   },
 ];
 
-// A few striking cards to stand in for a real unfurl in the hero preview. Art is
-// proxied same-origin via /img/card, same as everywhere else.
-// A faithful example modelled on a real Discord trade post: chasing one rainbow
-// ★2, with a row of rainbow (★2) and shiny (✵) cards up for trade — showing off
-// the rarities slang search resolves. Counts in the badge below match what's
+// A few striking cards to stand in for a real unfurl in the hero preview and
+// live-demo sections. Art is proxied same-origin via /img/card, same as
+// everywhere else. Modelled on a real Discord trade post: chasing one rainbow
+// ★2, with a row of rainbow (★2) and shiny (✵) cards up for trade — showing
+// off the rarities slang search resolves. Counts in the badges match what's
 // shown.
 const PREVIEW_WANTS = ["a1-253"]; // ★2 Charizard ex (rainbow)
 const PREVIEW_HAVES = [
@@ -89,29 +56,26 @@ const PREVIEW_HAVES = [
   "b2-185", // ★2 Mega Gardevoir ex (rainbow)
 ];
 
-const PreviewRow = ({
-  ids,
-  kind,
-}: {
-  ids: string[];
-  kind: "want" | "have";
-}) => (
-  <div className={`preview-row preview-${kind}`}>
-    <span className={`preview-vlabel ${kind === "want" ? "want" : "have"}`}>
-      {kind === "want" ? "WANT" : "HAVE"}
-    </span>
-    <div className="preview-cards">
-      {ids.map((id) => (
-        <img
-          key={id}
-          src={`/img/card/${id}`}
-          alt=""
-          width={183}
-          height={256}
-          loading="lazy"
-        />
-      ))}
-    </div>
+const CountPill = () => (
+  <span className="count-badge">
+    <span className="count-want">LF {PREVIEW_WANTS.length}</span>
+    <span className="count-sep">·</span>
+    <span className="count-have">FT {PREVIEW_HAVES.length}</span>
+  </span>
+);
+
+const CardRow = ({ ids }: { ids: string[] }) => (
+  <div className="card-row">
+    {ids.map((id) => (
+      <img
+        key={id}
+        src={`/img/card/${id}`}
+        alt=""
+        width={183}
+        height={256}
+        loading="lazy"
+      />
+    ))}
   </div>
 );
 
@@ -124,77 +88,117 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
     user={user}
     csrfToken={csrfToken}
   >
-    <section className="hero">
-      <p className="hero-eyebrow">Pokémon TCG Pocket</p>
-      <h1 className="hero-title">
-        Drop your <Wordmark />
-      </h1>
-      <p className="hero-sub">
-        Build your trade list once and share one link. Post it in Discord and it
-        unfurls with the cards you're <span className="want">looking for</span>{" "}
-        — no re-typing, no screenshots, no account needed.
-      </p>
-      <div className="hero-cta">
-        <a className="btn-primary" href="/new">
-          Build your trade list
-        </a>
-        <span className="hero-cta-note">Free · under 2 minutes</span>
+    <section className="home-hero">
+      <div className="home-rail" aria-hidden="true">
+        <span className="vlabel vlabel-want">WANT</span>
+        <span className="rail-divider" />
+        <span className="vlabel vlabel-have">HAVE</span>
       </div>
 
-      <div className="hero-preview" aria-hidden="true">
-        <PreviewRow ids={PREVIEW_WANTS} kind="want" />
-        <PreviewRow ids={PREVIEW_HAVES} kind="have" />
-        <span className="preview-mark">
-          <span className="count-badge">
-            <span className="count-want">LF {PREVIEW_WANTS.length}</span>
-            <span className="count-sep">·</span>
-            <span className="count-have">FT {PREVIEW_HAVES.length}</span>
-          </span>
-        </span>
+      <div className="home-hero-copy">
+        <p className="home-eyebrow">For Pokémon TCG Pocket traders</p>
+        <h1 className="home-h1">
+          The cards you <span className="want">want</span>,{" "}
+          <br className="home-h1-break" />
+          for the ones you <span className="have">have</span>.
+        </h1>
+        <p className="home-lead">
+          Pick what you're looking for and what you'll trade. Post one link in
+          any server — your cards show up right in the chat. No screenshots, no
+          re-typing, no account.
+        </p>
+        <div className="home-hero-cta">
+          <a className="btn-primary" href="/new">
+            Build your list
+          </a>
+          <span className="home-cta-note">free · under 2 min</span>
+        </div>
       </div>
-    </section>
 
-    <section className="steps">
-      <h2 className="steps-title">One link does it all</h2>
-      <ol className="steps-grid">
-        <li className="step">
-          <span className="step-num">1</span>
-          <h3>Pick your cards</h3>
-          <p className="text-secondary">
-            Browse by set or search community slang — “RR chsr EX” finds the
-            Charizard you mean. Only tradeable rarities show up.
-          </p>
-        </li>
-        <li className="step">
-          <span className="step-num">2</span>
-          <h3>Add your friend ID</h3>
-          <p className="text-secondary">
-            Enter your 16-digit code once. Viewers copy it with one tap and add
-            you in-game.
-          </p>
-        </li>
-        <li className="step">
-          <span className="step-num">3</span>
-          <h3>Share the link</h3>
-          <p className="text-secondary">
-            Post it anywhere. In Discord it unfurls with an image of your chase
-            cards, so people know what you want before they click.
-          </p>
-        </li>
-      </ol>
-    </section>
-
-    <section className="features">
-      <h2 className="features-title">Everything a trade post needs</h2>
-      <div className="features-grid">
-        {FEATURES.map((f) => (
-          <div key={f.title} className="feature">
-            <span className={`feature-mark ${f.hue}`} aria-hidden="true" />
-            <h3>{f.title}</h3>
-            <p className="text-secondary">{f.body}</p>
+      <div className="unfurl-mock" aria-hidden="true">
+        <div className="unfurl-card">
+          <div className="unfurl-row">
+            <span className="vlabel vlabel-want unfurl-card-label">WANT</span>
+            <CardRow ids={PREVIEW_WANTS} />
           </div>
-        ))}
+          <div className="unfurl-row">
+            <span className="vlabel vlabel-have unfurl-card-label">HAVE</span>
+            <CardRow ids={PREVIEW_HAVES} />
+          </div>
+          <span className="unfurl-card-pill">
+            <CountPill />
+          </span>
+          <span className="unfurl-card-mark">
+            <Wordmark />
+          </span>
+        </div>
+        <p className="unfurl-caption">
+          this is what your link looks like when you post it
+        </p>
       </div>
+    </section>
+
+    <section className="home-steps">
+      <div className="home-step">
+        <p className="home-step-eyebrow">01 · Pick</p>
+        <h2>Two lists, tap to fill</h2>
+        <p className="text-secondary">
+          Search any card. One tap for <span className="want">want</span>, one
+          for <span className="have">have</span>. Dupes counted automatically.
+        </p>
+      </div>
+      <div className="home-step">
+        <p className="home-step-eyebrow">02 · Link</p>
+        <h2>Grab your URL</h2>
+        <p className="text-secondary">
+          One permanent link, always current. Edit your lists any time — the
+          link never changes.
+        </p>
+        <code className="home-step-url">
+          wanthave.trade/<span className="want">you</span>
+        </code>
+      </div>
+      <div className="home-step">
+        <p className="home-step-eyebrow">03 · Post</p>
+        <h2>Trades come to you</h2>
+        <p className="text-secondary">
+          Drop it in any trading channel. Your wants show up front and center —
+          matches DM you, not the other way round.
+        </p>
+      </div>
+    </section>
+
+    <section className="home-demo">
+      <div className="home-demo-lists">
+        <div className="preview-row">
+          <span className="vlabel vlabel-want home-demo-label">WANT</span>
+          <CardRow ids={PREVIEW_WANTS} />
+        </div>
+        <div className="preview-row">
+          <span className="vlabel vlabel-have home-demo-label">HAVE</span>
+          <CardRow ids={PREVIEW_HAVES} />
+        </div>
+      </div>
+      <div className="home-demo-panel">
+        <CountPill />
+        <h2>A live page, not a screenshot</h2>
+        <p className="text-secondary">
+          Your page updates the second you edit. Old posts always point at your
+          current lists.
+        </p>
+      </div>
+    </section>
+
+    <section className="home-final">
+      <h2>
+        Stop typing your list<span className="want">.</span>
+      </h2>
+      <a className="btn-primary" href="/new">
+        Build your list
+      </a>
+      <span className="home-cta-note">
+        free · no account · works in any server
+      </span>
     </section>
 
     <section className="faq">
@@ -207,17 +211,6 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
           </details>
         ))}
       </div>
-    </section>
-
-    <section className="home-cta">
-      <h2>Ready to trade?</h2>
-      <p className="lead">
-        Build your <span className="want">want</span>
-        <span className="have">have</span> and drop the link in your server.
-      </p>
-      <a className="btn-primary" href="/new">
-        Build your trade list
-      </a>
     </section>
 
     {/* FAQPage structured data — eligible for rich results and read by AI

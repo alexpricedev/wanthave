@@ -102,6 +102,9 @@ interface LayoutProps {
   // the site-wide card. Public trade lists pass their own rendered OG image.
   ogImagePath?: string;
   ogImageAlt?: string;
+  // When false, omits the shared header/footer chrome — used by the builder
+  // view, which owns its own full-bleed layout.
+  chrome?: boolean;
 }
 
 export function Layout({
@@ -115,6 +118,7 @@ export function Layout({
   noindex,
   ogImagePath,
   ogImageAlt = "wanthave — build and share your Pokémon TCG Pocket trade list",
+  chrome = true,
 }: LayoutProps) {
   const ogImage = ogImagePath
     ? new URL(ogImagePath, SITE_URL).href
@@ -173,14 +177,16 @@ export function Layout({
         />
       </head>
       <body data-page={name} data-component="layout">
-        <header>
-          <a href="/" className="logo">
-            <Wordmark />
-          </a>
-          <Nav page={name} user={user} csrfToken={csrfToken} />
-        </header>
+        {chrome && (
+          <header>
+            <a href="/" className="logo">
+              <Wordmark />
+            </a>
+            <Nav page={name} user={user} csrfToken={csrfToken} />
+          </header>
+        )}
         <main>{children}</main>
-        <SiteFooter />
+        {chrome && <SiteFooter />}
         <script type="module" src={getAssetUrl("/assets/main.js")} />
       </body>
     </html>

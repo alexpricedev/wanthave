@@ -52,6 +52,7 @@ export const BuilderPage = ({
     noindex={config.mode === "edit"}
     user={user}
     csrfToken={csrfToken}
+    chrome={false}
   >
     <section className="builder-intro">
       <h1 className="builder-heading">{heading}</h1>
