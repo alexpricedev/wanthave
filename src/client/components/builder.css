@@ -237,26 +237,21 @@
 }
 
 .browse-card {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   border: 2px solid transparent;
   border-radius: 8px;
   overflow: hidden;
   background: var(--color-well);
-  aspect-ratio: 367 / 512;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition:
     transform 120ms ease,
     border-color 120ms ease;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  &:hover {
+  &:hover,
+  &:focus {
     transform: translateY(-2px);
     background: var(--color-well);
   }
@@ -270,6 +265,56 @@
   }
 }
 
+.browse-card-media {
+  position: relative;
+  aspect-ratio: 367 / 512;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.browse-card-caption {
+  padding: 4px 6px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.browse-card-name {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browse-card-rarity {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--color-primary);
+}
+
+.rarity-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.rarity-diamond,
+.rarity-star,
+.rarity-asterisk {
+  width: 10px;
+  height: 10px;
+  stroke-width: 2.75px;
+  flex-shrink: 0;
+}
+
 .browse-card-flag {
   position: absolute;
   top: 4px;
@@ -280,9 +325,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-void);
+  color: white;
+}
+
+.browse-card-check {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3px;
 }
 
 .in-want .browse-card-flag {
