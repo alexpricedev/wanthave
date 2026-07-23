@@ -198,7 +198,17 @@ function SiteFooter() {
   return (
     <footer>
       <Wordmark />
-      <a href="/feedback">Feedback</a>
+      <nav className="footer-links" aria-label="Footer">
+        <a href="/feedback">Feedback</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms &amp; Conditions</a>
+      </nav>
+      <span className="footer-made">
+        Made by{" "}
+        <a href="https://chptrs.tech" target="_blank" rel="noopener noreferrer">
+          CHPTRS
+        </a>
+      </span>
     </footer>
   );
 }

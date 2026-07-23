@@ -38,13 +38,30 @@
   }
 
   & > footer {
+    align-items: center;
     border-top: 1px solid var(--color-edge);
     color: var(--color-text-quaternary);
     display: flex;
+    flex-wrap: wrap;
     font-size: 13px;
-    gap: 1.5rem;
+    gap: 1rem 1.5rem;
     justify-content: center;
     padding: 1.5rem 2rem;
+  }
+
+  & > footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  & > footer .footer-made {
+    margin-left: auto;
+
+    @media (width <= 640px) {
+      margin-left: 0;
+    }
   }
 
   & > footer .wordmark {

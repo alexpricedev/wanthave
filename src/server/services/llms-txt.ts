@@ -27,6 +27,18 @@ const PAGES: LlmsPage[] = [
     description:
       "The builder — browse Pokémon TCG Pocket cards by set or slang-aware search, add wants and haves, and generate a shareable link. No account needed.",
   },
+  {
+    path: "/privacy",
+    title: "Privacy Policy",
+    description:
+      "What WantHave collects and why — trade lists, account email, basic request logs. No data selling, no ad trackers.",
+  },
+  {
+    path: "/terms",
+    title: "Terms & Conditions",
+    description:
+      "The terms of use for WantHave — acceptable use, your content, accounts, availability, and trademark notices.",
+  },
 ];
 
 const RESOURCES: LlmsPage[] = [

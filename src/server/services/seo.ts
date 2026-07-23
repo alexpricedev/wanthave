@@ -9,7 +9,7 @@ export const SITE_DESCRIPTION =
 
 // Public, indexable routes included in the sitemap. Private or noindex routes
 // (/login, /admin), API endpoints, and auth callbacks are intentionally omitted.
-export const SITEMAP_PATHS = ["/", "/new"] as const;
+export const SITEMAP_PATHS = ["/", "/new", "/privacy", "/terms"] as const;
 
 const absolute = (path: string): string => new URL(path, SITE_URL).href;
 
