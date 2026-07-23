@@ -10,6 +10,9 @@ export const cleanupTestData = async (db: SQL): Promise<void> => {
   // trade_list is truncated explicitly: truncating users only cascades to
   // account-owned lists, not anonymous ones (user_id NULL).
   await db`TRUNCATE TABLE trade_list CASCADE`;
+  // feedback FKs users with ON DELETE SET NULL, so truncating users won't clear
+  // it — truncate explicitly for isolation.
+  await db`TRUNCATE TABLE feedback CASCADE`;
   await db`TRUNCATE TABLE user_tokens CASCADE`;
   await db`TRUNCATE TABLE sessions CASCADE`;
   await db`TRUNCATE TABLE users CASCADE`;

@@ -198,7 +198,8 @@ function SiteFooter() {
   return (
     <footer>
       <Wordmark />
-      <nav className="footer-links" aria-label="Legal">
+      <nav className="footer-links" aria-label="Footer">
+        <a href="/feedback">Feedback</a>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms &amp; Conditions</a>
       </nav>
