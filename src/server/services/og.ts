@@ -23,10 +23,13 @@ const PLACEHOLDER_BG = "#1b1a20";
 const CARD_ASPECT = 367 / 512; // Pocket card art ratio
 const CARD_H = 486;
 const CARD_W = Math.round(CARD_H * CARD_ASPECT);
-const CARD_TOP = Math.round((CANVAS_H - CARD_H) / 2);
+const ROW_Y_SHIFT = 18; // lift the label + card row up from dead-center
+const CARD_TOP = Math.round((CANVAS_H - CARD_H) / 2) - ROW_Y_SHIFT;
 const CARD_GAP = 14;
 const EDGE_PAD = 40;
-const LABEL_GAP = 26; // between a vertical label and the cards after it
+const ROW_START_PAD = 12; // left inset for the vertical label + card row
+const LABEL_GAP = 12; // between a vertical label and the cards after it
+const EDGE_FADE_W = 180; // width of the black fade over the rightmost clipped card
 
 const parseFont = (path: string): opentype.Font =>
   opentype.parse(readFileSync(path).buffer as ArrayBuffer);
@@ -127,7 +130,7 @@ const planSegments = (list: TradeList): Segment[] => {
 export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
   const composites: OverlayOptions[] = [];
   const segments = planSegments(list);
-  let x = EDGE_PAD;
+  let x = ROW_START_PAD;
 
   for (let s = 0; s < segments.length; s++) {
     const segment = segments[s];
@@ -135,7 +138,7 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
     composites.push({
       input: label.buffer,
       left: Math.round(x),
-      top: Math.round((CANVAS_H - label.height) / 2),
+      top: Math.round((CANVAS_H - label.height) / 2) - ROW_Y_SHIFT,
     });
     x += label.width + LABEL_GAP;
 
@@ -152,8 +155,23 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
     x += LABEL_GAP - CARD_GAP;
   }
 
-  // Base layer: background + count badge (bottom-left) + wordmark (bottom-right).
-  const badgeY = CANVAS_H - 34;
+  // Fade the rightmost (clipped) card into black instead of a hard cut edge.
+  const edgeFadeSvg = `<svg width="${EDGE_FADE_W}" height="${CANVAS_H}" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="${BG}" stop-opacity="0"/>
+      <stop offset="1" stop-color="${BG}" stop-opacity="1"/>
+    </linearGradient></defs>
+    <rect width="${EDGE_FADE_W}" height="${CANVAS_H}" fill="url(#fade)"/>
+  </svg>`;
+  composites.push({
+    input: Buffer.from(edgeFadeSvg),
+    left: CANVAS_W - EDGE_FADE_W,
+    top: 0,
+  });
+
+  // Base layer: background + count badge (bottom-left, in a rounded pill) +
+  // wordmark (bottom-right).
+  const badgeY = CANVAS_H - 12;
   const badgeSize = 30;
   const lf = `LF ${list.wants.length}`;
   const ft = `FT ${list.haves.length}`;
@@ -164,9 +182,16 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
   badgeParts.push(textPath(mono, " · ", badgeSize, bx, badgeY, MUTED));
   bx += advance(mono, " · ", badgeSize);
   badgeParts.push(textPath(mono, ft, badgeSize, bx, badgeY, HAVE));
+  const badgeWidth = bx + advance(mono, ft, badgeSize) - EDGE_PAD;
+  const pillPadX = 16;
+  const pillPadTop = 28;
+  const pillPadBottom = 6;
+  const pill = `<rect x="${EDGE_PAD - pillPadX}" y="${badgeY - pillPadTop}" width="${
+    badgeWidth + pillPadX * 2
+  }" height="${pillPadTop + pillPadBottom}" rx="20" fill="#1a181e"/>`;
 
   const markSize = 34;
-  const markY = CANVAS_H - 32;
+  const markY = CANVAS_H - 14;
   const wWidth = advance(forque, "want", markSize);
   const hWidth = advance(forque, "have", markSize);
   const tWidth = advance(forque, ".trade", markSize);
@@ -177,13 +202,14 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
   mx += wWidth;
   markParts.push(textPath(forque, "have", markSize, mx, markY, HAVE));
   mx += hWidth;
-  markParts.push(textPath(forque, ".trade", markSize, mx, markY, MUTED));
+  markParts.push(textPath(forque, ".trade", markSize, mx, markY, "#ffffff"));
 
   const baseSvg = `<svg width="${CANVAS_W}" height="${CANVAS_H}" xmlns="http://www.w3.org/2000/svg">
     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#141216"/><stop offset="1" stop-color="${BG}"/>
     </linearGradient></defs>
     <rect width="${CANVAS_W}" height="${CANVAS_H}" fill="url(#g)"/>
+    ${pill}
     ${badgeParts.join("")}
     ${markParts.join("")}
   </svg>`;
