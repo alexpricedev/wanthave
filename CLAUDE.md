@@ -180,13 +180,13 @@ src/
 |------|-----------|---------|
 | Files & directories | kebab-case | `route-handler.ts`, `test-utils/` |
 | JSX component exports | PascalCase | `Home`, `Layout`, `CsrfField` |
-| Controller namespace exports | camelCase | `home`, `examplesApi`, `login` |
-| Service functions | camelCase | `getExamples`, `createCsrfToken` |
-| Type exports | PascalCase | `Example`, `VisitorStats`, `AuthContext` |
+| Controller namespace exports | camelCase | `home`, `statsApi`, `login` |
+| Service functions | camelCase | `getCards`, `createCsrfToken` |
+| Type exports | PascalCase | `Card`, `VisitorStats`, `AuthContext` |
 | Migrations | `NNN_snake_case.ts` | `001_initial_setup.ts` |
 | Test files | Co-located `.test.ts` | `home.test.ts` next to `home.tsx` |
 
-**Controller barrel export naming:** App controllers export plain names (`home`, `about`). API controllers use an `Api` suffix (`examplesApi`, `statsApi`) to disambiguate when both domains share a resource name.
+**Controller barrel export naming:** App controllers export plain names (`home`, `about`). API controllers use an `Api` suffix (`cardsApi`, `statsApi`) to disambiguate when both domains share a resource name.
 
 ### How Files Connect (Adding a New Page)
 
