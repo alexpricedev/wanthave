@@ -1,6 +1,7 @@
 import {
   cardImage,
   home,
+  legal,
   list,
   lists,
   llmsTxt,
@@ -24,6 +25,8 @@ export const appRoutes = {
   "/l/:slug": list.index<"/l/:slug">,
   "/l/:slug/og.png": list.og<"/l/:slug/og.png">,
   "/img/card/:id": cardImage.show<"/img/card/:id">,
+  "/privacy": legal.privacy,
+  "/terms": legal.terms,
   "/robots.txt": robotsTxt.index,
   "/site.webmanifest": webmanifest.index,
   "/sitemap.xml": sitemap.index,

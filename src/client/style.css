@@ -5,6 +5,7 @@
 @import "./pages/login.css";
 @import "./pages/admin.css";
 @import "./pages/error.css";
+@import "./pages/legal.css";
 
 /* Component styles */
 @import "./components/layout.css";
