@@ -41,13 +41,6 @@ export const Nav = ({ page, user, csrfToken }: NavProps) => {
             </a>
           )}
         </li>
-        {user && (
-          <li>
-            <a href="/new" className="btn-primary btn-nav-cta">
-              Start a list
-            </a>
-          </li>
-        )}
       </ul>
     </nav>
   );

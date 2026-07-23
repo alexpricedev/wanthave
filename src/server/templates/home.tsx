@@ -15,7 +15,7 @@ const FAQ: { question: string; answer: string }[] = [
       "No. You can build a trade list and share it anonymously in under two minutes. Create a free account only if you want your link to last forever and stay editable.",
   },
   {
-    question: "How does the Discord unfurl work?",
+    question: "How does it work?",
     answer:
       "When you paste your link, Discord shows an image of the cards you're looking for along with your want/have counts, so people know what you're after before they even click.",
   },
@@ -147,26 +147,26 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         <h2>Build your lists</h2>
         <p className="text-secondary">
           Search any card. One tap for <span className="want">want</span>, one
-          for <span className="have">have</span>. Dupes counted automatically.
+          for <span className="have">have</span>. You can show dupe cards too.
         </p>
       </div>
       <div className="home-step">
         <p className="home-step-eyebrow">Step 2</p>
         <h2>Share your unique URL</h2>
         <p className="text-secondary">
-          One permanent link, always current, that can include your Friend ID.
-          Edit your lists any time—the link never changes.
+          One link that you can update as you trade. The page even shows your
+          Friend ID.
         </p>
         <code className="home-step-url">
-          wanthave.trade/<span className="want">you</span>
+          wanthave.trade/l/<span className="want">list-id</span>
         </code>
       </div>
       <div className="home-step">
         <p className="home-step-eyebrow">Step 3</p>
         <h2>Organise your trade</h2>
         <p className="text-secondary">
-          Drop it in any trading channel. Your wants show up front and
-          center—matches DM you, not the other way round.
+          Drop it in any trading channel. Your wants show up front and center.
+          Organise the trade as you normally do.
         </p>
       </div>
     </section>
