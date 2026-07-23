@@ -9,7 +9,7 @@ interface NavProps {
 
 export const Nav = ({ page, user, csrfToken }: NavProps) => {
   const navLinks = [
-    { href: "/new", label: "Build", name: "new" },
+    ...(user ? [{ href: "/new", label: "Build", name: "new" }] : []),
     ...(user ? [{ href: "/lists", label: "My lists", name: "lists" }] : []),
   ];
 
@@ -36,16 +36,18 @@ export const Nav = ({ page, user, csrfToken }: NavProps) => {
               </button>
             </form>
           ) : (
-            <a href="/login" className="btn-ghost">
-              Login
+            <a href="/signup" className="btn-ghost">
+              Sign up
             </a>
           )}
         </li>
-        <li>
-          <a href="/new" className="btn-primary btn-nav-cta">
-            Start a list
-          </a>
-        </li>
+        {user && (
+          <li>
+            <a href="/new" className="btn-primary btn-nav-cta">
+              Start a list
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
   );
