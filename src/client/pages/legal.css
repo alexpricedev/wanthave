@@ -1,0 +1,55 @@
+[data-page="legal"] .legal {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 44rem;
+  padding: 3rem 1.5rem 4rem;
+}
+
+[data-page="legal"] .legal h1 {
+  color: var(--color-bone);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+[data-page="legal"] .legal-updated {
+  color: var(--color-text-quaternary);
+  font-size: 13px;
+  margin: 0.5rem 0 2.5rem;
+}
+
+[data-page="legal"] .legal h2 {
+  color: var(--color-bone);
+  font-size: 1.25rem;
+  margin: 2.25rem 0 0.75rem;
+}
+
+[data-page="legal"] .legal p {
+  margin: 0 0 1rem;
+}
+
+[data-page="legal"] .legal ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+[data-page="legal"] .legal li {
+  margin-bottom: 0.5rem;
+}
+
+[data-page="legal"] .legal strong {
+  color: var(--color-bone);
+}
+
+[data-page="legal"] .legal a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[data-page="legal"] .legal a:hover,
+[data-page="legal"] .legal a:focus {
+  color: var(--color-primary-hover);
+}

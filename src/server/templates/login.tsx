@@ -40,7 +40,6 @@ export const Login = ({ state }: LoginProps) => {
                 <p>
                   We've sent you a magic link. Click it to sign in instantly.
                 </p>
-                <p>For testing: Check the server console for the magic link.</p>
               </Flash>
             ) : (
               <form method="POST" action="/login">
