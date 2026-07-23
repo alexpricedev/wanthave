@@ -62,7 +62,7 @@ describe("Email Service", () => {
       expect(message.html).toContain(data.magicLinkUrl);
       expect(message.html).toContain("10 minutes");
       expect(message.html).toContain(
-        `Sign in to ${process.env.APP_NAME as string}`,
+        `Sign in to ${(process.env.APP_NAME as string).toUpperCase()}`,
       );
     });
 
@@ -235,11 +235,14 @@ describe("Email Service", () => {
       const html = message.html;
 
       expect(html).toContain("<!DOCTYPE html>");
-      expect(html).toContain(process.env.APP_NAME as string);
-      expect(html).toContain("Sign in to your account");
+      expect(html).toContain(
+        `Sign in to ${(process.env.APP_NAME as string).toUpperCase()}`,
+      );
       expect(html).toContain(data.magicLinkUrl);
       expect(html).toContain("20 minutes");
-      expect(html).toContain("If you didn't request this email");
+      expect(html).toContain(
+        "Didn't request this? You can safely ignore this email.",
+      );
     });
 
     test("text template contains essential information", async () => {
@@ -255,10 +258,14 @@ describe("Email Service", () => {
       expect(message.text).toBeDefined();
       const text = message.text as string;
 
-      expect(text).toContain(`Sign in to ${process.env.APP_NAME as string}`);
+      expect(text).toContain(
+        `Sign in to ${(process.env.APP_NAME as string).toUpperCase()}`,
+      );
       expect(text).toContain(data.magicLinkUrl);
       expect(text).toContain("30 minutes");
-      expect(text).toContain("If you didn't request this email");
+      expect(text).toContain(
+        "Didn't request this? You can safely ignore this email.",
+      );
     });
   });
 });

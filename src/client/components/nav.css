@@ -58,11 +58,4 @@
       padding: 0;
     }
   }
-
-  .btn-nav-cta {
-    padding: 9px 18px;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 700;
-  }
 }
