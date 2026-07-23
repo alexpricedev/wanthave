@@ -182,7 +182,7 @@ export function Layout({
             <a href="/" className="logo">
               <Wordmark />
             </a>
-            {user && <Nav page={name} user={user} csrfToken={csrfToken} />}
+            <Nav page={name} user={user} csrfToken={csrfToken} />
           </header>
         )}
         <main>{children}</main>

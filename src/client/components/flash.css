@@ -1,6 +1,6 @@
 .flash-success {
-  border: 1px solid color-mix(in srgb, var(--color-success) 25%, transparent);
-  background: color-mix(in srgb, var(--color-success) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-want) 30%, transparent);
+  background: color-mix(in srgb, var(--color-want) 8%, transparent);
   padding: 12px 16px;
   border-radius: var(--radius);
   margin-bottom: 1rem;

@@ -34,16 +34,18 @@ export const Lists = ({
     <section className="lists-page">
       <header className="lists-head">
         <h1>Your lists</h1>
-        <a className="btn-primary" href="/new">
-          New list
-        </a>
+        {lists.length > 0 && (
+          <a className="btn-primary" href="/new">
+            New list
+          </a>
+        )}
       </header>
 
       {lists.length === 0 ? (
         <div className="lists-empty">
           <p className="lead">
             You haven't saved any lists yet. Account lists never expire and can
-            be edited in place—the link and its Discord unfurl stay current.
+            be edited in place.
           </p>
           <a className="btn-primary" href="/new">
             Build your first list
