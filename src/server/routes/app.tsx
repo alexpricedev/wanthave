@@ -1,5 +1,6 @@
 import {
   cardImage,
+  feedback,
   home,
   list,
   lists,
@@ -20,6 +21,10 @@ export const appRoutes = {
   "/lists/:slug/edit": lists.edit<"/lists/:slug/edit">,
   "/lists/:slug/delete": createRouteHandler({
     POST: lists.destroy<"/lists/:slug/delete">,
+  }),
+  "/feedback": createRouteHandler({
+    GET: feedback.index,
+    POST: feedback.submit,
   }),
   "/l/:slug": list.index<"/l/:slug">,
   "/l/:slug/og.png": list.og<"/l/:slug/og.png">,

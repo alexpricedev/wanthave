@@ -198,6 +198,7 @@ function SiteFooter() {
   return (
     <footer>
       <Wordmark />
+      <a href="/feedback">Feedback</a>
     </footer>
   );
 }

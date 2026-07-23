@@ -1,4 +1,5 @@
 export { cardImage } from "./card-image";
+export { feedback } from "./feedback";
 export { home } from "./home";
 export { list } from "./list";
 export { lists } from "./lists";

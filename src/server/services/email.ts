@@ -23,6 +23,14 @@ export interface MagicLinkEmailData {
   expiryMinutes: number;
 }
 
+export interface FeedbackEmailData {
+  message: string;
+  // Who sent it: an account email, a reply address a guest left, or null.
+  submitter: string | null;
+  pageUrl: string | null;
+  userAgent: string | null;
+}
+
 export class EmailService {
   constructor(private provider: EmailProvider) {}
 
@@ -47,6 +55,124 @@ export class EmailService {
     };
 
     await this.provider.send(message);
+  }
+
+  // Notify the team that someone left feedback. Recipient is FEEDBACK_TO_EMAIL,
+  // falling back to REPLY_TO_EMAIL. reply-to is set to the submitter's address
+  // when they left one, so a reply reaches them directly. Throws if no recipient
+  // is configured — the caller catches and logs so a save is never lost to a
+  // missing env var.
+  async sendFeedbackNotification(data: FeedbackEmailData): Promise<void> {
+    const fromEmail = process.env.FROM_EMAIL as string;
+    const fromName = process.env.FROM_NAME as string;
+    const toEmail = process.env.FEEDBACK_TO_EMAIL ?? process.env.REPLY_TO_EMAIL;
+
+    if (!toEmail) {
+      throw new Error(
+        "No feedback recipient configured (set FEEDBACK_TO_EMAIL or REPLY_TO_EMAIL).",
+      );
+    }
+
+    const message: EmailMessage = {
+      to: { email: toEmail },
+      from: { email: fromEmail, name: fromName },
+      ...(data.submitter ? { replyTo: { email: data.submitter } } : {}),
+      headers: { "X-Entity-Ref-ID": crypto.randomUUID() },
+      subject: "New feedback on WantHave",
+      html: this.renderFeedbackTemplate(data),
+      text: this.renderFeedbackText(data),
+    };
+
+    await this.provider.send(message);
+  }
+
+  private renderFeedbackTemplate(data: FeedbackEmailData): string {
+    const appName = (process.env.APP_NAME as string).toUpperCase();
+
+    // Brand palette (mirrors renderMagicLinkTemplate) — inlined literal hex since
+    // email clients don't support CSS variables or external stylesheets.
+    const paper = "#f7f4ec";
+    const card = "#fffdf8";
+    const ink = "#17161a";
+    const muted = "#6f6a7a";
+    const edge = "#e7e1d4";
+    const want = "#e5b35b";
+    const have = "#7fcbd9";
+    const fontStack =
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+
+    const esc = (v: string): string =>
+      v
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+
+    const row = (label: string, value: string | null): string =>
+      value
+        ? `<p style="margin: 0 0 10px; font-size: 13px; line-height: 1.5; color: ${muted};"><strong style="color: ${ink};">${label}:</strong> ${esc(value)}</p>`
+        : "";
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light">
+  <title>New feedback on ${appName}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: ${paper}; font-family: ${fontStack}; -webkit-text-size-adjust: 100%;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: ${paper};">
+    <tr>
+      <td align="center" style="padding: 40px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width: 600px; max-width: 100%;">
+          <tr>
+            <td style="background-color: ${card}; border: 1px solid ${edge}; border-radius: 20px; box-shadow: 0 12px 40px rgba(23,22,26,0.06); overflow: hidden;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="50%" height="4" style="background-color: ${want}; font-size: 0; line-height: 4px;">&nbsp;</td>
+                  <td width="50%" height="4" style="background-color: ${have}; font-size: 0; line-height: 4px;">&nbsp;</td>
+                </tr>
+              </table>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding: 40px 40px 36px;">
+                    <h1 style="margin: 0 0 24px; font-size: 22px; line-height: 1.25; font-weight: 700; color: ${ink};">New feedback</h1>
+                    <div style="margin: 0 0 28px; padding: 20px; background-color: ${paper}; border: 1px solid ${edge}; border-radius: 12px; font-size: 16px; line-height: 1.6; color: ${ink}; white-space: pre-wrap;">${esc(data.message)}</div>
+                    ${row("From", data.submitter ?? "Guest (no email)")}
+                    ${row("Page", data.pageUrl)}
+                    ${row("User agent", data.userAgent)}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 28px 24px 8px;">
+              <p style="margin: 0; font-size: 13px; line-height: 1.5; font-weight: 700; letter-spacing: -0.01em;">
+                <span style="color: ${want};">want</span><span style="color: ${have};">have</span>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+  }
+
+  private renderFeedbackText(data: FeedbackEmailData): string {
+    const lines = [
+      "New feedback on WantHave",
+      "",
+      data.message,
+      "",
+      `From: ${data.submitter ?? "Guest (no email)"}`,
+    ];
+    if (data.pageUrl) lines.push(`Page: ${data.pageUrl}`);
+    if (data.userAgent) lines.push(`User agent: ${data.userAgent}`);
+    return lines.join("\n");
   }
 
   private renderMagicLinkTemplate(data: MagicLinkEmailData): string {
