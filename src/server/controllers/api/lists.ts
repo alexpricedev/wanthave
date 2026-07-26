@@ -8,6 +8,7 @@ import {
   updateTradeList,
 } from "../../services/lists";
 import { setSessionCookie } from "../../services/sessions";
+import { saveUserFriendId } from "../../services/users";
 
 // Set on anonymous list creation so the next successful login auto-claims the
 // list into the new account (see auth/callback). Readable by JS is fine — it
@@ -70,15 +71,21 @@ export const listsApi = {
       return Response.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
+    const friendId = asString(body.friendId);
     const result = await createTradeList({
       cards: parseCards(body.cards),
-      friendId: asString(body.friendId),
+      friendId,
       title: asString(body.title),
       userId: ctx.user?.id ?? null,
     });
 
     if (!result.ok) {
       return Response.json({ error: result.error }, { status: 400 });
+    }
+
+    // Keep the friend ID on the account so the next list prefills it.
+    if (ctx.user) {
+      await saveUserFriendId(ctx.user.id, friendId);
     }
 
     // Anonymous lists: drop a claim cookie so a later signup keeps this link.
@@ -116,15 +123,18 @@ export const listsApi = {
       return Response.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
+    const friendId = asString(body.friendId);
     const updated = await updateTradeList(slug, ctx.user.id, {
       cards: parseCards(body.cards),
-      friendId: asString(body.friendId),
+      friendId,
       title: asString(body.title),
     });
 
     if (!updated) {
       return Response.json({ error: "Not found" }, { status: 404 });
     }
+
+    await saveUserFriendId(ctx.user.id, friendId);
 
     return Response.json({ slug: updated.slug }, { status: 200 });
   },
