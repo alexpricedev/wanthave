@@ -189,7 +189,6 @@ const sortCards = (cards: CardDto[], sort: SortState): CardDto[] => {
   });
 };
 
-const LAST_KEY = "wanthave:last";
 const imgSrc = (id: string): string => `/img/card/${id}`;
 
 const formatFriendId = (digits: string): string =>
@@ -205,35 +204,6 @@ const loadFriendId = (): string => {
   } catch {
     // sessionStorage may be unavailable (private mode) — fall through.
     return "";
-  }
-};
-
-// Load the last list this device created, for the "edit-and-regenerate" flow.
-const loadLast = (): {
-  wants: Item[];
-  haves: Item[];
-  friendId: string;
-  title: string;
-} | null => {
-  try {
-    const raw = localStorage.getItem(LAST_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (
-      !parsed ||
-      !Array.isArray(parsed.wants) ||
-      !Array.isArray(parsed.haves)
-    ) {
-      return null;
-    }
-    return {
-      wants: parsed.wants,
-      haves: parsed.haves,
-      friendId: typeof parsed.friendId === "string" ? parsed.friendId : "",
-      title: typeof parsed.title === "string" ? parsed.title : "",
-    };
-  } catch {
-    return null;
   }
 };
 
@@ -358,8 +328,7 @@ function ListItem({
 }
 
 export function Builder(config: BuilderConfig) {
-  const initial =
-    config.initial ?? (config.mode === "create" ? loadLast() : null);
+  const initial = config.initial ?? null;
   const [wants, setWants] = useState<Item[]>(initial?.wants ?? []);
   const [haves, setHaves] = useState<Item[]>(initial?.haves ?? []);
   const [friendId, setFriendId] = useState<string>(
@@ -568,14 +537,6 @@ export function Builder(config: BuilderConfig) {
         return;
       }
       const data = await res.json();
-      try {
-        localStorage.setItem(
-          LAST_KEY,
-          JSON.stringify({ wants, haves, friendId: friendDigits, title }),
-        );
-      } catch {
-        // localStorage may be unavailable (private mode) — non-fatal.
-      }
       const dest =
         config.mode === "edit"
           ? `/l/${data.slug}`
