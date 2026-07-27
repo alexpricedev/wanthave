@@ -114,17 +114,18 @@ The OG image is the product's ad, utility, and brand in one frame. It must commu
 
 **Layout:**
 
-- **Vertical section label** — "WANT" rotated 90°, anchored to the left edge, full height, heavy weight. This is the structural brand element: the label *is* the layout.
-- **Card row** — want cards run left to right from the label, single row, full-bleed card art at consistent size (roughly 3 full cards visible). Cards are ordered as the user ordered them, so the user controls which chase cards appear in the unfurl.
-- **Deliberate bleed** — the final visible card is cropped by the right edge. The cut card is a designed signal that there's more behind the click, not an accident. If the list has exactly the number of cards that fit, slightly overscale so the last card still bleeds.
+- **Vertical section label** — "WANT" rotated 90°, anchored to the left edge, sized to the height of the row it introduces. This is the structural brand element: the label *is* the layout.
+- **Card row** — cards run left to right from the label at a consistent size, ordered as the user ordered them, so the user controls which chase cards appear in the unfurl.
+- **Depth through overlap** — a row always spans the full canvas width. Few cards sit apart with air between them; more cards than fit overlap like a fanned hand, down to a floor of half a card, each casting a soft shadow on the one behind it so the stack reads as depth rather than a smear. Overlap is what lets a deep list actually look deep at embed size.
+- **Deliberate bleed** — the final visible card is cropped by the right edge. The cut card is a designed signal that there's more behind the click, not an accident. Card size is solved so the row overflows the edge rather than stopping short of it.
 
-**Conditional layouts:**
+**Conditional layouts** — the layout is chosen by whichever gives the largest cards, so the frame stays full at any list size:
 
-- **One want** — after the single want card, a second vertical label "HAVE" divides the row, followed by have cards bleeding off the right. This turns a sparse image into a fuller, more tradeable-looking one.
-- **Zero wants** — "HAVE" label replaces "WANT" and the haves fill the row.
+- **Both wants and haves** — two rows, WANT above HAVE, with the sparser side getting the taller row (and so the bigger cards). Small lists collapse to a single row instead: WANT segment, then a second vertical "HAVE" label dividing it, followed by the haves — a handful of large cards fills the frame better than two half-empty rows.
+- **One side only** — that side's label and cards take a single full-height row.
 - **Zero cards entirely** — links can't be created without at least one card, so this state doesn't exist.
 
-**Branding & counts:** small "wanthave.trade" wordmark, bottom-right corner, legible but subordinate to the cards. Bottom-left carries a **count badge** in community shorthand — "LF 8 · FT 23" — so a viewer can triage list size without clicking. The badge uses the slang deliberately: it signals the tool speaks the community's language. The vertical WANT/HAVE labels carry the brand structurally; the wordmark closes the loop for anyone screenshotting the embed.
+**Branding & counts:** small "wanthave.trade" wordmark, bottom-left, on the same line the vertical labels start from, legible but subordinate to the cards. Bottom-centre carries a **count badge** in community shorthand — "LF 8 · FT 23" — so a viewer can triage list size without clicking. The badge uses the slang deliberately: it signals the tool speaks the community's language. The vertical WANT/HAVE labels carry the brand structurally; the wordmark closes the loop for anyone screenshotting the embed.
 
 **Constraints:**
 
