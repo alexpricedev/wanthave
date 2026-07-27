@@ -160,18 +160,21 @@ describe("update / claim / delete", () => {
   test("claimList makes an anonymous list permanent and owned", async () => {
     const created = await createTradeList({
       cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      friendId: "1234567890123456",
     });
     if (!created.ok) throw new Error("setup failed");
     const user = await findOrCreateUser(randomEmail());
 
-    expect(await claimList(created.list.slug, user.id)).toBe(true);
+    expect(await claimList(created.list.slug, user.id)).toEqual({
+      friendId: "1234567890123456",
+    });
     const claimed = await getTradeListBySlug(created.list.slug);
     expect(claimed?.userId).toBe(user.id);
     expect(claimed?.expiresAt).toBeNull();
 
     // Claiming an already-owned list is a no-op.
     const other = await findOrCreateUser(randomEmail());
-    expect(await claimList(created.list.slug, other.id)).toBe(false);
+    expect(await claimList(created.list.slug, other.id)).toBeNull();
   });
 
   test("getListsByUser returns summaries with counts; delete enforces ownership", async () => {
