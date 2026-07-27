@@ -15,8 +15,10 @@ mock.module("../../services/database", () => ({
 
 import { createMagicLink } from "../../services/auth";
 import { db } from "../../services/database";
+import { createTradeList } from "../../services/lists";
 import { SESSION_COOKIE_NAME } from "../../services/sessions";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
+import { CLAIM_COOKIE } from "../api/lists";
 import { callback } from "./callback";
 
 describe("Callback Controller", () => {
@@ -178,6 +180,33 @@ describe("Callback Controller", () => {
       const location3 = response.headers.get("location");
       expect(location3).toBeTruthy();
       expect(decodeURIComponent(location3 as string)).toContain("expired");
+    });
+
+    test("claims a pending anon list and copies its friend ID to the account", async () => {
+      const created = await createTradeList({
+        cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+        friendId: "1234567890123456",
+      });
+      if (!created.ok) throw new Error("setup failed");
+
+      const { rawToken, user } = await createMagicLink("claimer@example.com");
+
+      const request = createBunRequest(
+        `http://localhost:3000/auth/callback?token=${rawToken}`,
+        { headers: { cookie: `${CLAIM_COOKIE}=${created.list.slug}` } },
+      );
+
+      const response = await callback.index(request);
+
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe(`/l/${created.list.slug}`);
+
+      const rows = await db`
+        SELECT friend_id FROM users WHERE id = ${user.id}
+      `;
+      expect((rows[0] as { friend_id: string | null }).friend_id).toBe(
+        "1234567890123456",
+      );
     });
 
     test("handles database errors gracefully", async () => {

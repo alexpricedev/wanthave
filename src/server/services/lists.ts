@@ -308,13 +308,14 @@ export const updateTradeList = async (
 export const claimList = async (
   slug: string,
   userId: string,
-): Promise<boolean> => {
-  const result = await db`
+): Promise<{ friendId: string | null } | null> => {
+  const [row] = (await db`
     UPDATE trade_list
     SET user_id = ${userId}, expires_at = NULL, updated_at = CURRENT_TIMESTAMP
     WHERE slug = ${slug} AND user_id IS NULL
-  `;
-  return Boolean((result as { count?: number }).count);
+    RETURNING friend_id
+  `) as { friend_id: string | null }[];
+  return row ? { friendId: row.friend_id } : null;
 };
 
 export const deleteList = async (

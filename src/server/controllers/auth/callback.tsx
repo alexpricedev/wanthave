@@ -3,6 +3,7 @@ import { getSessionContext } from "../../middleware/auth";
 import { verifyMagicLink } from "../../services/auth";
 import { claimList } from "../../services/lists";
 import { setSessionCookie } from "../../services/sessions";
+import { saveUserFriendId } from "../../services/users";
 import { redirect } from "../../utils/response";
 import { CLAIM_COOKIE } from "../api/lists";
 
@@ -34,7 +35,12 @@ export const callback = {
       if (claimSlug) {
         req.cookies.delete(CLAIM_COOKIE);
         const claimed = await claimList(claimSlug, result.user.id);
-        if (claimed) destination = `/l/${claimSlug}`;
+        if (claimed) {
+          destination = `/l/${claimSlug}`;
+          if (claimed.friendId) {
+            await saveUserFriendId(result.user.id, claimed.friendId);
+          }
+        }
       }
 
       return new Response("", {

@@ -43,6 +43,16 @@ export const newList = {
           sets: setDtos,
           csrfToken: createToken,
           mode: "create",
+          // Signed-in users get the friend ID saved on their account prefilled;
+          // guests fall back to the client's sessionStorage copy.
+          initial: ctx.user?.friend_id
+            ? {
+                wants: [],
+                haves: [],
+                friendId: ctx.user.friend_id,
+                title: "",
+              }
+            : undefined,
         }}
         heading="Build your trade list"
         sub="Search for the cards you want and add them to your WANT list with a tap. Then switch modes to HAVE and repeat for what you have to trade. When you're done, get a link you can drop into Discord."
