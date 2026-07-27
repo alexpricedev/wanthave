@@ -3,6 +3,7 @@ import type { SessionContext } from "../../middleware/auth";
 import type { CreateFeedbackResult } from "../../services/feedback";
 import type { User } from "../../services/users";
 import { createBunRequest } from "../../test-utils/bun-request";
+import { createFormStamp, MIN_FILL_MS } from "../../utils/form-timing";
 
 // View controller test (see CLAUDE.md): mock the service layer, assert on the
 // rendered HTML and on the Response (status / Location).
@@ -81,8 +82,11 @@ mock.module("../../services/email", () => ({
 
 import { feedback } from "./feedback";
 
+// A stamp old enough to clear the timing trap, unless a test overrides it.
+const agedStamp = () => createFormStamp(Date.now() - (MIN_FILL_MS + 1_000));
+
 const post = (body: Record<string, string>) => {
-  const params = new URLSearchParams(body);
+  const params = new URLSearchParams({ form_ts: agedStamp(), ...body });
   return createBunRequest("http://localhost:3000/feedback", {
     method: "POST",
     headers: {
@@ -114,6 +118,8 @@ describe("feedback.index", () => {
     expect(html).toContain('name="email"');
     // Same-origin referer is captured into the hidden page_url field.
     expect(html).toContain("http://localhost:3000/l/abcdefghijk");
+    // Timing trap stamp is rendered so submissions can be timed.
+    expect(html).toContain('name="form_ts"');
   });
 
   test("omits the email field for a logged-in user", async () => {
@@ -189,6 +195,25 @@ describe("feedback.submit", () => {
 
     expect(res.status).toBe(403);
     expect(createFeedbackCalls).toHaveLength(0);
+  });
+
+  test.each([
+    ["an instant submission", () => createFormStamp()],
+    ["a missing stamp", () => ""],
+    ["a forged stamp", () => `${Date.now() - 60_000}.deadbeef`],
+  ])("silently drops %s", async (_label, stamp) => {
+    const req = post({
+      message: "Feature your site in Google's index!",
+      _csrf: "test-csrf-token",
+      form_ts: stamp(),
+    });
+    const res = await feedback.submit(req);
+
+    // The bot sees the ordinary success redirect, but nothing was stored or sent.
+    expect(res.status).toBe(303);
+    expect(res.headers.get("Location")).toBe("/feedback");
+    expect(createFeedbackCalls).toHaveLength(0);
+    expect(sendFeedbackCalls).toHaveLength(0);
   });
 
   test("redirects back on a validation error and sends no email", async () => {

@@ -9,6 +9,7 @@ import { log } from "../../services/logger";
 import { setSessionCookie } from "../../services/sessions";
 import type { FeedbackState } from "../../templates/feedback";
 import { Feedback } from "../../templates/feedback";
+import { createFormStamp, isTooFast } from "../../utils/form-timing";
 import { redirect, render } from "../../utils/response";
 import { stateHelpers } from "../../utils/state";
 
@@ -50,6 +51,7 @@ export const feedback = {
         user={ctx.user}
         csrfToken={csrfToken}
         pageUrl={capturePageUrl(req)}
+        formStamp={createFormStamp()}
         state={state}
       />,
     );
@@ -75,6 +77,16 @@ export const feedback = {
     const message = (formData.get("message") as string) ?? "";
     const guestEmail = (formData.get("email") as string) ?? "";
     const pageUrl = (formData.get("page_url") as string) ?? "";
+    const formStamp = (formData.get("form_ts") as string) ?? "";
+
+    // Nobody types feedback in under three seconds. A submission that fast (or
+    // one carrying no valid stamp at all) is a bot, so drop it silently — the
+    // spammer sees the same success page and has nothing to tune against.
+    if (isTooFast(formStamp)) {
+      log.info("feedback", "Dropped submission that failed the timing check");
+      setFlash(req, { state: "sent" });
+      return redirect("/feedback");
+    }
 
     // Prefer the account email; fall back to the reply address a guest typed.
     const email = ctx.user?.email ?? guestEmail.trim() ?? null;
