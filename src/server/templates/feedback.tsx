@@ -13,6 +13,7 @@ export interface FeedbackProps {
   user?: User | null;
   csrfToken: string;
   pageUrl: string;
+  formStamp: string;
   state?: FeedbackState;
 }
 
@@ -20,6 +21,7 @@ export const Feedback = ({
   user,
   csrfToken,
   pageUrl,
+  formStamp,
   state,
 }: FeedbackProps) => {
   return (
@@ -47,6 +49,7 @@ export const Feedback = ({
         <form method="POST" action="/feedback">
           <CsrfField token={csrfToken} />
           <input type="hidden" name="page_url" value={pageUrl} />
+          <input type="hidden" name="form_ts" value={formStamp} />
 
           {state?.state === "error" && state.error && (
             <Flash type="error">
