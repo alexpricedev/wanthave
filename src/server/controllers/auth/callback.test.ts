@@ -15,12 +15,28 @@ mock.module("../../services/database", () => ({
 
 import { createMagicLink } from "../../services/auth";
 import { db } from "../../services/database";
-import { createTradeList } from "../../services/lists";
 import { SESSION_COOKIE_NAME } from "../../services/sessions";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
 import { computeHMAC } from "../../utils/crypto";
 import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
-import { callback } from "./callback";
+
+// The real list service, with a switch one test flips to make the claim blow
+// up — the point being that a failed claim still leaves the user logged in.
+// Captured before mocking so the wrapper can't recurse into itself.
+const realLists = await import("../../services/lists");
+const { createTradeList } = realLists;
+const realClaimListsByToken = realLists.claimListsByToken;
+let claimThrows = false;
+
+mock.module("../../services/lists", () => ({
+  ...realLists,
+  claimListsByToken: async (hash: string, userId: string) => {
+    if (claimThrows) throw new Error("claim exploded");
+    return realClaimListsByToken(hash, userId);
+  },
+}));
+
+const { callback } = await import("./callback");
 
 const DEVICE_TOKEN = "device-token-for-callback-tests";
 
@@ -44,6 +60,7 @@ const callbackWithCookie = (rawToken: string, cookie: string) =>
 describe("Callback Controller", () => {
   beforeEach(async () => {
     await cleanupTestData(db);
+    claimThrows = false;
   });
 
   afterAll(async () => {
@@ -245,6 +262,37 @@ describe("Callback Controller", () => {
       );
 
       expect(response.headers.get("location")).toBe(`/l/${slug}`);
+    });
+
+    test("a failed claim leaves the user logged in, not on an error page", async () => {
+      const slug = await anonList();
+      const { rawToken, user } = await createMagicLink("resilient@example.com");
+
+      claimThrows = true;
+      const request = createBunRequest(
+        `http://localhost:3000/auth/callback?token=${rawToken}`,
+        { headers: { cookie: `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}` } },
+      );
+      const response = await callback.index(request);
+
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+      expect(findSetCookie(request, SESSION_COOKIE_NAME)).toContain(
+        `${SESSION_COOKIE_NAME}=`,
+      );
+
+      // The claim didn't happen, and the token cookie survives so the next
+      // login can retry it.
+      expect(findSetCookie(request, CLAIM_TOKEN_COOKIE)).toBeUndefined();
+      const rows = (await db`
+        SELECT user_id FROM trade_list WHERE slug = ${slug}
+      `) as { user_id: string | null }[];
+      expect(rows[0].user_id).toBeNull();
+
+      const users = (await db`
+        SELECT id FROM users WHERE id = ${user.id}
+      `) as { id: string }[];
+      expect(users).toHaveLength(1);
     });
 
     test("leaves another device's lists alone", async () => {

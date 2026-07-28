@@ -13,6 +13,8 @@ interface ListProps {
   shareUrl: string;
   created: boolean;
   canClaim: boolean;
+  // This visitor built the list but has no account yet — see isDeviceClaimant.
+  builtHere: boolean;
   isOwner: boolean;
   user: User | null;
   csrfToken?: string;
@@ -41,6 +43,7 @@ export const ListPage = ({
   shareUrl,
   created,
   canClaim,
+  builtHere,
   isOwner,
   user,
   csrfToken,
@@ -136,6 +139,25 @@ export const ListPage = ({
           </header>
         )}
 
+        {/* Returning to a list you made as a guest. The share panel above
+            already makes the pitch on the ?created=1 pass. */}
+        {builtHere && !created ? (
+          <div className="claim-bar">
+            <div className="claim-bar-copy">
+              <span className="owner-note text-tertiary">
+                You made this list
+              </span>
+              <p className="nudge-copy">
+                It expires in 90 days and can't be changed. Claim it with a free
+                account to edit the cards as you trade—this link keeps working.
+              </p>
+            </div>
+            <a className="btn-primary nudge-btn" href="/signup">
+              Claim &amp; edit
+            </a>
+          </div>
+        ) : null}
+
         {isOwner ? (
           <div className="owner-bar">
             <div className="owner-bar-head">
@@ -180,7 +202,9 @@ export const ListPage = ({
 
         {list.friendId ? <FriendIdBlock friendId={list.friendId} /> : null}
 
-        {!created ? <FlywheelCta variant="quiet" /> : null}
+        {/* "Build your own list" is for visitors — the person who built this
+            one is being asked to claim it instead. */}
+        {!created && !builtHere ? <FlywheelCta variant="quiet" /> : null}
       </article>
     </Layout>
   );

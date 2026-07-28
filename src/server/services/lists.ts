@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { computeHMAC } from "../utils/crypto";
 import { normalizeFriendId } from "../utils/friend-id";
 import { type Card, getCardById, isValidCardId, rarityRank } from "./cards";
 import { db } from "./database";
@@ -351,6 +352,21 @@ export const claimListsByToken = async (
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     )
     .map((r) => ({ slug: r.slug, friendId: r.friend_id }));
+};
+
+// Does this device hold the claim token for an unclaimed list — i.e. did it
+// build it? Lets the list page tell a guest the list is theirs before they have
+// an account. Deliberately returns no token material to the caller.
+export const isDeviceClaimant = async (
+  slug: string,
+  claimToken: string,
+): Promise<boolean> => {
+  const rows = await db`
+    SELECT 1 FROM trade_list
+    WHERE slug = ${slug} AND user_id IS NULL
+      AND claim_token_hash = ${computeHMAC(claimToken)}
+  `;
+  return rows.length > 0;
 };
 
 export const deleteList = async (
