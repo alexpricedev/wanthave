@@ -117,10 +117,35 @@ export const ListPage = ({
 
         {isOwner ? (
           <div className="owner-bar">
-            <span className="owner-note text-tertiary">You own this list</span>
-            <a className="btn-ghost" href={`/lists/${list.slug}/edit`}>
-              Edit list
-            </a>
+            <div className="owner-bar-head">
+              <span className="owner-note text-tertiary">
+                You own this list
+              </span>
+              <a className="btn-ghost" href={`/lists/${list.slug}/edit`}>
+                Edit list
+              </a>
+            </div>
+            {/* The share panel above already shows the link on ?created=1, so
+                only the plain owner view repeats it here. */}
+            {!created ? (
+              <div className="share-url-row">
+                <input
+                  className="share-url"
+                  type="text"
+                  readOnly
+                  value={shareUrl}
+                  aria-label="Shareable link"
+                />
+                <button
+                  type="button"
+                  className="share-copy"
+                  data-copy
+                  data-copy-text={shareUrl}
+                >
+                  Copy link
+                </button>
+              </div>
+            ) : null}
           </div>
         ) : null}
 

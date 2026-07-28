@@ -16,11 +16,31 @@ const guestContext: SessionContext = {
   requiresSetCookie: false,
 };
 
+const ownerContext: SessionContext = {
+  sessionId: "owner-session",
+  sessionHash: null,
+  sessionType: "authenticated",
+  user: {
+    id: "user-1",
+    email: "owner@example.com",
+    role: "user",
+    friend_id: null,
+    created_at: new Date(),
+  },
+  isGuest: false,
+  isAuthenticated: true,
+  requiresSetCookie: false,
+};
+
 let mockList: TradeList | null = null;
 let mockExpired = false;
+let mockContext: SessionContext = guestContext;
 
 mock.module("../../middleware/auth", () => ({
-  getSessionContext: async () => guestContext,
+  getSessionContext: async () => mockContext,
+}));
+mock.module("../../services/csrf", () => ({
+  createCsrfToken: async () => "csrf-token",
 }));
 mock.module("../../services/sessions", () => ({
   setSessionCookie: () => {},
@@ -56,6 +76,7 @@ describe("list.index", () => {
   beforeEach(() => {
     mockList = buildList();
     mockExpired = false;
+    mockContext = guestContext;
   });
 
   afterAll(() => mock.restore());
@@ -91,6 +112,35 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
     expect(html).toContain(`/l/abcdefghijk/og.png?v=${updatedAt.getTime()}`);
+  });
+
+  test("shows the share link in the owner bar", async () => {
+    mockContext = ownerContext;
+    mockList = { ...buildList(), userId: "user-1" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).toContain("You own this list");
+    expect(html).toContain(
+      'data-copy-text="http://localhost:3000/l/abcdefghijk"',
+    );
+  });
+
+  test("omits the owner-bar link on ?created=1 — the share panel has it", async () => {
+    mockContext = ownerContext;
+    mockList = { ...buildList(), userId: "user-1" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk?created=1",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).toContain("You own this list");
+    // One copy control on the page (the share panel's), not two.
+    expect(html.split("data-copy-text").length - 1).toBe(1);
   });
 
   test("shows the share panel and account nudge when ?created=1", async () => {
