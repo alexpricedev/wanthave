@@ -98,10 +98,17 @@ export const list = {
       await setCachedOgImage(slug, bytes);
     }
 
+    // A `?v=` URL is unique per edit (the page mints a new one from updated_at),
+    // so it can be cached forever. The bare URL is what older unfurls point at,
+    // and its content changes on every edit — keep that one short-lived so
+    // stale embeds recover on their own.
+    const versioned = new URL(req.url).searchParams.has("v");
     return new Response(new Uint8Array(bytes), {
       headers: {
         "Content-Type": "image/png",
-        "Cache-Control": "public, max-age=86400",
+        "Cache-Control": versioned
+          ? "public, max-age=31536000, immutable"
+          : "public, max-age=3600",
       },
     });
   },
