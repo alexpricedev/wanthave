@@ -18,6 +18,24 @@ interface ListProps {
   csrfToken?: string;
 }
 
+// Collapsed preview of the Discord/Twitter unfurl. A native <details> — no
+// client JS, and the closed panel keeps the image out of the layout until it's
+// asked for. The src must carry the same ?v= token as the meta tag: those URLs
+// are cached immutably, so the bare path would show the pre-edit image back.
+const OgPreview = ({ src }: { src: string }) => (
+  <details className="og-preview">
+    <summary className="og-preview-toggle">Preview</summary>
+    <img
+      className="og-preview-img"
+      src={src}
+      alt="How this list looks when the link is shared"
+      width={1200}
+      height={630}
+      loading="lazy"
+    />
+  </details>
+);
+
 export const ListPage = ({
   list,
   shareUrl,
@@ -81,6 +99,7 @@ export const ListPage = ({
                 Copy link
               </button>
             </div>
+            <OgPreview src={ogImagePath} />
             {canClaim ? (
               <div className="nudge" data-nudge>
                 <p className="nudge-copy">
@@ -146,6 +165,7 @@ export const ListPage = ({
                 </button>
               </div>
             ) : null}
+            {!created ? <OgPreview src={ogImagePath} /> : null}
           </div>
         ) : null}
 

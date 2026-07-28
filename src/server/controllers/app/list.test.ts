@@ -139,8 +139,27 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
     expect(html).toContain("You own this list");
-    // One copy control on the page (the share panel's), not two.
+    // One copy control and one preview on the page (the share panel's), not two.
     expect(html.split("data-copy-text").length - 1).toBe(1);
+    expect(html.split("og-preview-img").length - 1).toBe(1);
+  });
+
+  test("previews the unfurl from the versioned OG URL", async () => {
+    const updatedAt = new Date("2026-01-02T03:04:05Z");
+    mockContext = ownerContext;
+    mockList = { ...buildList(), userId: "user-1", updatedAt };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).toContain("Preview");
+    // The preview must bust cache the same way the meta tag does — a bare
+    // /og.png would serve the owner their pre-edit image.
+    expect(html).toContain(
+      `class="og-preview-img" src="/l/abcdefghijk/og.png?v=${updatedAt.getTime()}"`,
+    );
   });
 
   test("shows the share panel and account nudge when ?created=1", async () => {
