@@ -81,6 +81,18 @@ describe("list.index", () => {
     expect(html).toContain("/l/abcdefghijk/og.png");
   });
 
+  test("versions the OG image URL on updated_at so edits re-unfurl", async () => {
+    const updatedAt = new Date("2026-01-02T03:04:05Z");
+    mockList = { ...buildList(), updatedAt };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).toContain(`/l/abcdefghijk/og.png?v=${updatedAt.getTime()}`);
+  });
+
   test("shows the share panel and account nudge when ?created=1", async () => {
     const req = createBunRequest(
       "http://localhost:3000/l/abcdefghijk?created=1",
@@ -123,6 +135,29 @@ describe("list.index", () => {
 
 describe("list.og", () => {
   afterAll(() => mock.restore());
+
+  test("caches a versioned URL forever and the bare URL briefly", async () => {
+    mockList = buildList();
+    mockExpired = false;
+
+    const versioned = await list.og(
+      createBunRequest(
+        "http://localhost:3000/l/abcdefghijk/og.png?v=123",
+        {},
+        { slug: "abcdefghijk" },
+      ),
+    );
+    expect(versioned.headers.get("cache-control")).toContain("immutable");
+
+    const bare = await list.og(
+      createBunRequest(
+        "http://localhost:3000/l/abcdefghijk/og.png",
+        {},
+        { slug: "abcdefghijk" },
+      ),
+    );
+    expect(bare.headers.get("cache-control")).toBe("public, max-age=3600");
+  });
 
   test("serves the branded fallback for a missing list", async () => {
     mockList = null;

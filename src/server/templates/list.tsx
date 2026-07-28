@@ -34,13 +34,18 @@ export const ListPage = ({
     : `Pokémon Pocket trade list—LF ${wantCount} · FT ${haveCount}`;
   const description = `Looking for ${wantCount} card${wantCount === 1 ? "" : "s"}, ${haveCount} up for trade. Built with wanthave.trade.`;
 
+  // Version the OG image URL on updated_at. Discord's media proxy caches by URL
+  // and never revalidates, so an edited list needs a brand new image URL for the
+  // unfurl to pick up the new cards.
+  const ogImagePath = `/l/${list.slug}/og.png?v=${list.updatedAt.getTime()}`;
+
   return (
     <Layout
       title={title}
       description={description}
       name="list"
       canonicalPath={`/l/${list.slug}`}
-      ogImagePath={`/l/${list.slug}/og.png`}
+      ogImagePath={ogImagePath}
       user={user}
       csrfToken={csrfToken}
     >
