@@ -17,6 +17,7 @@ import { findOrCreateUser } from "./auth";
 import {
   ANON_TTL_DAYS,
   claimList,
+  claimListsByToken,
   createTradeList,
   deleteList,
   getCachedOgImage,
@@ -175,6 +176,52 @@ describe("update / claim / delete", () => {
     // Claiming an already-owned list is a no-op.
     const other = await findOrCreateUser(randomEmail());
     expect(await claimList(created.list.slug, other.id)).toBeNull();
+  });
+
+  test("claimListsByToken claims every list from one device, newest first", async () => {
+    const mine = "token-hash-mine";
+    const older = await createTradeList({
+      cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      claimTokenHash: mine,
+      friendId: "1111222233334444",
+    });
+    const newer = await createTradeList({
+      cards: [{ cardId: "a1-002", kind: "want", quantity: 1 }],
+      claimTokenHash: mine,
+      friendId: "5555666677778888",
+    });
+    // Another device's list, and one already owned — neither should move.
+    const theirs = await createTradeList({
+      cards: [{ cardId: "a1-003", kind: "want", quantity: 1 }],
+      claimTokenHash: "token-hash-theirs",
+    });
+    if (!older.ok || !newer.ok || !theirs.ok) throw new Error("setup failed");
+
+    await connection`
+      UPDATE trade_list SET created_at = created_at - INTERVAL '1 hour'
+      WHERE slug = ${older.list.slug}
+    `;
+
+    const user = await findOrCreateUser(randomEmail());
+    const claimed = await claimListsByToken(mine, user.id);
+
+    expect(claimed).toEqual([
+      { slug: newer.list.slug, friendId: "5555666677778888" },
+      { slug: older.list.slug, friendId: "1111222233334444" },
+    ]);
+
+    for (const slug of [newer.list.slug, older.list.slug]) {
+      const list = await getTradeListBySlug(slug);
+      expect(list?.userId).toBe(user.id);
+      expect(list?.expiresAt).toBeNull();
+    }
+
+    const untouched = await getTradeListBySlug(theirs.list.slug);
+    expect(untouched?.userId).toBeNull();
+
+    // The token is spent once the lists are claimed.
+    const other = await findOrCreateUser(randomEmail());
+    expect(await claimListsByToken(mine, other.id)).toEqual([]);
   });
 
   test("getListsByUser returns summaries with counts; delete enforces ownership", async () => {

@@ -1,11 +1,45 @@
 import type { BunRequest } from "bun";
 import { getSessionContext } from "../../middleware/auth";
 import { verifyMagicLink } from "../../services/auth";
-import { claimList } from "../../services/lists";
+import {
+  type ClaimedList,
+  claimList,
+  claimListsByToken,
+} from "../../services/lists";
 import { setSessionCookie } from "../../services/sessions";
 import { saveUserFriendId } from "../../services/users";
+import { computeHMAC } from "../../utils/crypto";
 import { redirect } from "../../utils/response";
-import { CLAIM_COOKIE } from "../api/lists";
+import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
+
+// Adopt every anonymous list this device built. The claim token covers lists
+// created since it shipped; the legacy slug cookie covers the one list a guest
+// mid-flow at that point would otherwise lose. Newest first.
+const claimPendingLists = async (
+  req: BunRequest,
+  userId: string,
+): Promise<ClaimedList[]> => {
+  const claimed: ClaimedList[] = [];
+
+  const token = req.cookies.get(CLAIM_TOKEN_COOKIE);
+  if (token) {
+    req.cookies.delete(CLAIM_TOKEN_COOKIE);
+    claimed.push(...(await claimListsByToken(computeHMAC(token), userId)));
+  }
+
+  const legacySlug = req.cookies.get(CLAIM_COOKIE);
+  if (legacySlug) {
+    req.cookies.delete(CLAIM_COOKIE);
+    if (!claimed.some((l) => l.slug === legacySlug)) {
+      const legacy = await claimList(legacySlug, userId);
+      if (legacy) {
+        claimed.push({ slug: legacySlug, friendId: legacy.friendId });
+      }
+    }
+  }
+
+  return claimed;
+};
 
 export const callback = {
   async index(req: BunRequest): Promise<Response> {
@@ -27,20 +61,16 @@ export const callback = {
 
       setSessionCookie(req, result.sessionId);
 
-      // Auto-claim the anonymous list this device most recently created, so
-      // "create a link → sign up to keep it" lands the user on their now-
-      // permanent list. Best effort: a failed claim never blocks login.
-      let destination = "/lists";
-      const claimSlug = req.cookies.get(CLAIM_COOKIE);
-      if (claimSlug) {
-        req.cookies.delete(CLAIM_COOKIE);
-        const claimed = await claimList(claimSlug, result.user.id);
-        if (claimed) {
-          destination = `/l/${claimSlug}`;
-          if (claimed.friendId) {
-            await saveUserFriendId(result.user.id, claimed.friendId);
-          }
-        }
+      // "Create a link → sign up to keep it" should hand over everything this
+      // device built. One claimed list lands on the list itself; several land
+      // on the index that now holds them all.
+      const claimed = await claimPendingLists(req, result.user.id);
+      const destination =
+        claimed.length === 1 ? `/l/${claimed[0].slug}` : "/lists";
+
+      const friendId = claimed.find((l) => l.friendId)?.friendId;
+      if (friendId) {
+        await saveUserFriendId(result.user.id, friendId);
       }
 
       return new Response("", {

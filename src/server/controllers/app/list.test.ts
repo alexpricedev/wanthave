@@ -170,7 +170,8 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
     expect(html).toContain("Your link is ready");
-    expect(html).toContain("Keep it forever");
+    expect(html).toContain("Keep it editable");
+    expect(html).toContain("edit the cards as you trade");
   });
 
   test("renders the expired page (200, never 404)", async () => {

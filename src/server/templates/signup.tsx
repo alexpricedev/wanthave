@@ -31,7 +31,8 @@ export const Signup = ({ state }: SignupProps) => {
           <div className="login-card">
             <h1 className="login-title">Create your account</h1>
             <p className="login-subtitle">
-              We'll send you a magic link to sign up instantly
+              We'll send you a magic link to sign up instantly. Your lists stop
+              expiring and you can edit them as you trade.
             </p>
 
             {state?.state === "email-sent" ? (

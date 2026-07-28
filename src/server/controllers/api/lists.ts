@@ -3,17 +3,48 @@ import { getSessionContext } from "../../middleware/auth";
 import { csrfProtection } from "../../middleware/csrf";
 import { rateLimit } from "../../middleware/rate-limit";
 import {
+  ANON_TTL_DAYS,
   type CardInput,
   createTradeList,
   updateTradeList,
 } from "../../services/lists";
 import { setSessionCookie } from "../../services/sessions";
 import { saveUserFriendId } from "../../services/users";
+import { computeHMAC, generateSecureToken } from "../../utils/crypto";
 
-// Set on anonymous list creation so the next successful login auto-claims the
-// list into the new account (see auth/callback). Readable by JS is fine — it
-// only holds a public slug.
+// Legacy: anonymous list creation used to drop the newest list's slug here, and
+// login claimed that one list. Nothing writes it any more — auth/callback still
+// reads it so guests mid-flow when claim tokens shipped don't lose their list.
+// Safe to delete once the old cookie's 7-day max-age has passed.
 export const CLAIM_COOKIE = "wh_claim";
+
+// Per-device claim token. Every anonymous list stores its HMAC, so signing in
+// adopts all of them at once (see auth/callback). httpOnly: unlike the slug it
+// replaces, holding this token is what authorizes the claim.
+export const CLAIM_TOKEN_COOKIE = "wh_owner";
+
+// Outlive the lists it claims, so the window to sign up and keep them matches
+// how long they actually live rather than expiring out from under the user.
+const CLAIM_TOKEN_COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  path: "/",
+  maxAge: ANON_TTL_DAYS * 24 * 60 * 60,
+};
+
+// Shape of a freshly minted generateSecureToken(). The cookie is user-supplied,
+// so anything else gets thrown away rather than hashed into a DB column.
+const CLAIM_TOKEN_PATTERN = /^[A-Za-z0-9_-]{32}$/;
+
+// Reuse this device's existing token so every list it has built shares one, and
+// mint a fresh one for a first-time guest.
+const deviceClaimToken = (req: BunRequest): string => {
+  const existing = req.cookies.get(CLAIM_TOKEN_COOKIE);
+  return existing && CLAIM_TOKEN_PATTERN.test(existing)
+    ? existing
+    : generateSecureToken();
+};
 
 interface CreateBody {
   cards?: unknown;
@@ -72,11 +103,13 @@ export const listsApi = {
     }
 
     const friendId = asString(body.friendId);
+    const claimToken = ctx.user ? null : deviceClaimToken(req);
     const result = await createTradeList({
       cards: parseCards(body.cards),
       friendId,
       title: asString(body.title),
       userId: ctx.user?.id ?? null,
+      claimTokenHash: claimToken ? computeHMAC(claimToken) : null,
     });
 
     if (!result.ok) {
@@ -88,14 +121,14 @@ export const listsApi = {
       await saveUserFriendId(ctx.user.id, friendId);
     }
 
-    // Anonymous lists: drop a claim cookie so a later signup keeps this link.
-    if (!ctx.user) {
-      req.cookies.set(CLAIM_COOKIE, result.list.slug, {
-        httpOnly: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7,
-      });
+    // Re-set on every anonymous create so an active guest's claim window keeps
+    // pace with their newest list rather than aging out from the first one.
+    if (claimToken) {
+      req.cookies.set(
+        CLAIM_TOKEN_COOKIE,
+        claimToken,
+        CLAIM_TOKEN_COOKIE_OPTIONS,
+      );
     }
 
     return Response.json({ slug: result.list.slug }, { status: 201 });

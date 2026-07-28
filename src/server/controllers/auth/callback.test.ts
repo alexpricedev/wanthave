@@ -18,8 +18,28 @@ import { db } from "../../services/database";
 import { createTradeList } from "../../services/lists";
 import { SESSION_COOKIE_NAME } from "../../services/sessions";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
-import { CLAIM_COOKIE } from "../api/lists";
+import { computeHMAC } from "../../utils/crypto";
+import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
 import { callback } from "./callback";
+
+const DEVICE_TOKEN = "device-token-for-callback-tests";
+
+const anonList = async (opts: { friendId?: string } = {}): Promise<string> => {
+  const created = await createTradeList({
+    cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+    claimTokenHash: computeHMAC(DEVICE_TOKEN),
+    friendId: opts.friendId ?? null,
+  });
+  if (!created.ok) throw new Error("setup failed");
+  return created.list.slug;
+};
+
+const callbackWithCookie = (rawToken: string, cookie: string) =>
+  callback.index(
+    createBunRequest(`http://localhost:3000/auth/callback?token=${rawToken}`, {
+      headers: { cookie },
+    }),
+  );
 
 describe("Callback Controller", () => {
   beforeEach(async () => {
@@ -182,7 +202,74 @@ describe("Callback Controller", () => {
       expect(decodeURIComponent(location3 as string)).toContain("expired");
     });
 
-    test("claims a pending anon list and copies its friend ID to the account", async () => {
+    test("claims every anon list built on the device, not just the newest", async () => {
+      const withFriendId = await anonList({ friendId: "1234567890123456" });
+      await db`
+        UPDATE trade_list SET created_at = created_at - INTERVAL '1 hour'
+        WHERE slug = ${withFriendId}
+      `;
+      const newest = await anonList();
+
+      const { rawToken, user } = await createMagicLink("multi@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      // More than one list claimed, so the index is the useful landing page.
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+
+      const claimed = (await db`
+        SELECT slug FROM trade_list WHERE user_id = ${user.id}
+      `) as { slug: string }[];
+      expect(claimed.map((r) => r.slug).sort()).toEqual(
+        [withFriendId, newest].sort(),
+      );
+
+      // Newest first, so the most recent friend ID wins — falling back past the
+      // newest list here, which has none.
+      const rows = (await db`
+        SELECT friend_id FROM users WHERE id = ${user.id}
+      `) as { friend_id: string | null }[];
+      expect(rows[0].friend_id).toBe("1234567890123456");
+    });
+
+    test("lands on the list itself when the device made only one", async () => {
+      const slug = await anonList();
+
+      const { rawToken } = await createMagicLink("single@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      expect(response.headers.get("location")).toBe(`/l/${slug}`);
+    });
+
+    test("leaves another device's lists alone", async () => {
+      const created = await createTradeList({
+        cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+        claimTokenHash: computeHMAC("someone-elses-token"),
+      });
+      if (!created.ok) throw new Error("setup failed");
+
+      const { rawToken, user } = await createMagicLink("nosy@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      expect(response.headers.get("location")).toBe("/lists");
+      const claimed = await db`
+        SELECT slug FROM trade_list WHERE user_id = ${user.id}
+      `;
+      expect(claimed).toHaveLength(0);
+    });
+
+    // Guests who created a list before claim tokens shipped still hold the old
+    // slug cookie — they shouldn't lose that list.
+    test("still claims via the legacy slug cookie, friend ID and all", async () => {
       const created = await createTradeList({
         cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
         friendId: "1234567890123456",

@@ -103,12 +103,14 @@ export const ListPage = ({
             {canClaim ? (
               <div className="nudge" data-nudge>
                 <p className="nudge-copy">
-                  BTW: This link expires in 90 days. Create a free account to
-                  keep it forever and edit it anytime.
+                  BTW: this link can't be changed once you walk away, and it
+                  expires in 90 days. A free account lets you edit the cards as
+                  you trade—same link, so your Discord post stays current—and
+                  keeps it from expiring.
                 </p>
                 <div className="nudge-actions">
                   <a className="btn-primary nudge-btn" href="/signup">
-                    Keep it forever
+                    Keep it editable
                   </a>
                   <button
                     type="button"

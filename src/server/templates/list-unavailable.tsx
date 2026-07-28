@@ -30,7 +30,7 @@ export const ListUnavailable = ({ reason, user, csrfToken }: Props) => {
         </h1>
         <p className="lead">
           {expired
-            ? "Anonymous lists last 90 days. The good news: making a fresh one takes under two minutes."
+            ? "Anonymous lists last 90 days. The good news: making a fresh one takes under two minutes—and with a free account your next one never expires and stays editable."
             : "This link doesn't point to a trade list. It may have been mistyped or removed."}
         </p>
         <FlywheelCta variant="primary" />
