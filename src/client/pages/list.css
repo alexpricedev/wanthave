@@ -137,9 +137,8 @@
   /* ── Owner bar ────────────────────────────────────────────────────────── */
   .owner-bar {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
     padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
     background: var(--color-ground);
@@ -147,8 +146,22 @@
     border-radius: var(--radius-sm);
   }
 
+  .owner-bar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
   .owner-note {
     font-size: 0.875rem;
+  }
+
+  /* Compact rerun of the share row — same controls, sized for the owner bar. */
+  .owner-bar .share-url,
+  .owner-bar .share-copy {
+    font-size: 0.875rem;
+    padding-block: 9px;
   }
 
   /* ── Unavailable / expired ────────────────────────────────────────────── */
