@@ -175,8 +175,8 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
     expect(html).toContain("Your link is ready");
-    expect(html).toContain("Keep it editable");
-    expect(html).toContain("edit the cards as you trade");
+    expect(html).toContain("Claim account");
+    expect(html).toContain("update it as trades come in");
   });
 
   test("tells a guest the list is theirs and offers to claim it", async () => {
