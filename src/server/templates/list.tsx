@@ -81,7 +81,7 @@ export const ListPage = ({
               <h1 className="share-title">Your link is ready</h1>
             </div>
             <p className="share-sub">
-              Paste this link into Discord and it'll show a previous of your
+              Paste this link into Discord and it'll show a preview of your
               list.
             </p>
             <div className="share-url-row">
