@@ -12,7 +12,7 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "Do I need an account?",
     answer:
-      "No. You can build a trade list and share it anonymously in under two minutes. Create a free account only if you want your link to last forever and stay editable.",
+      "No. You can build a trade list and share it anonymously in under two minutes. An anonymous list is fixed once it's made—create a free account if you want to edit it as you trade and keep the link from expiring.",
   },
   {
     question: "How does it work?",
@@ -32,7 +32,7 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "How long does my link last?",
     answer:
-      "Anonymous links last 90 days. With a free account they never expire, and you can edit a list in place so a pinned Discord post always stays current.",
+      "Anonymous links last 90 days and can't be changed after you create them. With a free account they never expire and you can edit a list in place—the URL stays the same, so a pinned Discord post always stays current.",
   },
   {
     question: "Is it free?",
@@ -154,8 +154,8 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         <p className="home-step-eyebrow">Step 2</p>
         <h2>Share your unique URL</h2>
         <p className="text-secondary">
-          One link that you can update as you trade. The page even shows your
-          Friend ID.
+          One link, and with a free account you can edit it as you trade. The
+          page even shows your Friend ID.
         </p>
         <code className="home-step-url">
           wanthave.trade/l/<span className="want">list-id</span>

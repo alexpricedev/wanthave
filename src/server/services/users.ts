@@ -29,3 +29,21 @@ export const saveUserFriendId = async (
   `;
   return friendId;
 };
+
+// Same, but only fills a blank. Claiming anonymous lists at login carries their
+// friend ID onto the account, and a list built months ago shouldn't overwrite an
+// ID the user has since set on purpose. The guard lives in the WHERE clause so
+// there's no read-then-write race.
+export const backfillUserFriendId = async (
+  userId: string,
+  rawFriendId: string | null | undefined,
+): Promise<string | null> => {
+  const friendId = normalizeFriendId(rawFriendId);
+  if (!friendId) return null;
+
+  await db`
+    UPDATE users SET friend_id = ${friendId}
+    WHERE id = ${userId} AND friend_id IS NULL
+  `;
+  return friendId;
+};

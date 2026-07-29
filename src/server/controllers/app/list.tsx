@@ -4,6 +4,7 @@ import { createCsrfToken } from "../../services/csrf";
 import {
   getCachedOgImage,
   getTradeListBySlug,
+  isDeviceClaimant,
   isExpired,
   setCachedOgImage,
 } from "../../services/lists";
@@ -12,6 +13,7 @@ import { setSessionCookie } from "../../services/sessions";
 import { ListPage } from "../../templates/list";
 import { ListUnavailable } from "../../templates/list-unavailable";
 import { render } from "../../utils/response";
+import { CLAIM_TOKEN_COOKIE } from "../api/lists";
 
 // The site-wide branded fallback OG, served for expired/missing links so old
 // Discord posts never look broken.
@@ -67,12 +69,22 @@ export const list = {
 
     const isOwner = ctx.user?.id != null && tradeList.userId === ctx.user.id;
 
+    // A guest returning to a list they built: the page can tell them it's
+    // theirs and what an account would add. Only worth a lookup for an
+    // unclaimed list viewed by someone carrying a claim token.
+    const claimToken = req.cookies.get(CLAIM_TOKEN_COOKIE);
+    const builtHere =
+      tradeList.userId === null &&
+      Boolean(claimToken) &&
+      (await isDeviceClaimant(slug, claimToken as string));
+
     return render(
       <ListPage
         list={tradeList}
         shareUrl={shareUrl}
         created={created}
         canClaim={tradeList.userId === null}
+        builtHere={builtHere}
         isOwner={isOwner}
         user={ctx.user}
         csrfToken={logoutCsrf}

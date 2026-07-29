@@ -13,6 +13,8 @@ interface ListProps {
   shareUrl: string;
   created: boolean;
   canClaim: boolean;
+  // This visitor built the list but has no account yet — see isDeviceClaimant.
+  builtHere: boolean;
   isOwner: boolean;
   user: User | null;
   csrfToken?: string;
@@ -41,6 +43,7 @@ export const ListPage = ({
   shareUrl,
   created,
   canClaim,
+  builtHere,
   isOwner,
   user,
   csrfToken,
@@ -78,7 +81,7 @@ export const ListPage = ({
               <h1 className="share-title">Your link is ready</h1>
             </div>
             <p className="share-sub">
-              Paste this link into Discord and it'll show a previous of your
+              Paste this link into Discord and it'll show a preview of your
               list.
             </p>
             <div className="share-url-row">
@@ -103,12 +106,13 @@ export const ListPage = ({
             {canClaim ? (
               <div className="nudge" data-nudge>
                 <p className="nudge-copy">
-                  BTW: This link expires in 90 days. Create a free account to
-                  keep it forever and edit it anytime.
+                  BTW: this unique link is locked, and will expire in 90 days.
+                  You can create a free account which will link this list to
+                  your email and allow you to update it as trades come in.
                 </p>
                 <div className="nudge-actions">
                   <a className="btn-primary nudge-btn" href="/signup">
-                    Keep it forever
+                    Claim account
                   </a>
                   <button
                     type="button"
@@ -127,12 +131,33 @@ export const ListPage = ({
               {list.title ?? "Pokémon Pocket trade list"}
             </h1>
             <p className="list-head-hint">
-              This page has a list of cards your buddy is looking for and a list
-              of the cards he has to trade.
+              {isOwner || builtHere
+                ? "This page has the cards you're looking for and the cards you have up for trade."
+                : "This page has a list of cards your buddy is looking for and a list of the cards he has to trade."}
             </p>
             <CountBadge wantCount={wantCount} haveCount={haveCount} />
           </header>
         )}
+
+        {/* Returning to a list you made as a guest. The share panel above
+            already makes the pitch on the ?created=1 pass. */}
+        {builtHere && !created ? (
+          <div className="claim-bar">
+            <div className="claim-bar-copy">
+              <span className="owner-note text-tertiary">
+                You made this list
+              </span>
+              <p className="nudge-copy">
+                It expires in 90 days and can't be changed. Creating an account
+                now will link it with your email address and allow you to edit
+                the cards as you trade.
+              </p>
+            </div>
+            <a className="btn-primary nudge-btn" href="/signup">
+              Claim &amp; edit
+            </a>
+          </div>
+        ) : null}
 
         {isOwner ? (
           <div className="owner-bar">
@@ -178,7 +203,9 @@ export const ListPage = ({
 
         {list.friendId ? <FriendIdBlock friendId={list.friendId} /> : null}
 
-        {!created ? <FlywheelCta variant="quiet" /> : null}
+        {/* "Build your own list" is for visitors — the person who built this
+            one is being asked to claim it instead. */}
+        {!created && !builtHere ? <FlywheelCta variant="quiet" /> : null}
       </article>
     </Layout>
   );

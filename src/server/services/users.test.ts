@@ -15,7 +15,7 @@ mock.module("./database", () => ({
 }));
 
 import { db } from "./database";
-import { getUsers, saveUserFriendId } from "./users";
+import { backfillUserFriendId, getUsers, saveUserFriendId } from "./users";
 
 const createUser = async (email: string): Promise<string> => {
   const id = randomUUID();
@@ -107,5 +107,32 @@ describe("saveUserFriendId", () => {
     await saveUserFriendId(userId, "5555666677778888");
 
     expect(await friendIdOf(userId)).toBe("5555666677778888");
+  });
+});
+
+describe("backfillUserFriendId", () => {
+  test("fills a blank friend ID", async () => {
+    const userId = await createUser("blank@test.com");
+
+    expect(await backfillUserFriendId(userId, "1234 5678 9012 3456")).toBe(
+      "1234567890123456",
+    );
+    expect(await friendIdOf(userId)).toBe("1234567890123456");
+  });
+
+  test("leaves an ID the user already set alone", async () => {
+    const userId = await createUser("existing@test.com");
+    await saveUserFriendId(userId, "1111222233334444");
+
+    await backfillUserFriendId(userId, "5555666677778888");
+
+    expect(await friendIdOf(userId)).toBe("1111222233334444");
+  });
+
+  test("ignores an ID that isn't 16 digits", async () => {
+    const userId = await createUser("backfill-invalid@test.com");
+
+    expect(await backfillUserFriendId(userId, "12345")).toBeNull();
+    expect(await friendIdOf(userId)).toBeNull();
   });
 });

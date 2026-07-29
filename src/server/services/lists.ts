@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { computeHMAC } from "../utils/crypto";
 import { normalizeFriendId } from "../utils/friend-id";
 import { type Card, getCardById, isValidCardId, rarityRank } from "./cards";
 import { db } from "./database";
@@ -37,6 +38,9 @@ export interface CreateListInput {
   friendId?: string | null;
   userId?: string | null;
   title?: string | null;
+  // HMAC of the creating device's claim token. Anonymous lists only — an
+  // account list is already owned and has nothing to claim.
+  claimTokenHash?: string | null;
 }
 
 export interface ListCardRow {
@@ -212,6 +216,7 @@ export const createTradeList = async (
   const expiresAt = userId
     ? null
     : new Date(Date.now() + ANON_TTL_DAYS * 24 * 60 * 60 * 1000).toISOString();
+  const claimTokenHash = userId ? null : (input.claimTokenHash ?? null);
 
   // Retry on the astronomically-unlikely slug collision.
   for (let attempt = 0; attempt < 5; attempt++) {
@@ -219,8 +224,8 @@ export const createTradeList = async (
     try {
       const list = await db.begin(async (tx) => {
         const [row] = (await tx`
-          INSERT INTO trade_list (slug, user_id, title, friend_id, expires_at)
-          VALUES (${slug}, ${userId}, ${title}, ${friendId}, ${expiresAt})
+          INSERT INTO trade_list (slug, user_id, title, friend_id, expires_at, claim_token_hash)
+          VALUES (${slug}, ${userId}, ${title}, ${friendId}, ${expiresAt}, ${claimTokenHash})
           RETURNING id, slug, user_id, title, friend_id, created_at, updated_at, expires_at
         `) as TradeListRow[];
         await insertCards(tx, row.id, cards);
@@ -303,6 +308,11 @@ export const updateTradeList = async (
   return hydrate(updated, loadCardRows(cardsToRaw(cards)));
 };
 
+export interface ClaimedList {
+  slug: string;
+  friendId: string | null;
+}
+
 // Claim an anonymous list into an account: it stops expiring and starts
 // belonging to the user. No-op if already owned by someone.
 export const claimList = async (
@@ -311,11 +321,52 @@ export const claimList = async (
 ): Promise<{ friendId: string | null } | null> => {
   const [row] = (await db`
     UPDATE trade_list
-    SET user_id = ${userId}, expires_at = NULL, updated_at = CURRENT_TIMESTAMP
+    SET user_id = ${userId}, expires_at = NULL, claim_token_hash = NULL,
+        updated_at = CURRENT_TIMESTAMP
     WHERE slug = ${slug} AND user_id IS NULL
     RETURNING friend_id
   `) as { friend_id: string | null }[];
   return row ? { friendId: row.friend_id } : null;
+};
+
+// Claim every anonymous list built on one device — the whole point of the claim
+// token, so a guest who made three lists doesn't sign up and keep only one.
+// Returns them newest first so the caller can land the user on the list they
+// most likely just made.
+export const claimListsByToken = async (
+  claimTokenHash: string,
+  userId: string,
+): Promise<ClaimedList[]> => {
+  const rows = (await db`
+    UPDATE trade_list
+    SET user_id = ${userId}, expires_at = NULL, claim_token_hash = NULL,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE claim_token_hash = ${claimTokenHash} AND user_id IS NULL
+    RETURNING slug, friend_id, created_at
+  `) as { slug: string; friend_id: string | null; created_at: string }[];
+
+  // UPDATE ... RETURNING has no defined row order, so sort here.
+  return rows
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    )
+    .map((r) => ({ slug: r.slug, friendId: r.friend_id }));
+};
+
+// Does this device hold the claim token for an unclaimed list — i.e. did it
+// build it? Lets the list page tell a guest the list is theirs before they have
+// an account. Deliberately returns no token material to the caller.
+export const isDeviceClaimant = async (
+  slug: string,
+  claimToken: string,
+): Promise<boolean> => {
+  const rows = await db`
+    SELECT 1 FROM trade_list
+    WHERE slug = ${slug} AND user_id IS NULL
+      AND claim_token_hash = ${computeHMAC(claimToken)}
+  `;
+  return rows.length > 0;
 };
 
 export const deleteList = async (

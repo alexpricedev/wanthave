@@ -15,15 +15,59 @@ mock.module("../../services/database", () => ({
 
 import { createMagicLink } from "../../services/auth";
 import { db } from "../../services/database";
-import { createTradeList } from "../../services/lists";
 import { SESSION_COOKIE_NAME } from "../../services/sessions";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
-import { CLAIM_COOKIE } from "../api/lists";
-import { callback } from "./callback";
+import { computeHMAC } from "../../utils/crypto";
+import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
+
+// The real list service, with a switch one test flips to make the claim blow
+// up — the point being that a failed claim still leaves the user logged in.
+// Captured before mocking so the wrapper can't recurse into itself.
+const realLists = await import("../../services/lists");
+const { createTradeList } = realLists;
+const realClaimListsByToken = realLists.claimListsByToken;
+const realClaimList = realLists.claimList;
+let claimThrows = false;
+let legacyClaimThrows = false;
+
+mock.module("../../services/lists", () => ({
+  ...realLists,
+  claimListsByToken: async (hash: string, userId: string) => {
+    if (claimThrows) throw new Error("claim exploded");
+    return realClaimListsByToken(hash, userId);
+  },
+  claimList: async (slug: string, userId: string) => {
+    if (legacyClaimThrows) throw new Error("legacy claim exploded");
+    return realClaimList(slug, userId);
+  },
+}));
+
+const { callback } = await import("./callback");
+
+const DEVICE_TOKEN = "device-token-for-callback-tests";
+
+const anonList = async (opts: { friendId?: string } = {}): Promise<string> => {
+  const created = await createTradeList({
+    cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+    claimTokenHash: computeHMAC(DEVICE_TOKEN),
+    friendId: opts.friendId ?? null,
+  });
+  if (!created.ok) throw new Error("setup failed");
+  return created.list.slug;
+};
+
+const callbackWithCookie = (rawToken: string, cookie: string) =>
+  callback.index(
+    createBunRequest(`http://localhost:3000/auth/callback?token=${rawToken}`, {
+      headers: { cookie },
+    }),
+  );
 
 describe("Callback Controller", () => {
   beforeEach(async () => {
     await cleanupTestData(db);
+    claimThrows = false;
+    legacyClaimThrows = false;
   });
 
   afterAll(async () => {
@@ -182,7 +226,105 @@ describe("Callback Controller", () => {
       expect(decodeURIComponent(location3 as string)).toContain("expired");
     });
 
-    test("claims a pending anon list and copies its friend ID to the account", async () => {
+    test("claims every anon list built on the device, not just the newest", async () => {
+      const withFriendId = await anonList({ friendId: "1234567890123456" });
+      await db`
+        UPDATE trade_list SET created_at = created_at - INTERVAL '1 hour'
+        WHERE slug = ${withFriendId}
+      `;
+      const newest = await anonList();
+
+      const { rawToken, user } = await createMagicLink("multi@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      // More than one list claimed, so the index is the useful landing page.
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+
+      const claimed = (await db`
+        SELECT slug FROM trade_list WHERE user_id = ${user.id}
+      `) as { slug: string }[];
+      expect(claimed.map((r) => r.slug).sort()).toEqual(
+        [withFriendId, newest].sort(),
+      );
+
+      // Newest first, so the most recent friend ID wins — falling back past the
+      // newest list here, which has none.
+      const rows = (await db`
+        SELECT friend_id FROM users WHERE id = ${user.id}
+      `) as { friend_id: string | null }[];
+      expect(rows[0].friend_id).toBe("1234567890123456");
+    });
+
+    test("lands on the list itself when the device made only one", async () => {
+      const slug = await anonList();
+
+      const { rawToken } = await createMagicLink("single@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      expect(response.headers.get("location")).toBe(`/l/${slug}`);
+    });
+
+    test("a failed claim leaves the user logged in, not on an error page", async () => {
+      const slug = await anonList();
+      const { rawToken, user } = await createMagicLink("resilient@example.com");
+
+      claimThrows = true;
+      const request = createBunRequest(
+        `http://localhost:3000/auth/callback?token=${rawToken}`,
+        { headers: { cookie: `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}` } },
+      );
+      const response = await callback.index(request);
+
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+      expect(findSetCookie(request, SESSION_COOKIE_NAME)).toContain(
+        `${SESSION_COOKIE_NAME}=`,
+      );
+
+      // The claim didn't happen, and the token cookie survives so the next
+      // login can retry it.
+      expect(findSetCookie(request, CLAIM_TOKEN_COOKIE)).toBeUndefined();
+      const rows = (await db`
+        SELECT user_id FROM trade_list WHERE slug = ${slug}
+      `) as { user_id: string | null }[];
+      expect(rows[0].user_id).toBeNull();
+
+      const users = (await db`
+        SELECT id FROM users WHERE id = ${user.id}
+      `) as { id: string }[];
+      expect(users).toHaveLength(1);
+    });
+
+    test("leaves another device's lists alone", async () => {
+      const created = await createTradeList({
+        cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+        claimTokenHash: computeHMAC("someone-elses-token"),
+      });
+      if (!created.ok) throw new Error("setup failed");
+
+      const { rawToken, user } = await createMagicLink("nosy@example.com");
+      const response = await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      expect(response.headers.get("location")).toBe("/lists");
+      const claimed = await db`
+        SELECT slug FROM trade_list WHERE user_id = ${user.id}
+      `;
+      expect(claimed).toHaveLength(0);
+    });
+
+    // Guests who created a list before claim tokens shipped still hold the old
+    // slug cookie — they shouldn't lose that list.
+    test("still claims via the legacy slug cookie, friend ID and all", async () => {
       const created = await createTradeList({
         cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
         friendId: "1234567890123456",
@@ -207,6 +349,52 @@ describe("Callback Controller", () => {
       expect((rows[0] as { friend_id: string | null }).friend_id).toBe(
         "1234567890123456",
       );
+    });
+
+    test("a claimed list doesn't overwrite the friend ID already on the account", async () => {
+      await anonList({ friendId: "1111222233334444" });
+      const { rawToken, user } = await createMagicLink("settled@example.com");
+      // Returning user who set their own ID after a previous login.
+      await db`
+        UPDATE users SET friend_id = '5555666677778888' WHERE id = ${user.id}
+      `;
+
+      await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      const rows = (await db`
+        SELECT friend_id FROM users WHERE id = ${user.id}
+      `) as { friend_id: string | null }[];
+      expect(rows[0].friend_id).toBe("5555666677778888");
+    });
+
+    test("keeps the legacy cookie when its claim fails, so a retry is possible", async () => {
+      const created = await createTradeList({
+        cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      });
+      if (!created.ok) throw new Error("setup failed");
+
+      const { rawToken } = await createMagicLink("retry@example.com");
+      legacyClaimThrows = true;
+
+      const request = createBunRequest(
+        `http://localhost:3000/auth/callback?token=${rawToken}`,
+        { headers: { cookie: `${CLAIM_COOKIE}=${created.list.slug}` } },
+      );
+      const response = await callback.index(request);
+
+      // Login still succeeds, and the cookie isn't cleared — deleting it before
+      // the claim landed would orphan the list for good.
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+      expect(findSetCookie(request, CLAIM_COOKIE)).toBeUndefined();
+
+      const rows = (await db`
+        SELECT user_id FROM trade_list WHERE slug = ${created.list.slug}
+      `) as { user_id: string | null }[];
+      expect(rows[0].user_id).toBeNull();
     });
 
     test("handles database errors gracefully", async () => {
