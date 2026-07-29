@@ -96,6 +96,55 @@
     }
   }
 
+  /* ── Unfurl preview ───────────────────────────────────────────────────── */
+  .og-preview {
+    margin-top: 0.75rem;
+  }
+
+  .og-preview-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: fit-content;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+    list-style: none;
+
+    /* Safari still paints the disclosure triangle without this. */
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 5px solid currentcolor;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      transition: transform 0.15s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-bone);
+    }
+  }
+
+  .og-preview[open] .og-preview-toggle::before {
+    transform: rotate(90deg);
+  }
+
+  .og-preview-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 0.75rem;
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius-sm);
+  }
+
   /* ── Account nudge ────────────────────────────────────────────────────── */
   .nudge {
     margin-top: 1.25rem;
