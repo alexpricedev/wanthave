@@ -26,13 +26,19 @@ import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
 const realLists = await import("../../services/lists");
 const { createTradeList } = realLists;
 const realClaimListsByToken = realLists.claimListsByToken;
+const realClaimList = realLists.claimList;
 let claimThrows = false;
+let legacyClaimThrows = false;
 
 mock.module("../../services/lists", () => ({
   ...realLists,
   claimListsByToken: async (hash: string, userId: string) => {
     if (claimThrows) throw new Error("claim exploded");
     return realClaimListsByToken(hash, userId);
+  },
+  claimList: async (slug: string, userId: string) => {
+    if (legacyClaimThrows) throw new Error("legacy claim exploded");
+    return realClaimList(slug, userId);
   },
 }));
 
@@ -61,6 +67,7 @@ describe("Callback Controller", () => {
   beforeEach(async () => {
     await cleanupTestData(db);
     claimThrows = false;
+    legacyClaimThrows = false;
   });
 
   afterAll(async () => {
@@ -342,6 +349,33 @@ describe("Callback Controller", () => {
       expect((rows[0] as { friend_id: string | null }).friend_id).toBe(
         "1234567890123456",
       );
+    });
+
+    test("keeps the legacy cookie when its claim fails, so a retry is possible", async () => {
+      const created = await createTradeList({
+        cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      });
+      if (!created.ok) throw new Error("setup failed");
+
+      const { rawToken } = await createMagicLink("retry@example.com");
+      legacyClaimThrows = true;
+
+      const request = createBunRequest(
+        `http://localhost:3000/auth/callback?token=${rawToken}`,
+        { headers: { cookie: `${CLAIM_COOKIE}=${created.list.slug}` } },
+      );
+      const response = await callback.index(request);
+
+      // Login still succeeds, and the cookie isn't cleared — deleting it before
+      // the claim landed would orphan the list for good.
+      expect(response.status).toBe(303);
+      expect(response.headers.get("location")).toBe("/lists");
+      expect(findSetCookie(request, CLAIM_COOKIE)).toBeUndefined();
+
+      const rows = (await db`
+        SELECT user_id FROM trade_list WHERE slug = ${created.list.slug}
+      `) as { user_id: string | null }[];
+      expect(rows[0].user_id).toBeNull();
     });
 
     test("handles database errors gracefully", async () => {

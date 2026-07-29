@@ -192,6 +192,22 @@ describe("list.index", () => {
     expect(html).toContain("Claim &amp; edit");
     // They built it — don't pitch them on building one.
     expect(html).not.toContain("Create your own trade list");
+    // ...and don't describe it as someone else's.
+    expect(html).not.toContain("your buddy");
+  });
+
+  test("addresses the owner in the second person, not as a visitor", async () => {
+    mockContext = ownerContext;
+    mockList = { ...buildList(), userId: "user-1" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+
+    expect(html).toContain("the cards you&#x27;re looking for");
+    expect(html).not.toContain("your buddy");
   });
 
   test("does not offer the claim to a visitor without the token", async () => {

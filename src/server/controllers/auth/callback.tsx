@@ -36,13 +36,15 @@ const claimPendingLists = async (
 
     const legacySlug = req.cookies.get(CLAIM_COOKIE);
     if (legacySlug) {
-      req.cookies.delete(CLAIM_COOKIE);
       if (!claimed.some((l) => l.slug === legacySlug)) {
         const legacy = await claimList(legacySlug, userId);
         if (legacy) {
           claimed.push({ slug: legacySlug, friendId: legacy.friendId });
         }
       }
+      // Only once the claim is settled — dropping it first would orphan the
+      // list for good if claimList threw.
+      req.cookies.delete(CLAIM_COOKIE);
     }
 
     // Carrying the newest claimed friend ID onto the account is part of the

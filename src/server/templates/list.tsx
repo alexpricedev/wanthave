@@ -131,8 +131,9 @@ export const ListPage = ({
               {list.title ?? "Pokémon Pocket trade list"}
             </h1>
             <p className="list-head-hint">
-              This page has a list of cards your buddy is looking for and a list
-              of the cards he has to trade.
+              {isOwner || builtHere
+                ? "This page has the cards you're looking for and the cards you have up for trade."
+                : "This page has a list of cards your buddy is looking for and a list of the cards he has to trade."}
             </p>
             <CountBadge wantCount={wantCount} haveCount={haveCount} />
           </header>
