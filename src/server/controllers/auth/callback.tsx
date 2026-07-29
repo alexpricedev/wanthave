@@ -8,7 +8,7 @@ import {
 } from "../../services/lists";
 import { log } from "../../services/logger";
 import { setSessionCookie } from "../../services/sessions";
-import { saveUserFriendId } from "../../services/users";
+import { backfillUserFriendId } from "../../services/users";
 import { computeHMAC } from "../../utils/crypto";
 import { redirect } from "../../utils/response";
 import { CLAIM_COOKIE, CLAIM_TOKEN_COOKIE } from "../api/lists";
@@ -48,10 +48,11 @@ const claimPendingLists = async (
     }
 
     // Carrying the newest claimed friend ID onto the account is part of the
-    // adoption, and just as optional.
+    // adoption, and just as optional. A backfill, not a write: these lists can
+    // be months old, so they don't get to overwrite an ID already on file.
     const friendId = claimed.find((l) => l.friendId)?.friendId;
     if (friendId) {
-      await saveUserFriendId(userId, friendId);
+      await backfillUserFriendId(userId, friendId);
     }
   } catch (error) {
     log.error("claim", `Could not claim lists for ${userId}: ${error}`);

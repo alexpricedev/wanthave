@@ -351,6 +351,25 @@ describe("Callback Controller", () => {
       );
     });
 
+    test("a claimed list doesn't overwrite the friend ID already on the account", async () => {
+      await anonList({ friendId: "1111222233334444" });
+      const { rawToken, user } = await createMagicLink("settled@example.com");
+      // Returning user who set their own ID after a previous login.
+      await db`
+        UPDATE users SET friend_id = '5555666677778888' WHERE id = ${user.id}
+      `;
+
+      await callbackWithCookie(
+        rawToken,
+        `${CLAIM_TOKEN_COOKIE}=${DEVICE_TOKEN}`,
+      );
+
+      const rows = (await db`
+        SELECT friend_id FROM users WHERE id = ${user.id}
+      `) as { friend_id: string | null }[];
+      expect(rows[0].friend_id).toBe("5555666677778888");
+    });
+
     test("keeps the legacy cookie when its claim fails, so a retry is possible", async () => {
       const created = await createTradeList({
         cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
