@@ -10,53 +10,63 @@ import sharp from "sharp";
 import { artObjectKey, getCardById } from "./cards";
 import { log } from "./logger";
 
+// "We don't have this" and "we couldn't find out" need telling apart. `absent`
+// is a normal state with a known remedy (run the sync) and is safe to answer
+// with a cacheable placeholder. `error` means the bucket didn't answer, which is
+// never safe to cache — a blank tile pinned at the CDN would outlive the blip
+// that caused it — and, if the S3 credentials are wrong, is the only signal that
+// anything is broken at all.
+export type CardImage =
+  | { status: "ok"; bytes: Uint8Array }
+  | { status: "absent" }
+  | { status: "error" };
+
 const CACHE_DIR = ".cache/cards";
 const memoryCache = new Map<string, Uint8Array>();
-const inflight = new Map<string, Promise<Uint8Array | null>>();
+const inflight = new Map<string, Promise<CardImage>>();
 
 const cachePath = (id: string): string => `${CACHE_DIR}/${id}.webp`;
 
-const fetchAndCache = async (id: string): Promise<Uint8Array | null> => {
+const fetchAndCache = async (id: string): Promise<CardImage> => {
   const card = getCardById(id);
-  if (!card) return null;
+  if (!card) return { status: "absent" };
 
   const onDisk = Bun.file(cachePath(id));
   if (await onDisk.exists()) {
     const bytes = new Uint8Array(await onDisk.arrayBuffer());
     memoryCache.set(id, bytes);
-    return bytes;
+    return { status: "ok", bytes };
   }
 
   try {
     const object = Bun.s3.file(artObjectKey(card));
     if (!(await object.exists())) {
       // A card in the catalogue whose art hasn't been synced yet — expected in
-      // the window between a set landing and sync-card-art.ts running. The
-      // proxy serves a placeholder tile for this; nothing is cached, so it
-      // resolves itself once the sync happens.
+      // the window between a set landing and sync-card-art.ts running. Nothing
+      // is cached, so it resolves itself once the sync happens.
       log.warn("card-images", `No art in bucket for ${id}`);
-      return null;
+      return { status: "absent" };
     }
     const bytes = new Uint8Array(await object.arrayBuffer());
     await Bun.write(cachePath(id), bytes);
     memoryCache.set(id, bytes);
-    return bytes;
+    return { status: "ok", bytes };
   } catch (error) {
-    log.warn(
+    // Logged at error, not warn: every card failing this way means the bucket is
+    // unreachable or misconfigured, and that should be loud.
+    log.error(
       "card-images",
       `Read failed for ${id}: ${error instanceof Error ? error.message : String(error)}`,
     );
-    return null;
+    return { status: "error" };
   }
 };
 
-// Returns the webp bytes for a card, or null if the id is unknown or the fetch
-// failed. Concurrent requests for the same id share one fetch.
-export const getCardImageBytes = async (
-  id: string,
-): Promise<Uint8Array | null> => {
+// Returns a card's webp bytes, or why we haven't got them. Concurrent requests
+// for the same id share one read.
+export const getCardImage = async (id: string): Promise<CardImage> => {
   const cached = memoryCache.get(id);
-  if (cached) return cached;
+  if (cached) return { status: "ok", bytes: cached };
 
   const existing = inflight.get(id);
   if (existing) return existing;

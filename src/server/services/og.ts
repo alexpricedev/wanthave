@@ -6,7 +6,7 @@
 import { readFileSync } from "node:fs";
 import opentype from "opentype.js";
 import sharp, { type OverlayOptions } from "sharp";
-import { getCardImageBytes } from "./card-images";
+import { getCardImage } from "./card-images";
 import type { Card } from "./cards";
 import type { ListCardRow, TradeList } from "./lists";
 import { log } from "./logger";
@@ -148,10 +148,16 @@ const cardArt = async ({
   color,
 }: CardLayerOptions): Promise<Layer> => {
   const visible = Math.max(1, Math.min(width, visibleWidth));
-  const bytes = await getCardImageBytes(card.id);
-  if (bytes) {
+  // Absent and error both land on the placeholder here — an unfurl should
+  // degrade to a tile rather than fail — but either way `placeholder: true`
+  // stops the result being cached as final.
+  const image = await getCardImage(card.id);
+  if (image.status === "ok") {
     try {
-      const full = await sharp(bytes).resize(width, height).png().toBuffer();
+      const full = await sharp(image.bytes)
+        .resize(width, height)
+        .png()
+        .toBuffer();
       if (visible === width) return { buffer: full, placeholder: false };
       const cropped = await sharp(full)
         .extract({ left: 0, top: 0, width: visible, height })

@@ -1,6 +1,6 @@
 import type { BunRequest } from "bun";
 import {
-  getCardImageBytes,
+  getCardImage,
   getPlaceholderImageBytes,
 } from "../../services/card-images";
 import { getCardById } from "../../services/cards";
@@ -12,13 +12,24 @@ export const cardImage = {
     req: BunRequest<T>,
   ): Promise<Response> {
     const { id } = req.params;
-    const bytes = await getCardImageBytes(id);
-    if (bytes) {
-      return new Response(new Uint8Array(bytes), {
+    const image = await getCardImage(id);
+    if (image.status === "ok") {
+      return new Response(new Uint8Array(image.bytes), {
         headers: {
           "Content-Type": "image/webp",
           "Cache-Control": "public, max-age=31536000, immutable",
         },
+      });
+    }
+
+    // The bucket didn't answer. Say so rather than dressing a transient failure
+    // up as a 200: a placeholder here would be cached by the CDN and outlive the
+    // blip, and a wholesale outage (bad credentials, say) would show as a site
+    // full of blank tiles instead of something obviously wrong.
+    if (image.status === "error") {
+      return new Response("Card image temporarily unavailable", {
+        status: 503,
+        headers: { "Cache-Control": "no-store" },
       });
     }
 

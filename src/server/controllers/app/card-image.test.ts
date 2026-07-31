@@ -1,11 +1,16 @@
 import { describe, expect, mock, test } from "bun:test";
 import { createBunRequest } from "../../test-utils/bun-request";
 
-// Art for "a1-001" resolves; "b4-001" is a real card whose art the CDN doesn't
-// have yet. Nothing here touches the network.
+// Art for "a1-001" resolves; "b4-001" is a real card not yet mirrored into the
+// bucket; "a1-002" stands in for the bucket failing to answer. Nothing here
+// touches the network.
 mock.module("../../services/card-images", () => ({
-  getCardImageBytes: async (id: string) =>
-    id === "a1-001" ? new Uint8Array([1, 2, 3]) : null,
+  getCardImage: async (id: string) => {
+    if (id === "a1-001")
+      return { status: "ok", bytes: new Uint8Array([1, 2, 3]) };
+    if (id === "a1-002") return { status: "error" };
+    return { status: "absent" };
+  },
   getPlaceholderImageBytes: async () => new Uint8Array([9, 9]),
 }));
 
@@ -40,5 +45,13 @@ describe("cardImage.show", () => {
   test("404s for an id that isn't in the catalogue", async () => {
     const res = await show("zz9-999");
     expect(res.status).toBe(404);
+  });
+
+  // A placeholder here would be a 200 the CDN caches, so a momentary bucket
+  // failure would leave a blank tile pinned at the edge long after it passed.
+  test("503s without caching when the bucket can't be read", async () => {
+    const res = await show("a1-002");
+    expect(res.status).toBe(503);
+    expect(res.headers.get("Cache-Control")).toBe("no-store");
   });
 });

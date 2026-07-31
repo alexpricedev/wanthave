@@ -6,7 +6,7 @@ import type { ListCardRow, TradeList } from "./lists";
 // No network in tests: the renderer falls back to its placeholder tile, which
 // exercises the same layout maths as real art.
 mock.module("./card-images", () => ({
-  getCardImageBytes: async () => null,
+  getCardImage: async () => ({ status: "absent" }),
 }));
 
 import { renderOgImage } from "./og";
