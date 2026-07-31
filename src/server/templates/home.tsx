@@ -1,5 +1,9 @@
 import { Layout } from "@server/components/layouts";
-import { Wordmark } from "@server/components/wordmark";
+import {
+  DEMO_HAVES,
+  DEMO_OG_PATH,
+  DEMO_WANTS,
+} from "@server/services/demo-list";
 import { faqStructuredData } from "@server/services/seo";
 import type { User } from "@server/services/users";
 
@@ -40,22 +44,11 @@ const FAQ: { question: string; answer: string }[] = [
   },
 ];
 
-// A few striking cards to stand in for a real unfurl in the hero preview and
-// live-demo sections. Art is proxied same-origin via /img/card, same as
-// everywhere else. Modelled on a real Discord trade post: chasing one rainbow
-// ★2, with a row of rainbow (★2) and shiny (✵) cards up for trade — showing
-// off the rarities slang search resolves. Counts in the badges match what's
-// shown. Drawn from the newest set so the page shows what people are actually
-// hunting right now — refresh these when a set drops.
-const PREVIEW_WANTS = ["b4-188"]; // ★2 Mega Rayquaza ex (rainbow)
-const PREVIEW_HAVES = [
-  "b4-227", // ✵2 Mega Gardevoir ex (shiny)
-  "b4-187", // ★2 Mega Metagross ex (rainbow)
-  "b4-231", // ✵2 Mega Kangaskhan ex (shiny)
-  "b4-185", // ★2 Mega Gallade ex (rainbow)
-  "b4-226", // ✵2 Mega Swampert ex (shiny)
-  "b4-182", // ★2 Mega Sharpedo ex (rainbow)
-];
+// The live-demo section further down the page shows the same cards as the
+// hero's rendered unfurl. Art is proxied same-origin via /img/card, same as
+// everywhere else.
+const PREVIEW_WANTS = DEMO_WANTS;
+const PREVIEW_HAVES = DEMO_HAVES;
 
 const CountPill = () => (
   <span className="count-badge">
@@ -123,23 +116,14 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         </p>
       </div>
 
-      <div className="unfurl-mock" aria-hidden="true">
-        <div className="unfurl-card">
-          <div className="unfurl-row">
-            <span className="vlabel vlabel-want unfurl-card-label">WANT</span>
-            <CardRow ids={PREVIEW_WANTS} />
-          </div>
-          <div className="unfurl-row">
-            <span className="vlabel vlabel-have unfurl-card-label">HAVE</span>
-            <CardRow ids={PREVIEW_HAVES} />
-          </div>
-          <span className="unfurl-card-pill">
-            <CountPill />
-          </span>
-          <span className="unfurl-card-mark">
-            <Wordmark />
-          </span>
-        </div>
+      <div className="unfurl-mock">
+        <img
+          className="unfurl-img"
+          src={DEMO_OG_PATH}
+          alt="A shared wanthave list unfurling with the cards it's looking for and the ones it has for trade"
+          width={1200}
+          height={630}
+        />
         <p className="unfurl-caption">
           this is what your link looks like when you post it
         </p>

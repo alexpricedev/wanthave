@@ -154,12 +154,15 @@
   }
 
   /* ── Unfurl preview (right side of hero) ─────────────────────────────── */
+  /* Centred, because the real unfurl is a fixed 1200×630 and doesn't grow to
+     match the copy column's height the way the old mock did. */
   .unfurl-mock {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 12px;
     padding: 72px 56px 72px 0;
-    max-width: 520px;
+    max-width: 620px;
 
     @media (width <= 860px) {
       padding: 0 24px 24px;
@@ -167,51 +170,16 @@
     }
   }
 
-  /* Two stacked rows (WANT card, then HAVE cards) in a bordered panel, cards
-     fading off the right edge — the original hero preview treatment. */
-  .unfurl-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 28px 0 60px 24px;
-    background: radial-gradient(
-      120% 120% at 0% 0%,
-      #17151b 0%,
-      var(--color-void) 70%
-    );
+  /* The real OG image, rendered by the same code a share link uses. */
+  .unfurl-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
     border: 1px solid var(--color-edge);
     border-radius: var(--radius);
-    overflow: hidden;
-    mask-image: linear-gradient(to right, #000 82%, transparent 100%);
     box-shadow: var(--shadow);
-  }
-
-  .unfurl-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .unfurl-card-label {
-    flex-shrink: 0;
-    font-size: 1.5rem;
-  }
-
-  .unfurl-card-pill {
-    position: absolute;
-    left: 24px;
-    bottom: 20px;
-  }
-
-  .unfurl-card-mark {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-
-    .wordmark {
-      font-size: 1rem;
-    }
+    background: var(--color-void);
   }
 
   .unfurl-caption {
