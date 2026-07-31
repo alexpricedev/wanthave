@@ -87,12 +87,15 @@ export const getSet = (code: string): CardSet | undefined =>
 export const getCardsBySet = (code: string): Card[] =>
   CARDS.filter((c) => c.set === code);
 
-// The Limitless CDN URL the image proxy fetches from. Never sent to the browser
-// directly — see services/card-images.ts and the /img/card proxy route.
-export const limitlessUrl = (card: Card): string =>
-  `https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/pocket/${card.set}/${card.set}_${String(
-    card.number,
-  ).padStart(3, "0")}_EN.webp`;
+// Where the image proxy reads a card's art from in our own S3 bucket. The
+// bucket is private and this key never reaches the browser — art is always
+// served through /img/card/:id (see services/card-images.ts), which keeps CSP
+// `img-src 'self'` intact and gives the OG renderer local bytes.
+//
+// The bucket is populated by scripts/sync-card-art.ts. We mirror rather than
+// proxy an upstream CDN because the community art host publishes a new set's
+// images days after the set itself, and that gap is visible to users.
+export const artObjectKey = (card: Card): string => `cards/${card.id}.webp`;
 
 // ─── Slang-aware search ────────────────────────────────────────────────────
 // Resolves community shorthand ("RR chsr EX", "shiny pika", "FA trainer")

@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import {
+  artObjectKey,
   getCardById,
   getCardsBySet,
   isValidCardId,
-  limitlessUrl,
   RARITIES,
   rarityLabel,
   SETS,
@@ -31,13 +31,11 @@ describe("catalogue integrity", () => {
     expect(getCardById("a1-036")?.name).toBe("Charizard ex");
   });
 
-  test("limitlessUrl builds the padded CDN path", () => {
+  test("artObjectKey addresses the card's object in our own bucket", () => {
     const card = getCardById("a1-036");
     expect(card).toBeTruthy();
     if (card) {
-      expect(limitlessUrl(card)).toBe(
-        "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/pocket/A1/A1_036_EN.webp",
-      );
+      expect(artObjectKey(card)).toBe("cards/a1-036.webp");
     }
   });
 
