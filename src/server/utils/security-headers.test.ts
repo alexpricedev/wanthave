@@ -63,6 +63,27 @@ describe("withSecurityHeaders", () => {
     expect(res.headers.get("X-Content-Type-Options")).toBe("nosniff");
   });
 
+  // The CDN in front of this app caches on URL alone — cookies aren't part of
+  // the key — so HTML must never be shared-cacheable or one visitor's rendered
+  // auth state could be served to the next.
+  test("marks HTML uncacheable so a shared cache can't serve it to another visitor", () => {
+    const res = withSecurityHeaders(
+      new Response("<!DOCTYPE html><p>hi</p>", {
+        headers: { "Content-Type": "text/html" },
+      }),
+    );
+
+    expect(res.headers.get("Cache-Control")).toBe("private, no-store");
+  });
+
+  test("leaves non-HTML responses cacheable", () => {
+    const res = withSecurityHeaders(
+      new Response("bytes", { headers: { "Content-Type": "image/webp" } }),
+    );
+
+    expect(res.headers.get("Cache-Control")).toBeNull();
+  });
+
   test("omits HSTS outside production", () => {
     // Tests run with NODE_ENV=test, so the strict-transport header is withheld
     // to avoid pinning localhost to HTTPS.
