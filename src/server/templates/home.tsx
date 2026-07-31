@@ -117,6 +117,10 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
             </a>
           )}
         </div>
+        <p className="home-banner">
+          <span className="home-banner-tag">New</span>
+          Rulers of the Skies is live
+        </p>
       </div>
 
       <div className="unfurl-mock" aria-hidden="true">

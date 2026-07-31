@@ -76,6 +76,32 @@
     }
   }
 
+  /* Set-launch announcement, sitting under the CTA row. */
+  .home-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 7px 14px 7px 7px;
+    border: 1px solid var(--color-edge);
+    border-radius: 999px;
+    background: var(--color-well);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+
+  .home-banner-tag {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+  }
+
   .home-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
