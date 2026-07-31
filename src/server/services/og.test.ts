@@ -51,11 +51,14 @@ describe("renderOgImage", () => {
 
   for (const [wants, haves] of cases) {
     test(`renders a 1200x630 PNG for ${wants} wants / ${haves} haves`, async () => {
-      const png = await renderOgImage(buildList(wants, haves));
-      const meta = await sharp(png).metadata();
+      const render = await renderOgImage(buildList(wants, haves));
+      const meta = await sharp(render.png).metadata();
       expect(meta.format).toBe("png");
       expect(meta.width).toBe(1200);
       expect(meta.height).toBe(630);
+      // Art is mocked away here, so every drawn card is a placeholder — the
+      // render must report itself incomplete so the caller skips the cache.
+      expect(render.complete).toBe(false);
     });
   }
 });
