@@ -30,6 +30,7 @@ export const appRoutes = {
   "/l/:slug": list.index<"/l/:slug">,
   "/l/:slug/og.png": list.og<"/l/:slug/og.png">,
   "/img/card/:id": cardImage.show<"/img/card/:id">,
+  "/og/demo.png": home.demoOg,
   "/privacy": legal.privacy,
   "/terms": legal.terms,
   "/robots.txt": robotsTxt.index,
