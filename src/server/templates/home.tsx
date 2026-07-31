@@ -45,15 +45,16 @@ const FAQ: { question: string; answer: string }[] = [
 // everywhere else. Modelled on a real Discord trade post: chasing one rainbow
 // ★2, with a row of rainbow (★2) and shiny (✵) cards up for trade — showing
 // off the rarities slang search resolves. Counts in the badges match what's
-// shown.
-const PREVIEW_WANTS = ["a1-253"]; // ★2 Charizard ex (rainbow)
+// shown. Drawn from the newest set so the page shows what people are actually
+// hunting right now — refresh these when a set drops.
+const PREVIEW_WANTS = ["b4-188"]; // ★2 Mega Rayquaza ex (rainbow)
 const PREVIEW_HAVES = [
-  "b1-321", // ✵2 Pikachu ex (shiny)
-  "a1-262", // ★2 Mewtwo ex (rainbow)
-  "b1-328", // ✵2 Arceus ex (shiny)
-  "a1a-076", // ★2 Gyarados ex (rainbow)
-  "a3a-100", // ✵2 Arcanine ex (shiny)
-  "b2-185", // ★2 Mega Gardevoir ex (rainbow)
+  "b4-227", // ✵2 Mega Gardevoir ex (shiny)
+  "b4-187", // ★2 Mega Metagross ex (rainbow)
+  "b4-231", // ✵2 Mega Kangaskhan ex (shiny)
+  "b4-185", // ★2 Mega Gallade ex (rainbow)
+  "b4-226", // ✵2 Mega Swampert ex (shiny)
+  "b4-182", // ★2 Mega Sharpedo ex (rainbow)
 ];
 
 const CountPill = () => (

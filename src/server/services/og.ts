@@ -6,7 +6,8 @@
 import { readFileSync } from "node:fs";
 import opentype from "opentype.js";
 import sharp, { type OverlayOptions } from "sharp";
-import { getCardImageBytes } from "./card-images";
+import { getCardImage } from "./card-images";
+import type { Card } from "./cards";
 import type { ListCardRow, TradeList } from "./lists";
 import { log } from "./logger";
 
@@ -41,7 +42,7 @@ const ONE_ROW_ADVANTAGE = 1.6; // how much bigger one row must be to beat stacki
 // so a deep list reads as a stack instead of a truncated row.
 const MIN_STEP_RATIO = 0.5; // hard floor: never hide more than half a card
 const BLEED_KEEP = 0.65; // fraction of the last card left on-canvas
-const SHADOW_PAD = 12; // transparent margin around each card for its shadow
+export const SHADOW_PAD = 12; // transparent margin around each card for its shadow
 
 const parseFont = (path: string): opentype.Font =>
   opentype.parse(readFileSync(path).buffer as ArrayBuffer);
@@ -118,14 +119,22 @@ const sizeForThickness = (text: string, target: number): number => {
   return (target * UNIT) / (box.y2 - box.y1);
 };
 
-interface CardLayerOptions {
-  card: ListCardRow;
+export interface CardLayerOptions {
+  card: Card;
   width: number;
   height: number;
   /** Visible width once the right canvas edge crops the card. */
   visibleWidth: number;
   /** Accent used by the placeholder tile when card art is unavailable. */
   color: string;
+}
+
+// A rendered layer, plus whether it fell back to the placeholder. The caller
+// chains that flag up to renderOgImage so a render standing in for art that
+// isn't on the CDN yet doesn't get cached as if it were final.
+export interface Layer {
+  buffer: Buffer;
+  placeholder: boolean;
 }
 
 // The card art itself, resized to the band and cropped where the right edge
@@ -137,27 +146,35 @@ const cardArt = async ({
   height,
   visibleWidth,
   color,
-}: CardLayerOptions): Promise<Buffer> => {
+}: CardLayerOptions): Promise<Layer> => {
   const visible = Math.max(1, Math.min(width, visibleWidth));
-  const bytes = await getCardImageBytes(card.card.id);
-  if (bytes) {
+  // Absent and error both land on the placeholder here — an unfurl should
+  // degrade to a tile rather than fail — but either way `placeholder: true`
+  // stops the result being cached as final.
+  const image = await getCardImage(card.id);
+  if (image.status === "ok") {
     try {
-      const full = await sharp(bytes).resize(width, height).png().toBuffer();
-      if (visible === width) return full;
-      return sharp(full)
+      const full = await sharp(image.bytes)
+        .resize(width, height)
+        .png()
+        .toBuffer();
+      if (visible === width) return { buffer: full, placeholder: false };
+      const cropped = await sharp(full)
         .extract({ left: 0, top: 0, width: visible, height })
         .png()
         .toBuffer();
+      return { buffer: cropped, placeholder: false };
     } catch (error) {
-      log.warn("og", `card render failed for ${card.card.id}: ${error}`);
+      log.warn("og", `card render failed for ${card.id}: ${error}`);
     }
   }
   const svg = `<svg width="${visible}" height="${height}" xmlns="http://www.w3.org/2000/svg">
     <rect width="${visible}" height="${height}" rx="12" fill="${PLACEHOLDER_BG}"/>
     <rect width="${visible}" height="6" fill="${color}"/>
-    ${textPath(forque, card.card.name.slice(0, 14), 30, 16, height / 2, "#ece9e2")}
+    ${textPath(forque, card.name.slice(0, 14), 30, 16, height / 2, "#ece9e2")}
   </svg>`;
-  return sharp(Buffer.from(svg)).png().toBuffer();
+  const buffer = await sharp(Buffer.from(svg)).png().toBuffer();
+  return { buffer, placeholder: true };
 };
 
 // A card plus the soft shadow it casts on whatever sits behind it. Overlapping
@@ -165,9 +182,9 @@ const cardArt = async ({
 // hairline border on the art) is what makes the row read as discrete cards.
 // The result is SHADOW_PAD larger on every side, so paste it at (x - SHADOW_PAD,
 // top - SHADOW_PAD).
-const cardLayer = async (options: CardLayerOptions): Promise<Buffer> => {
+export const cardLayer = async (options: CardLayerOptions): Promise<Layer> => {
   const art = await cardArt(options);
-  const meta = await sharp(art).metadata();
+  const meta = await sharp(art.buffer).metadata();
   const w = meta.width ?? options.width;
   const h = meta.height ?? options.height;
   const canvasW = w + SHADOW_PAD * 2;
@@ -183,10 +200,11 @@ const cardLayer = async (options: CardLayerOptions): Promise<Buffer> => {
       fill="${BG}"/>
   </svg>`;
 
-  return sharp(Buffer.from(shadowSvg))
-    .composite([{ input: art, left: SHADOW_PAD, top: SHADOW_PAD }])
+  const buffer = await sharp(Buffer.from(shadowSvg))
+    .composite([{ input: art.buffer, left: SHADOW_PAD, top: SHADOW_PAD }])
     .png()
     .toBuffer();
+  return { buffer, placeholder: art.placeholder };
 };
 
 interface Segment {
@@ -294,8 +312,15 @@ const cardStep = (count: number, cardW: number, track: number): number => {
   return Math.max(cardW * MIN_STEP_RATIO, Math.min(tight, ideal));
 };
 
-export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
+export interface OgRender {
+  png: Uint8Array;
+  /** False when at least one drawn card fell back to the placeholder tile. */
+  complete: boolean;
+}
+
+export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
   const composites: OverlayOptions[] = [];
+  let complete = true;
 
   // A composited overlay may not overflow the canvas, and each card layer
   // carries SHADOW_PAD of margin, so the usable right edge sits that much short
@@ -352,7 +377,7 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
       const layers = await Promise.all(
         placements.map((p) =>
           cardLayer({
-            card: p.card,
+            card: p.card.card,
             width: cardW,
             height: cardH,
             visibleWidth: rightLimit - p.left,
@@ -361,11 +386,13 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
         ),
       );
 
+      if (layers.some((layer) => layer.placeholder)) complete = false;
+
       // Reversed: sharp draws later entries on top, and we want the leftmost
       // card in front so each shadow falls on the card behind it.
       for (let i = layers.length - 1; i >= 0; i--) {
         composites.push({
-          input: layers[i],
+          input: layers[i].buffer,
           left: placements[i].left - SHADOW_PAD,
           top: cardTop - SHADOW_PAD,
         });
@@ -446,8 +473,9 @@ export const renderOgImage = async (list: TradeList): Promise<Uint8Array> => {
   // Palette-quantized: two full rows of card art are ~1.5MB as a truecolour PNG
   // and ~0.3MB here, with no visible difference at embed sizes. That payload is
   // cached per list in Postgres and refetched by every unfurl.
-  return sharp(Buffer.from(baseSvg))
+  const png = await sharp(Buffer.from(baseSvg))
     .composite(composites)
     .png({ compressionLevel: 9, palette: true })
     .toBuffer();
+  return { png, complete };
 };

@@ -667,7 +667,7 @@ export function Builder(config: BuilderConfig) {
                 id="list-title-input"
                 type="text"
                 class="friend-input"
-                placeholder="Everyday Wonders Wants, All Spares"
+                placeholder="Rulers of the Skies Wants, All Spares"
                 maxLength={80}
                 value={title}
                 onInput={(e) => setTitle((e.target as HTMLInputElement).value)}

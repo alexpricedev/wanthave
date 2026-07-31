@@ -8,8 +8,8 @@
  *     shiny (S/SSR) from the star full-arts; the glyph-based feeds collapse them.
  *   - chase-manning (.cache/chase.json) — the ex / full-art / card-type (Trainer)
  *     attributes that flib doesn't carry.
- * Card art is served from the Limitless CDN via our own image proxy, so we only
- * need the set code + number to build an image URL — no image bytes stored here.
+ * No image bytes are stored here. Art lives in our own bucket, keyed by card id;
+ * run `bun run scripts/sync-card-art.ts` after adding a set to mirror it.
  *
  * Only the tradeable rarities survive the filter: ◆1–◆4, ★1, ★2, and ✵1/✵2
  * shiny (tradeable since the Oct 2025 update, ★2+ at a Shinedust cost). Immersive
@@ -26,6 +26,9 @@ type FlibCard = {
   rarity: string;
   name: string;
   packs?: string[];
+  // Asset filename, e.g. "cPK_10_000010_00_FUSHIGIDANE_C.webp". The prefix is
+  // the only signal flib carries for Pokémon (cPK) vs Trainer (cTR).
+  image?: string;
 };
 
 // chase-manning card — id like "a1-001" joins to flib's set+number.
@@ -55,12 +58,22 @@ const RARITY_MAP: Record<string, string> = {
 // chase-manning row (a handful of shiny cards only appear in flib).
 const FULLART_CODES = new Set(["s1", "s2", "sh1", "sh2"]);
 
+// chase-manning lags flib by a release or two, so the newest set arrives with no
+// chase rows at all. Its `ex` and `fullart` columns are reproducible from flib
+// alone (they agree exactly with the " ex" name suffix and FULLART_CODES across
+// the whole catalogue), but `type` is not. Search only cares about Trainer vs
+// not, and flib's asset filename prefix carries that: cTR_ = Trainer, cPK_ =
+// Pokémon. The Pokémon energy type stays null until chase catches up.
+const typeFromImage = (image: string | undefined): string | null =>
+  image?.startsWith("cTR") ? "Trainer" : null;
+
 // Ordered oldest → newest. Set codes are how the community refers to sets; the
 // display name is added where it's well established, otherwise the code stands
 // on its own.
 const SET_ORDER = [
   "a1", "a1a", "a2", "a2a", "a2b", "a3", "a3a", "a3b",
   "a4", "a4a", "a4b", "b1", "b1a", "b2", "b2a", "b2b", "b3", "b3a", "b3b",
+  "b4",
 ];
 
 // English set names, sourced from the flibustier/pokemon-tcg-pocket-database
@@ -86,6 +99,7 @@ const SET_NAMES: Record<string, string> = {
   b3: "Pulsing Aura",
   b3a: "Paradox Drive",
   b3b: "Everyday Wonders",
+  b4: "Rulers of the Skies",
 };
 
 // a1 → A1, a1a → A1a, b2b → B2b (uppercase leading letter only)
@@ -134,7 +148,7 @@ for (const f of flib) {
     rarity,
     ex: meta ? meta.ex === "Yes" : / ex$/i.test(f.name),
     fa: meta ? meta.fullart === "Yes" : FULLART_CODES.has(rarity),
-    type: meta?.type ?? null,
+    type: meta?.type ?? typeFromImage(f.image),
     pack: meta?.pack ?? f.packs?.[0] ?? null,
   });
 }
@@ -156,7 +170,12 @@ const payload = {
   sets,
   cards: out,
 };
-await Bun.write("src/server/data/cards.json", `${JSON.stringify(payload)}\n`);
+// Indented, not minified: the file is checked in, so adding a set should show
+// up as a few hundred added lines rather than one rewritten 1MB line.
+await Bun.write(
+  "src/server/data/cards.json",
+  `${JSON.stringify(payload, null, 2)}\n`,
+);
 
 const byRarity = out.reduce<Record<string, number>>((acc, c) => {
   acc[c.rarity] = (acc[c.rarity] ?? 0) + 1;

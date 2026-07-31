@@ -11,7 +11,8 @@ import { readFileSync } from "node:fs";
 import opentype from "opentype.js";
 import pngToIco from "png-to-ico";
 import sharp from "sharp";
-import { getCardImageBytes } from "../src/server/services/card-images";
+import { getCardById } from "../src/server/services/cards";
+import { cardLayer, SHADOW_PAD } from "../src/server/services/og";
 
 const WANT = "#e5b35b";
 const HAVE = "#7fcbd9";
@@ -94,11 +95,14 @@ const buildIcons = async (): Promise<void> => {
 };
 
 // ── Marketing OG (1200×630) ──────────────────────────────────────────────────
-// Card row mirrors the per-list OG (src/server/services/og.ts): a vertical
-// WANT label, a few want cards, a vertical HAVE label, then have cards
-// bleeding off the right edge under a black fade.
-const WANT_HEROES = ["a1-036", "a1-129", "a1-096"];
-const HAVE_HEROES = ["a1-004", "b1-073"];
+// The card row is drawn by the per-list OG renderer itself (og.ts `cardLayer`),
+// not a lookalike: same geometry, same drop shadows, same right-edge crop. What
+// someone sees on the marketing card is literally what their own list renders
+// as, and the two can't drift apart.
+// Drawn from the newest set, same as the home page hero — refresh both when a
+// set drops (and re-run this script).
+const WANT_HEROES = ["b4-188", "b4-187", "b4-185"];
+const HAVE_HEROES = ["b4-227", "b4-231"];
 
 const vLabel = async (
   text: string,
@@ -149,17 +153,29 @@ const buildOg = async (): Promise<void> => {
 
     for (const id of segment.ids) {
       if (x >= W) break;
-      const bytes = await getCardImageBytes(id);
-      if (!bytes) continue;
-      const visibleWidth = Math.max(1, Math.min(cardW, W - Math.round(x)));
-      let buf = await sharp(bytes).resize(cardW, cardH).png().toBuffer();
-      if (visibleWidth < cardW) {
-        buf = await sharp(buf)
-          .extract({ left: 0, top: 0, width: visibleWidth, height: cardH })
-          .png()
-          .toBuffer();
+      const card = getCardById(id);
+      if (!card) throw new Error(`Hero card ${id} is not in the catalogue`);
+
+      const layer = await cardLayer({
+        card,
+        width: cardW,
+        height: cardH,
+        visibleWidth: Math.max(1, Math.min(cardW, W - Math.round(x))),
+        color: segment.color,
+      });
+      // This artifact is checked in, so it can't self-heal the way the runtime
+      // OG does — a set whose art hasn't reached the CDN yet would ship as a
+      // blank tile on every unfurl of the marketing card. Fail instead.
+      if (layer.placeholder) {
+        throw new Error(
+          `No art available for hero card ${id} — pick a card whose art is on the CDN, or rerun once it lands`,
+        );
       }
-      composites.push({ input: buf, left: Math.round(x), top: cardTop });
+      composites.push({
+        input: layer.buffer,
+        left: Math.round(x) - SHADOW_PAD,
+        top: cardTop - SHADOW_PAD,
+      });
       x += cardW + cardGap;
     }
     x += labelGap - cardGap;

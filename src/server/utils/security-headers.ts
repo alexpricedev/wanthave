@@ -101,6 +101,22 @@ export const withSecurityHeaders = (res: Response): Response => {
       res.headers.set(name, value);
     }
   }
+  // Keep HTML out of shared caches. Our CDN (Railway) keys its cache on method,
+  // host, path and query — cookies are NOT part of the key, and a Cookie request
+  // header doesn't disable caching. Since this app authenticates by session
+  // cookie rather than an Authorization header, any cacheable HTML response
+  // could be handed to the next visitor: the owner bar on a list, an account
+  // page, a rendered CSRF token. Every HTML page here is per-request anyway
+  // (auth state, CSRF), so nothing is lost by saying so explicitly — and it
+  // means adding a Cache-Control to an HTML route later can't silently open a
+  // hole. Routes that set their own Cache-Control are left alone.
+  const contentType = res.headers.get("Content-Type") ?? "";
+  if (
+    contentType.startsWith("text/html") &&
+    !res.headers.has("Cache-Control")
+  ) {
+    res.headers.set("Cache-Control", "private, no-store");
+  }
   // Advertise discovery resources unless a route set its own Link header.
   if (!res.headers.has("Link")) {
     res.headers.set("Link", DISCOVERY_LINK_HEADER);

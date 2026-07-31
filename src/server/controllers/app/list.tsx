@@ -104,10 +104,19 @@ export const list = {
       return fallbackOg();
     }
 
+    // A render that fell back to placeholder tiles isn't cached. An anon list is
+    // immutable, so caching one would freeze the placeholders in place forever —
+    // and whatever made the art unavailable (a set not yet mirrored, a bad
+    // deploy, a blip) is by definition the transient case. Re-rendering until the
+    // art resolves costs one render per unfurl.
     const cached = await getCachedOgImage(slug);
-    const bytes = cached ?? (await renderOgImage(tradeList));
-    if (!cached) {
-      await setCachedOgImage(slug, bytes);
+    let bytes = cached;
+    if (!bytes) {
+      const render = await renderOgImage(tradeList);
+      bytes = render.png;
+      if (render.complete) {
+        await setCachedOgImage(slug, bytes);
+      }
     }
 
     // A `?v=` URL is unique per edit (the page mints a new one from updated_at),
