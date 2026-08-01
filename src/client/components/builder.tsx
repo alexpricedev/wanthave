@@ -708,10 +708,12 @@ export function Builder(config: BuilderConfig) {
             onClick={submit}
             disabled={submitting}
           >
-            {submitting
-              ? "Creating…"
-              : config.mode === "edit"
-                ? "Save changes"
+            {config.mode === "edit"
+              ? submitting
+                ? "Saving…"
+                : "Save changes"
+              : submitting
+                ? "Creating…"
                 : "Create link"}
           </button>
 
