@@ -591,6 +591,12 @@
   margin: 0 0 0.75rem;
 }
 
+/* A stale CSRF token isn't the user's fault and nothing was lost — amber, not
+   red, since the fix is simply pressing the button once more. */
+.builder-error--warning {
+  color: var(--color-warning);
+}
+
 /* The primary "create/save" CTA is green (success), not the amber accent — it
    reads as "go" and stays distinct from the WANT/HAVE brand hues. Dark ink on
    the light green for contrast, mirroring .btn-primary. */

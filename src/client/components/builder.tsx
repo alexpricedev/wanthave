@@ -352,6 +352,13 @@ export function Builder(config: BuilderConfig) {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // A timed-out token is the user's page going stale, not their mistake — say
+  // so in warning amber rather than error red.
+  const [errorKind, setErrorKind] = useState<"error" | "warning">("error");
+
+  // Swapped out when the server hands back a fresh token after the page's
+  // original one expired, so the next click saves instead of failing again.
+  const [csrfToken, setCsrfToken] = useState(config.csrfToken);
 
   const placement = useMemo(() => {
     const map = new Map<string, Kind>();
@@ -497,6 +504,7 @@ export function Builder(config: BuilderConfig) {
 
   const submit = async () => {
     setError(null);
+    setErrorKind("error");
     if (totalCards === 0) {
       setError("Add at least one card before creating a link.");
       return;
@@ -526,12 +534,21 @@ export function Builder(config: BuilderConfig) {
         method: config.mode === "edit" ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": config.csrfToken,
+          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
+        // Nothing was saved, but the server minted a token that will work.
+        // Keep every card on screen and let the user press the button again.
+        if (
+          data.code === "csrf-expired" &&
+          typeof data.csrfToken === "string"
+        ) {
+          setCsrfToken(data.csrfToken);
+          setErrorKind("warning");
+        }
         setError(data.error ?? "Something went wrong. Try again.");
         setSubmitting(false);
         return;
@@ -552,6 +569,7 @@ export function Builder(config: BuilderConfig) {
   // optional details step rather than submitting straight away.
   const goToDetails = () => {
     setError(null);
+    setErrorKind("error");
     if (totalCards === 0) {
       setError("Add at least one card before creating a link.");
       return;
@@ -697,7 +715,14 @@ export function Builder(config: BuilderConfig) {
           </div>
 
           {error ? (
-            <p class="builder-error" role="alert">
+            <p
+              class={
+                errorKind === "warning"
+                  ? "builder-error builder-error--warning"
+                  : "builder-error"
+              }
+              role="alert"
+            >
               {error}
             </p>
           ) : null}

@@ -1,7 +1,8 @@
 import type { BunRequest } from "bun";
 import { getSessionContext } from "../../middleware/auth";
-import { csrfProtection } from "../../middleware/csrf";
+import { checkCsrf, isRecoverableCsrfFailure } from "../../middleware/csrf";
 import { rateLimit } from "../../middleware/rate-limit";
+import { createCsrfToken } from "../../services/csrf";
 import {
   ANON_TTL_DAYS,
   type CardInput,
@@ -75,6 +76,46 @@ const parseCards = (raw: unknown): CardInput[] => {
 const asString = (v: unknown): string | null =>
   typeof v === "string" ? v : null;
 
+// The builder is a long-lived page: a CSRF token minted when it loaded goes
+// stale after ~15-30 minutes, and until now that was a dead end — the 403 body
+// was plain text the island couldn't read, and retrying could never work
+// because the token in the page was permanently expired. A stale token still
+// proves the caller holds this session's secret (or, for a lapsed session, the
+// request has already been given a fresh one), so refuse the action but hand
+// back a token that works. The user clicks again and keeps every card.
+const CSRF_EXPIRED_MESSAGE =
+  "Your session timed out while you were building. Nothing was lost — press the button again to save.";
+
+const csrfGuard = async (
+  req: BunRequest,
+  sessionId: string,
+  method: string,
+  path: string,
+): Promise<Response | null> => {
+  const result = await checkCsrf(req, { method, path });
+  if (result.ok) return null;
+
+  if (isRecoverableCsrfFailure(result)) {
+    try {
+      const csrfToken = await createCsrfToken(sessionId, method, path);
+      return Response.json(
+        { error: CSRF_EXPIRED_MESSAGE, code: "csrf-expired", csrfToken },
+        { status: 403 },
+      );
+    } catch {
+      // Session vanished between the check and minting - fall through to the
+      // hard failure rather than pretending recovery is possible.
+    }
+  }
+
+  // Hard failure. Re-shape the middleware's plain-text body as JSON so the
+  // island shows the real reason instead of its generic fallback.
+  return Response.json(
+    { error: await result.response.text() },
+    { status: result.response.status },
+  );
+};
+
 export const listsApi = {
   async create(req: BunRequest): Promise<Response> {
     // Cap list creation per IP so a script can't flood the DB / OG renderer.
@@ -89,10 +130,7 @@ export const listsApi = {
       setSessionCookie(req, ctx.sessionId);
     }
 
-    const csrf = await csrfProtection(req, {
-      method: "POST",
-      path: "/api/lists",
-    });
+    const csrf = await csrfGuard(req, ctx.sessionId, "POST", "/api/lists");
     if (csrf) return csrf;
 
     let body: CreateBody;
@@ -138,15 +176,17 @@ export const listsApi = {
     req: BunRequest<T>,
   ): Promise<Response> {
     const ctx = await getSessionContext(req);
-    if (!ctx.isAuthenticated || !ctx.user) {
+    if (!ctx.isAuthenticated || !ctx.user || !ctx.sessionId) {
       return Response.json({ error: "Login required" }, { status: 403 });
     }
 
     const { slug } = req.params;
-    const csrf = await csrfProtection(req, {
-      method: "PUT",
-      path: `/api/lists/${slug}`,
-    });
+    const csrf = await csrfGuard(
+      req,
+      ctx.sessionId,
+      "PUT",
+      `/api/lists/${slug}`,
+    );
     if (csrf) return csrf;
 
     let body: CreateBody;
