@@ -1,4 +1,5 @@
 import type { BunRequest } from "bun";
+import { trackPageView } from "../services/events";
 import { log } from "../services/logger";
 import { SITE_NAME } from "../services/seo";
 import { withCompression } from "./compression";
@@ -158,7 +159,13 @@ export const handleGuarded = async <R extends Request>(
   if (maintenance) return finalizeResponse(req, maintenance);
 
   try {
-    return await finalizeResponse(req, await produce(req));
+    const response = await produce(req);
+    // Fire and forget: `trackPageView` filters itself down to HTML GETs, never
+    // throws, and must not add latency to the response it is describing. Read
+    // after `produce` so a first-time visitor's freshly-set session cookie is
+    // already on the request.
+    void trackPageView(req, response);
+    return await finalizeResponse(req, response);
   } catch (error) {
     const { pathname } = new URL(req.url);
     log.error(
