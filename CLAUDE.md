@@ -108,7 +108,7 @@ NEVER try to roll your own lint or test commands.
 - Services provide single source of truth for data operations
 - Services should be pure functions when possible for easier testing
 - Services can be shared across both API and view routes
-- Example: `analytics.ts` service for visitor stats and analytics
+- Example: `lists.ts` service, shared by the list API and the list view routes
 
 ### Type Safety Across Layers
 
@@ -116,7 +116,7 @@ NEVER try to roll your own lint or test commands.
 - Import and use service types in templates for consistency
 - Avoid duplicating type definitions across files
 - Maintain type safety from service → route → template
-- Example: `VisitorStats` type exported from analytics service
+- Example: `TradeList` type exported from the lists service
 
 ## Routing Structure
 
@@ -180,13 +180,13 @@ src/
 |------|-----------|---------|
 | Files & directories | kebab-case | `route-handler.ts`, `test-utils/` |
 | JSX component exports | PascalCase | `Home`, `Layout`, `CsrfField` |
-| Controller namespace exports | camelCase | `home`, `statsApi`, `login` |
+| Controller namespace exports | camelCase | `home`, `cardsApi`, `login` |
 | Service functions | camelCase | `getCards`, `createCsrfToken` |
-| Type exports | PascalCase | `Card`, `VisitorStats`, `AuthContext` |
+| Type exports | PascalCase | `Card`, `TradeList`, `AuthContext` |
 | Migrations | `NNN_snake_case.ts` | `001_initial_setup.ts` |
 | Test files | Co-located `.test.ts` | `home.test.ts` next to `home.tsx` |
 
-**Controller barrel export naming:** App controllers export plain names (`home`, `about`). API controllers use an `Api` suffix (`cardsApi`, `statsApi`) to disambiguate when both domains share a resource name.
+**Controller barrel export naming:** App controllers export plain names (`home`, `list`). API controllers use an `Api` suffix (`cardsApi`, `listsApi`) to disambiguate when both domains share a resource name.
 
 ### How Files Connect (Adding a New Page)
 

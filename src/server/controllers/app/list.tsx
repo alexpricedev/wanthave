@@ -1,6 +1,7 @@
 import type { BunRequest } from "bun";
 import { getSessionContext } from "../../middleware/auth";
 import { createCsrfToken } from "../../services/csrf";
+import { trackOgFetch } from "../../services/events";
 import {
   getCachedOgImage,
   getTradeListBySlug,
@@ -98,9 +99,22 @@ export const list = {
     req: BunRequest<T>,
   ): Promise<Response> {
     const { slug } = req.params;
+    const startedAt = Date.now();
+    const userAgent = req.headers.get("user-agent");
+    // A `?v=` URL is minted per edit and cached forever, so it marks a fresh
+    // unfurl; the bare URL expires hourly and marks a platform re-fetch of a
+    // post that is still being viewed.
+    const versioned = new URL(req.url).searchParams.has("v");
     const tradeList = await getTradeListBySlug(slug);
 
     if (!tradeList || isExpired(tradeList)) {
+      void trackOgFetch({
+        slug,
+        outcome: tradeList ? "expired" : "missing",
+        userAgent,
+        durationMs: Date.now() - startedAt,
+        versioned,
+      });
       return fallbackOg();
     }
 
@@ -111,19 +125,30 @@ export const list = {
     // art resolves costs one render per unfurl.
     const cached = await getCachedOgImage(slug);
     let bytes = cached;
+    let complete = true;
     if (!bytes) {
       const render = await renderOgImage(tradeList);
       bytes = render.png;
+      complete = render.complete;
       if (render.complete) {
         await setCachedOgImage(slug, bytes);
       }
     }
 
-    // A `?v=` URL is unique per edit (the page mints a new one from updated_at),
-    // so it can be cached forever. The bare URL is what older unfurls point at,
-    // and its content changes on every edit — keep that one short-lived so
-    // stale embeds recover on their own.
-    const versioned = new URL(req.url).searchParams.has("v");
+    void trackOgFetch({
+      slug,
+      outcome: "ok",
+      userAgent,
+      renderComplete: complete,
+      cacheHit: cached !== null,
+      durationMs: Date.now() - startedAt,
+      cardCount: tradeList.wants.length + tradeList.haves.length,
+      versioned,
+    });
+
+    // The `?v=` URL is unique per edit, so it can be cached forever. The bare
+    // URL is what older unfurls point at, and its content changes on every edit
+    // — keep that one short-lived so stale embeds recover on their own.
     return new Response(new Uint8Array(bytes), {
       headers: {
         "Content-Type": "image/png",

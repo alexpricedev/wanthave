@@ -13,6 +13,9 @@ export const cleanupTestData = async (db: SQL): Promise<void> => {
   // feedback FKs users with ON DELETE SET NULL, so truncating users won't clear
   // it — truncate explicitly for isolation.
   await db`TRUNCATE TABLE feedback CASCADE`;
+  // event has no FKs to lists or sessions on purpose (analytics rows outlive
+  // their subject), so nothing cascades into it — truncate explicitly.
+  await db`TRUNCATE TABLE event CASCADE`;
   await db`TRUNCATE TABLE user_tokens CASCADE`;
   await db`TRUNCATE TABLE sessions CASCADE`;
   await db`TRUNCATE TABLE users CASCADE`;
