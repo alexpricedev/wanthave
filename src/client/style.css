@@ -17,6 +17,7 @@
 @import "./components/badge.css";
 @import "./components/trade.css";
 @import "./components/builder.css";
+@import "./components/confirm-modal.css";
 
 /* All three faces (Forque display, Archivo body, IBM Plex Mono utility) are
    self-hosted from public/fonts and declared via inline @font-face in the
