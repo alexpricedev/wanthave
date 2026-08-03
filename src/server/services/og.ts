@@ -25,6 +25,7 @@ const PLACEHOLDER_BG = "#1b1a20";
 const CARD_ASPECT = 367 / 512; // Pocket card art ratio
 const CARD_GAP = 14;
 const ROW_START_PAD = 24; // left inset for the vertical label + card row
+const ROW_END_PAD = 96; // right margin an inline row leaves clear of the edge fade
 const LABEL_GAP = 12; // between a vertical label and the cards after it
 const EDGE_FADE_W = 180; // width of the black fade over the rightmost clipped card
 
@@ -36,7 +37,11 @@ const FOOTER_BASELINE = CANVAS_H - 34; // wordmark + count badge sit on this lin
 const ONE_ROW_H = 486;
 const ONE_ROW_Y_SHIFT = 18; // lift the single-row band up from dead-center
 const MAX_ROW_SHARE = 0.62; // cap on how much height the sparser row can take
-const ONE_ROW_ADVANTAGE = 1.6; // how much bigger one row must be to beat stacking
+
+// A two-sided list this small still fits one row at a readable card size, so it
+// goes inline rather than stacking.
+const INLINE_MAX_WANTS = 2;
+const INLINE_MAX_HAVES = 4;
 
 // Overlap. Cards step by less than their width when a row holds more than fits,
 // so a deep list reads as a stack instead of a truncated row.
@@ -232,12 +237,12 @@ const aspectRatioOf = (text: string): number => {
 const LABEL_THICKNESS = Math.min(aspectRatioOf("WANT"), aspectRatioOf("HAVE"));
 
 // The card height at which these segments, laid side by side in one row, span
-// the canvas with the last card bleeding off the right edge. Label thickness
-// and card width are both multiples of card height, so the row width is linear
-// in it and inverts directly.
-const heightToFillOneRow = (segments: Segment[]): number => {
-  let perHeight = -CARD_ASPECT * (1 - BLEED_KEEP);
-  let fixed = ROW_START_PAD + LABEL_GAP * (segments.length - 1);
+// the canvas with every card landing fully on it. Label thickness and card
+// width are both multiples of card height, so the row width is linear in it and
+// inverts directly.
+const heightToFitOneRow = (segments: Segment[]): number => {
+  let perHeight = 0;
+  let fixed = ROW_START_PAD + ROW_END_PAD + LABEL_GAP * (segments.length - 1);
   for (const segment of segments) {
     perHeight += LABEL_THICKNESS + segment.cards.length * CARD_ASPECT;
     fixed += LABEL_GAP + (segment.cards.length - 1) * CARD_GAP;
@@ -247,12 +252,12 @@ const heightToFillOneRow = (segments: Segment[]): number => {
 
 // Conditional layouts:
 //   one side only → a single full-height row
-//   both sides    → stacked rows, WANT above HAVE, unless a single row (WANT
-//                   segment, then a HAVE label dividing it) buys cards
-//                   ONE_ROW_ADVANTAGE times bigger
+//   both sides    → stacked rows, WANT above HAVE, unless the list is small
+//                   enough to sit inline: a single row of the WANT segment
+//                   followed by a HAVE label dividing it
 // Stacking is the default because the two labels reading down the left edge is
-// the layout. Only a list small enough that one row makes the cards dramatically
-// bigger — a want and a have, say — is worth breaking that structure for.
+// the layout. Only a list short enough that one row still shows every card at a
+// readable size is worth breaking that structure for.
 // (A list with no cards at all can't be created, so that case doesn't exist.)
 const planRows = (list: TradeList): Row[] => {
   const want: Segment = { label: "WANT", color: WANT, cards: list.wants };
@@ -272,9 +277,11 @@ const planRows = (list: TradeList): Row[] => {
   }
 
   const avail = CANVAS_H - TOP_PAD - ROW_GAP - BOTTOM_RESERVE;
-  const twoRowCardH = avail / 2 - SHADOW_PAD * 2;
-  const combined = heightToFillOneRow([want, have]);
-  if (combined >= twoRowCardH * ONE_ROW_ADVANTAGE) {
+  if (
+    list.wants.length <= INLINE_MAX_WANTS &&
+    list.haves.length <= INLINE_MAX_HAVES
+  ) {
+    const combined = heightToFitOneRow([want, have]);
     return [oneRow([want, have], Math.min(combined, ONE_ROW_H))];
   }
 
@@ -321,6 +328,10 @@ export interface OgRender {
 export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
   const composites: OverlayOptions[] = [];
   let complete = true;
+  // Whether any card runs past the right edge — the edge fade only earns its
+  // place when there is a cut edge to soften, and over a row that fits it just
+  // dims the last card.
+  let clipped = false;
 
   // A composited overlay may not overflow the canvas, and each card layer
   // carries SHADOW_PAD of margin, so the usable right edge sits that much short
@@ -374,6 +385,13 @@ export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
         .map((card, i) => ({ card, left: Math.round(x + i * step) }))
         .filter((p) => rightLimit - p.left >= 8);
 
+      if (
+        placements.length < segment.cards.length ||
+        placements.some((p) => rightLimit - p.left < cardW)
+      ) {
+        clipped = true;
+      }
+
       const layers = await Promise.all(
         placements.map((p) =>
           cardLayer({
@@ -405,18 +423,20 @@ export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
   }
 
   // Fade the rightmost (clipped) card into black instead of a hard cut edge.
-  const edgeFadeSvg = `<svg width="${EDGE_FADE_W}" height="${CANVAS_H}" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="${BG}" stop-opacity="0"/>
-      <stop offset="1" stop-color="${BG}" stop-opacity="1"/>
-    </linearGradient></defs>
-    <rect width="${EDGE_FADE_W}" height="${CANVAS_H}" fill="url(#fade)"/>
-  </svg>`;
-  composites.push({
-    input: Buffer.from(edgeFadeSvg),
-    left: CANVAS_W - EDGE_FADE_W,
-    top: 0,
-  });
+  if (clipped) {
+    const edgeFadeSvg = `<svg width="${EDGE_FADE_W}" height="${CANVAS_H}" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="${BG}" stop-opacity="0"/>
+        <stop offset="1" stop-color="${BG}" stop-opacity="1"/>
+      </linearGradient></defs>
+      <rect width="${EDGE_FADE_W}" height="${CANVAS_H}" fill="url(#fade)"/>
+    </svg>`;
+    composites.push({
+      input: Buffer.from(edgeFadeSvg),
+      left: CANVAS_W - EDGE_FADE_W,
+      top: 0,
+    });
+  }
 
   // Base layer: background + wordmark (bottom-left, on the same line the
   // vertical labels start from) + count badge (bottom-centre, in a rounded
