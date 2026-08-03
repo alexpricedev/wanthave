@@ -1,6 +1,7 @@
 import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
 import { SQL } from "bun";
 import type { SessionContext } from "../../middleware/auth";
+import type { CsrfCheckResult, CsrfFailureReason } from "../../middleware/csrf";
 import type { User } from "../../services/users";
 import { createBunRequest, findSetCookie } from "../../test-utils/bun-request";
 import { cleanupTestData } from "../../test-utils/helpers";
@@ -36,9 +37,35 @@ let mockContext: SessionContext = guestContext;
 mock.module("../../middleware/auth", () => ({
   getSessionContext: async () => mockContext,
 }));
+// Only checkCsrf is faked — isRecoverableCsrfFailure stays real so these tests
+// exercise the actual decision about which failures may hand back a token.
+const realCsrfMiddleware = await import("../../middleware/csrf");
+let mockCsrfResult: CsrfCheckResult = { ok: true };
+
 mock.module("../../middleware/csrf", () => ({
-  csrfProtection: async () => null,
+  ...realCsrfMiddleware,
+  checkCsrf: async () => mockCsrfResult,
 }));
+
+let mintedTokens = 0;
+mock.module("../../services/csrf", () => ({
+  createCsrfToken: async (sessionId: string, method: string, path: string) => {
+    mintedTokens++;
+    return `fresh:${sessionId}:${method}:${path}`;
+  },
+}));
+
+const csrfFails = (
+  reason: CsrfFailureReason,
+  body = "Invalid CSRF token",
+  status = 403,
+): void => {
+  mockCsrfResult = {
+    ok: false,
+    reason,
+    response: new Response(body, { status }),
+  };
+};
 mock.module("../../middleware/rate-limit", () => ({
   rateLimit: () => null,
 }));
@@ -116,6 +143,8 @@ describe("Lists API", () => {
   beforeEach(async () => {
     await cleanupTestData(connection);
     mockContext = guestContext;
+    mockCsrfResult = { ok: true };
+    mintedTokens = 0;
   });
 
   afterAll(async () => {
@@ -213,5 +242,95 @@ describe("Lists API", () => {
 
     expect(findSetCookie(req, CLAIM_TOKEN_COOKIE)).toBeUndefined();
     expect(await claimHashes()).toEqual([null]);
+  });
+
+  describe("expired CSRF recovery", () => {
+    const listCount = async (): Promise<number> => {
+      const rows = (await connection`
+        SELECT COUNT(*)::int AS n FROM trade_list
+      `) as { n: number }[];
+      return rows[0].n;
+    };
+
+    test("a stale token gets a fresh one back and creates nothing", async () => {
+      csrfFails("expired-token");
+
+      const res = await post({ cards: CARDS });
+      const body = await res.json();
+
+      expect(res.status).toBe(403);
+      expect(body.code).toBe("csrf-expired");
+      expect(body.csrfToken).toBe("fresh:guest-session:POST:/api/lists");
+      expect(body.error).toContain("Nothing was lost");
+      expect(await listCount()).toBe(0);
+    });
+
+    test("retrying with the fresh token saves the list", async () => {
+      csrfFails("expired-token");
+      await post({ cards: CARDS });
+
+      mockCsrfResult = { ok: true };
+      const res = await post({ cards: CARDS });
+
+      expect(res.status).toBe(201);
+      expect(await listCount()).toBe(1);
+    });
+
+    test("a lapsed session recovers against the session this request made", async () => {
+      csrfFails("expired-session");
+
+      const res = await post({ cards: CARDS });
+      const body = await res.json();
+
+      expect(res.status).toBe(403);
+      expect(body.code).toBe("csrf-expired");
+      expect(body.csrfToken).toBe("fresh:guest-session:POST:/api/lists");
+      expect(await listCount()).toBe(0);
+    });
+
+    test("a cross-origin request never gets a token", async () => {
+      csrfFails("invalid-origin", "Invalid request origin");
+
+      const res = await post({ cards: CARDS });
+      const body = await res.json();
+
+      expect(res.status).toBe(403);
+      expect(body.csrfToken).toBeUndefined();
+      expect(body.code).toBeUndefined();
+      expect(body.error).toBe("Invalid request origin");
+      expect(mintedTokens).toBe(0);
+      expect(await listCount()).toBe(0);
+    });
+
+    test("a forged token never gets a token back", async () => {
+      csrfFails("invalid-token");
+
+      const res = await post({ cards: CARDS });
+      const body = await res.json();
+
+      expect(res.status).toBe(403);
+      expect(body.csrfToken).toBeUndefined();
+      expect(body.error).toBe("Invalid CSRF token");
+      expect(mintedTokens).toBe(0);
+    });
+
+    test("editing recovers too, bound to the list's own path", async () => {
+      await signIn();
+      const created = await post({ cards: CARDS });
+      const { slug } = await created.json();
+
+      csrfFails("expired-token");
+      const res = await put(slug, { cards: CARDS, title: "Renamed" });
+      const body = await res.json();
+
+      expect(res.status).toBe(403);
+      expect(body.code).toBe("csrf-expired");
+      expect(body.csrfToken).toBe(`fresh:guest-session:PUT:/api/lists/${slug}`);
+
+      const rows = (await connection`
+        SELECT title FROM trade_list WHERE slug = ${slug}
+      `) as { title: string | null }[];
+      expect(rows[0].title).not.toBe("Renamed");
+    });
   });
 });

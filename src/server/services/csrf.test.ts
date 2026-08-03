@@ -1,10 +1,21 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
+import {
+  afterAll,
+  beforeEach,
+  describe,
+  expect,
+  mock,
+  setSystemTime,
+  test,
+} from "bun:test";
 import { SQL } from "bun";
 import { cleanupTestData } from "../test-utils/helpers";
 import { findOrCreateUser } from "./auth";
 import {
+  CSRF_GRACE_WINDOWS,
   createCsrfToken,
   ensureCsrfSecret,
+  inspectCsrfToken,
+  TIME_WINDOW_MINUTES,
   validateOrigin,
   verifyCsrfToken,
 } from "./csrf";
@@ -284,6 +295,135 @@ describe("CSRF Service", () => {
       await expect(
         createCsrfToken(fakeSessionId, "POST", "/test"),
       ).rejects.toThrow("Cannot create CSRF token: session not found");
+    });
+  });
+
+  describe("inspectCsrfToken", () => {
+    // Aligned to a bucket boundary so an offset of N windows lands exactly N
+    // buckets back — no boundary flakiness.
+    const BASE = new Date("2026-01-01T12:00:00.000Z");
+    const WINDOW_MS = TIME_WINDOW_MINUTES * 60 * 1000;
+
+    // Mint a token as though the page had rendered `windowsAgo` buckets back,
+    // then hand the clock back to BASE for the verification.
+    const tokenFrom = async (
+      sessionId: string,
+      windowsAgo: number,
+    ): Promise<string> => {
+      setSystemTime(new Date(BASE.getTime() - windowsAgo * WINDOW_MS));
+      const token = await createCsrfToken(sessionId, "POST", "/api/lists");
+      setSystemTime(BASE);
+      return token;
+    };
+
+    const inspect = (sessionId: string, token: string) =>
+      inspectCsrfToken(sessionId, "POST", "/api/lists", token);
+
+    // Sessions are written with a real-clock expiry, so hand the clock back
+    // before each test creates one.
+    beforeEach(() => {
+      setSystemTime();
+    });
+
+    afterAll(() => {
+      setSystemTime();
+    });
+
+    test("accepts the current and previous bucket as valid", async () => {
+      const sessionId = await createTestSession();
+
+      expect(await inspect(sessionId, await tokenFrom(sessionId, 0))).toBe(
+        "valid",
+      );
+      expect(await inspect(sessionId, await tokenFrom(sessionId, 1))).toBe(
+        "valid",
+      );
+    });
+
+    test("reports an older but authentic token as expired", async () => {
+      const sessionId = await createTestSession();
+
+      expect(await inspect(sessionId, await tokenFrom(sessionId, 2))).toBe(
+        "expired",
+      );
+      expect(
+        await inspect(
+          sessionId,
+          await tokenFrom(sessionId, 1 + CSRF_GRACE_WINDOWS),
+        ),
+      ).toBe("expired");
+    });
+
+    test("a token past the grace range is invalid, not expired", async () => {
+      const sessionId = await createTestSession();
+
+      expect(
+        await inspect(
+          sessionId,
+          await tokenFrom(sessionId, 2 + CSRF_GRACE_WINDOWS),
+        ),
+      ).toBe("invalid");
+    });
+
+    test("an expired token is never accepted for the action itself", async () => {
+      const sessionId = await createTestSession();
+      const stale = await tokenFrom(sessionId, 3);
+
+      expect(
+        await verifyCsrfToken(sessionId, "POST", "/api/lists", stale),
+      ).toBe(false);
+    });
+
+    test("a stale token for a different path is invalid", async () => {
+      const sessionId = await createTestSession();
+      const stale = await tokenFrom(sessionId, 3);
+
+      expect(
+        await inspectCsrfToken(sessionId, "POST", "/api/other", stale),
+      ).toBe("invalid");
+    });
+
+    test("a forged token is invalid", async () => {
+      const sessionId = await createTestSession();
+      await tokenFrom(sessionId, 0); // establish the session's secret
+
+      expect(await inspect(sessionId, "nonce.forged")).toBe("invalid");
+      expect(await inspect(sessionId, "no-dot-here")).toBe("invalid");
+    });
+
+    test("a token against a dead session is session-expired", async () => {
+      const sessionId = await createTestSession();
+      const token = await tokenFrom(sessionId, 0);
+      await cleanupTestData(db);
+
+      expect(await inspect(sessionId, token)).toBe("session-expired");
+    });
+
+    test("several stale tabs can't lock a user out of recovery", async () => {
+      const sessionId = await createTestSession();
+      const stale = await tokenFrom(sessionId, 3);
+
+      // Well past MAX_FAILURES_PER_WINDOW — expired hits must not feed the
+      // failure brake, or the recovery path would close on the honest user.
+      for (let i = 0; i < 11; i++) {
+        expect(await inspect(sessionId, stale)).toBe("expired");
+      }
+
+      // And a fresh token still works afterwards.
+      expect(await inspect(sessionId, await tokenFrom(sessionId, 0))).toBe(
+        "valid",
+      );
+    });
+
+    test("replay of a captured stale token is still bounded", async () => {
+      const sessionId = await createTestSession();
+      const stale = await tokenFrom(sessionId, 3);
+
+      for (let i = 0; i < 60; i++) {
+        expect(await inspect(sessionId, stale)).toBe("expired");
+      }
+
+      expect(await inspect(sessionId, stale)).toBe("invalid");
     });
   });
 

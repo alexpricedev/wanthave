@@ -134,3 +134,129 @@ describe("Builder submit button label", () => {
     expect(button?.textContent).toBe("Saving…");
   });
 });
+
+describe("Builder expired-token recovery", () => {
+  const originalFetch = globalThis.fetch;
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    document.body.innerHTML = "";
+    sessionStorage.clear();
+  });
+
+  const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+  const EXPIRED_BODY = {
+    error: "Your session timed out. Nothing was lost — press again.",
+    code: "csrf-expired",
+    csrfToken: "second-chance-token",
+  };
+
+  // Mount on the details step with one card queued, recording the CSRF token
+  // sent with each submit. The first attempt gets the expired-token 403; every
+  // later one hangs, so the in-flight state is stable to assert against.
+  const mountWithExpiredFirstAttempt = async () => {
+    const tokensSent: (string | undefined)[] = [];
+    let attempt = 0;
+
+    globalThis.fetch = Object.assign(
+      (_url: string, init: RequestInit): Promise<Response> => {
+        const headers = init.headers as Record<string, string>;
+        tokensSent.push(headers["X-CSRF-Token"]);
+        attempt++;
+        if (attempt === 1) {
+          return Promise.resolve(
+            new Response(JSON.stringify(EXPIRED_BODY), { status: 403 }),
+          );
+        }
+        return new Promise<Response>(() => {});
+      },
+      { preconnect: originalFetch.preconnect },
+    ) as typeof globalThis.fetch;
+
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    render(
+      h(Builder, {
+        ...baseConfig,
+        initial: {
+          wants: [{ card: CARD, quantity: 1 }],
+          haves: [],
+          friendId: "",
+        },
+      }),
+      host,
+    );
+
+    const submit = () =>
+      host.querySelector<HTMLButtonElement>("button.builder-submit");
+
+    submit()?.click(); // step 1 → details
+    await flush();
+    submit()?.click(); // first save attempt
+    await flush();
+
+    return { host, submit, tokensSent };
+  };
+
+  test("warns instead of erroring, and keeps the cards on screen", async () => {
+    const { host, submit } = await mountWithExpiredFirstAttempt();
+
+    const alert = host.querySelector(".builder-error");
+    expect(alert?.textContent).toBe(EXPIRED_BODY.error);
+    expect(alert?.classList.contains("builder-error--warning")).toBe(true);
+
+    // Nothing was lost and the button is live again for a second try.
+    expect(submit()?.disabled).toBe(false);
+
+    host.querySelector<HTMLButtonElement>("button.builder-back")?.click();
+    await flush();
+    expect(host.querySelectorAll(".trade-list li").length).toBe(1);
+  });
+
+  test("the second attempt uses the token the server handed back", async () => {
+    const { submit, tokensSent } = await mountWithExpiredFirstAttempt();
+
+    submit()?.click();
+    await flush();
+
+    expect(tokensSent).toEqual(["test-csrf-token", "second-chance-token"]);
+  });
+
+  test("an ordinary failure still reads as an error", async () => {
+    globalThis.fetch = Object.assign(
+      () =>
+        Promise.resolve(
+          new Response(JSON.stringify({ error: "Invalid CSRF token" }), {
+            status: 403,
+          }),
+        ),
+      { preconnect: originalFetch.preconnect },
+    ) as typeof globalThis.fetch;
+
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    render(
+      h(Builder, {
+        ...baseConfig,
+        initial: {
+          wants: [{ card: CARD, quantity: 1 }],
+          haves: [],
+          friendId: "",
+        },
+      }),
+      host,
+    );
+
+    const submit = () =>
+      host.querySelector<HTMLButtonElement>("button.builder-submit");
+    submit()?.click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    submit()?.click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const alert = host.querySelector(".builder-error");
+    expect(alert?.textContent).toBe("Invalid CSRF token");
+    expect(alert?.classList.contains("builder-error--warning")).toBe(false);
+  });
+});
