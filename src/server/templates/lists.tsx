@@ -73,7 +73,13 @@ export const Lists = ({
                 <a className="btn-ghost" href={`/lists/${l.slug}/edit`}>
                   Edit
                 </a>
-                <form method="post" action={`/lists/${l.slug}/delete`}>
+                <form
+                  method="post"
+                  action={`/lists/${l.slug}/delete`}
+                  data-confirm={`Deleting “${l.title ?? "Untitled list"}” is permanent, and its link will stop working for anyone you've shared it with.`}
+                  data-confirm-title="Delete this list?"
+                  data-confirm-label="Delete list"
+                >
                   <CsrfField token={deleteCsrfTokens[l.slug] ?? null} />
                   <button type="submit" className="btn-danger">
                     Delete

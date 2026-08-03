@@ -18,6 +18,10 @@
 @import "./components/trade.css";
 @import "./components/builder.css";
 
+/* Third-party, then our token mapping on top. Order matters. */
+@import "@alexpricedev/billet-dialog/styles.css";
+@import "./components/dialog-theme.css";
+
 /* All three faces (Forque display, Archivo body, IBM Plex Mono utility) are
    self-hosted from public/fonts and declared via inline @font-face in the
    document head — kept out of this bundle so the bundler doesn't try to resolve
