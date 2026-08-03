@@ -1,8 +1,7 @@
-import { cardsApi, listsApi, statsApi } from "../controllers/api";
+import { cardsApi, listsApi } from "../controllers/api";
 import { createRouteHandler } from "../utils/route-handler";
 
 export const apiRoutes = {
-  "/api/stats": statsApi.index,
   "/api/cards": cardsApi.index,
   "/api/cards/search": cardsApi.search,
   "/api/lists": createRouteHandler({ POST: listsApi.create }),

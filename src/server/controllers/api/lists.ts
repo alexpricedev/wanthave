@@ -2,6 +2,7 @@ import type { BunRequest } from "bun";
 import { getSessionContext } from "../../middleware/auth";
 import { csrfProtection } from "../../middleware/csrf";
 import { rateLimit } from "../../middleware/rate-limit";
+import { sessionHashFromRequest, track } from "../../services/events";
 import {
   ANON_TTL_DAYS,
   type CardInput,
@@ -104,8 +105,9 @@ export const listsApi = {
 
     const friendId = asString(body.friendId);
     const claimToken = ctx.user ? null : deviceClaimToken(req);
+    const cards = parseCards(body.cards);
     const result = await createTradeList({
-      cards: parseCards(body.cards),
+      cards,
       friendId,
       title: asString(body.title),
       userId: ctx.user?.id ?? null,
@@ -115,6 +117,22 @@ export const listsApi = {
     if (!result.ok) {
       return Response.json({ error: result.error }, { status: 400 });
     }
+
+    // The denominator for the builder funnel: against page views on /new this
+    // says whether a low list count is a traffic problem or a builder problem.
+    void track({
+      name: "list_created",
+      slug: result.list.slug,
+      userId: ctx.user?.id ?? null,
+      sessionHash: sessionHashFromRequest(req),
+      props: {
+        want_count: cards.filter((c) => c.kind === "want").length,
+        have_count: cards.filter((c) => c.kind === "have").length,
+        has_friend_id: Boolean(friendId),
+        has_title: Boolean(asString(body.title)),
+        is_anon: ctx.user == null,
+      },
+    });
 
     // Keep the friend ID on the account so the next list prefills it.
     if (ctx.user) {
