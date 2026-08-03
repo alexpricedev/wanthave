@@ -7,12 +7,14 @@
 @import "./pages/admin.css";
 @import "./pages/error.css";
 @import "./pages/legal.css";
+@import "./pages/account.css";
 
 /* Component styles */
 @import "./components/layout.css";
 @import "./components/nav.css";
 @import "./components/flash.css";
 @import "./components/form-field.css";
+@import "./components/name-prompt.css";
 @import "./components/data-table.css";
 @import "./components/badge.css";
 @import "./components/trade.css";

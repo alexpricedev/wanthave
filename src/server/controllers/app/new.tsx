@@ -53,6 +53,9 @@ export const newList = {
                 title: "",
               }
             : undefined,
+          account: ctx.user
+            ? { displayName: ctx.user.display_name ?? "" }
+            : undefined,
         }}
         heading="Build your trade list"
         sub="Search for the cards you want and add them to your WANT list with a tap. Then switch modes to HAVE and repeat for what you have to trade. When you're done, get a link you can drop into Discord."

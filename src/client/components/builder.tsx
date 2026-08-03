@@ -33,6 +33,8 @@ export interface BuilderConfig {
   mode: "create" | "edit";
   slug?: string;
   initial?: { wants: Item[]; haves: Item[]; friendId: string; title?: string };
+  // Signed-in users only — see BuilderClientConfig on the server.
+  account?: { displayName: string };
 }
 
 const RARITY_LABEL: Record<CardDto["rarity"], string> = {
@@ -335,6 +337,11 @@ export function Builder(config: BuilderConfig) {
     initial?.friendId || loadFriendId(),
   );
   const [title, setTitle] = useState<string>(initial?.title ?? "");
+  // Account-level, not list-level: saved to the profile on submit and reused on
+  // every list. Only rendered for signed-in users (config.account).
+  const [displayName, setDisplayName] = useState<string>(
+    config.account?.displayName ?? "",
+  );
   const [target, setTarget] = useState<Kind>("want");
 
   // Two-step flow: pick cards first, then an optional details step (list name +
@@ -526,7 +533,14 @@ export function Builder(config: BuilderConfig) {
         quantity: i.quantity,
       })),
     ];
-    const payload = { cards, friendId: friendDigits, title: title.trim() };
+    const payload = {
+      cards,
+      friendId: friendDigits,
+      title: title.trim(),
+      // Omitted entirely for guests, so the server can tell "no account to
+      // name" from "name cleared".
+      ...(config.account ? { displayName: displayName.trim() } : {}),
+    };
     try {
       const url =
         config.mode === "edit" ? `/api/lists/${config.slug}` : "/api/lists";
@@ -677,6 +691,33 @@ export function Builder(config: BuilderConfig) {
           {/* List name + Friend ID — optional details, collected on this step
               so they don't crowd the card picker. */}
           <div class="builder-meta builder-meta--stack">
+            {/* Signed-in only: this is the last step before the link exists, so
+                it's the last chance to put a name on it before it's pasted
+                anywhere. Saved to the account, not the list. */}
+            {config.account ? (
+              <section class="builder-friend">
+                <label class="friend-label" for="display-name-input">
+                  Your name <span class="text-tertiary">(optional)</span>
+                </label>
+                <input
+                  id="display-name-input"
+                  type="text"
+                  class="friend-input"
+                  placeholder="Your name or Discord handle"
+                  maxLength={24}
+                  autocomplete="nickname"
+                  value={displayName}
+                  onInput={(e) =>
+                    setDisplayName((e.target as HTMLInputElement).value)
+                  }
+                />
+                <span class="friend-hint text-tertiary">
+                  Shows first when the link unfurls, and on every list you
+                  share.
+                </span>
+              </section>
+            ) : null}
+
             <section class="builder-friend">
               <label class="friend-label" for="list-title-input">
                 List name <span class="text-tertiary">(optional)</span>

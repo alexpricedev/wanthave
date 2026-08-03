@@ -67,12 +67,17 @@ export const lists = {
       );
     }
 
+    const accountCsrf = ctx.user.display_name
+      ? undefined
+      : await createCsrfToken(ctx.sessionId, "POST", "/account");
+
     return render(
       <Lists
         lists={summaries}
         user={ctx.user}
         logoutCsrf={logoutCsrf}
         deleteCsrfTokens={deleteCsrfTokens}
+        accountCsrf={accountCsrf}
       />,
     );
   },
@@ -116,6 +121,7 @@ export const lists = {
             friendId: list.friendId ?? "",
             title: list.title ?? "",
           },
+          account: { displayName: ctx.user.display_name ?? "" },
         }}
         heading="Edit your list"
         sub="Change your cards or friend ID and save. The link and its Discord unfurl update in place."

@@ -1,4 +1,5 @@
 import {
+  account,
   cardImage,
   feedback,
   home,
@@ -18,6 +19,10 @@ import { createRouteHandler } from "../utils/route-handler";
 export const appRoutes = {
   "/": home.index,
   "/new": newList.index,
+  "/account": createRouteHandler({
+    GET: account.index,
+    POST: account.update,
+  }),
   "/lists": createRouteHandler({ GET: lists.index }),
   "/lists/:slug/edit": lists.edit<"/lists/:slug/edit">,
   "/lists/:slug/delete": createRouteHandler({

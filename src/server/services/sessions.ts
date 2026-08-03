@@ -86,7 +86,7 @@ export const getSessionContextFromDB = async (
       SELECT
         s.id_hash, s.user_id, s.session_type,
         s.expires_at, s.last_activity_at, s.created_at,
-        u.id as user_id_result, u.email, u.role, u.friend_id,
+        u.id as user_id_result, u.email, u.role, u.friend_id, u.display_name,
         u.created_at as user_created_at
       FROM sessions s
       LEFT JOIN users u ON s.user_id = u.id
@@ -107,6 +107,7 @@ export const getSessionContextFromDB = async (
       email: string | null;
       role: "user" | "admin" | null;
       friend_id: string | null;
+      display_name: string | null;
       user_created_at: string | null;
     };
 
@@ -118,6 +119,7 @@ export const getSessionContextFromDB = async (
           email: data.email as string,
           role: (data.role as "user" | "admin") ?? "user",
           friend_id: data.friend_id,
+          display_name: data.display_name,
           created_at: new Date(data.user_created_at as string),
         }
       : null;

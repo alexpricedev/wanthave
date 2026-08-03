@@ -1,5 +1,6 @@
 import { CsrfField } from "../components/csrf-field";
 import { Layout } from "../components/layouts";
+import { NamePrompt } from "../components/name-prompt";
 import { CountBadge } from "../components/trade";
 import type { ListSummary } from "../services/lists";
 import type { User } from "../services/users";
@@ -9,6 +10,8 @@ interface ListsProps {
   user: User;
   logoutCsrf?: string;
   deleteCsrfTokens: Record<string, string>;
+  // Only minted when the user hasn't named themselves yet — see the prompt.
+  accountCsrf?: string;
 }
 
 const fmtDate = (d: Date): string =>
@@ -23,6 +26,7 @@ export const Lists = ({
   user,
   logoutCsrf,
   deleteCsrfTokens,
+  accountCsrf,
 }: ListsProps) => (
   <Layout
     title="Your lists—wanthave"
@@ -40,6 +44,17 @@ export const Lists = ({
           </a>
         )}
       </header>
+
+      {/* The landing page after signing in or claiming lists — and the last
+          quiet moment to put a name on links that are already out there. */}
+      {user.display_name ? null : (
+        <NamePrompt
+          csrfToken={accountCsrf}
+          returnTo="/lists"
+          idPrefix="lists"
+          label="Add your name to your shared links"
+        />
+      )}
 
       {lists.length === 0 ? (
         <div className="lists-empty">

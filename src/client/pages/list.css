@@ -28,6 +28,14 @@
     margin: 0;
   }
 
+  /* Whose list this is, above the title it belongs to. */
+  .list-head-owner {
+    margin: 0;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   /* ── Share panel (creator, ?created=1) ────────────────────────────────── */
   .share-panel {
     background: radial-gradient(
@@ -229,6 +237,16 @@
 
   .owner-note {
     font-size: 0.875rem;
+  }
+
+  .owner-name-note {
+    margin: 0;
+    font-size: 0.8125rem;
+
+    strong {
+      color: var(--color-bone);
+      font-weight: 600;
+    }
   }
 
   /* Compact rerun of the share row — same controls, sized for the owner bar. */

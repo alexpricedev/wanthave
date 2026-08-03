@@ -1,4 +1,5 @@
 import { Layout } from "../components/layouts";
+import { NamePrompt } from "../components/name-prompt";
 import {
   CountBadge,
   FlywheelCta,
@@ -18,6 +19,9 @@ interface ListProps {
   isOwner: boolean;
   user: User | null;
   csrfToken?: string;
+  // CSRF for the inline "add your name" form. Only minted for the owner, who
+  // is the only visitor that form is rendered for.
+  accountCsrf?: string;
 }
 
 // Collapsed preview of the Discord/Twitter unfurl. A native <details> — no
@@ -47,13 +51,34 @@ export const ListPage = ({
   isOwner,
   user,
   csrfToken,
+  accountCsrf,
 }: ListProps) => {
   const wantCount = list.wants.length;
   const haveCount = list.haves.length;
+
+  // The owner's name leads the title: in a Discord channel the first words of
+  // the embed are what identify the post, and "whose list is this" beats
+  // anything else we could put there.
+  const owner = list.ownerName ? `${list.ownerName}—` : "";
   const title = list.title
-    ? `${list.title}—wanthave`
-    : `Pokémon Pocket trade list—LF ${wantCount} · FT ${haveCount}`;
-  const description = `Looking for ${wantCount} card${wantCount === 1 ? "" : "s"}, ${haveCount} up for trade. Built with wanthave.trade.`;
+    ? `${owner}${list.title}—wanthave`
+    : `${owner}Pokémon Pocket trade list—LF ${wantCount} · FT ${haveCount}`;
+  const cardsWanted = `${wantCount} card${wantCount === 1 ? "" : "s"}`;
+  const description = list.ownerName
+    ? `${list.ownerName} is looking for ${cardsWanted}, with ${haveCount} up for trade. Built with wanthave.trade.`
+    : `Looking for ${cardsWanted}, ${haveCount} up for trade. Built with wanthave.trade.`;
+  const headTitle =
+    list.title ??
+    (list.ownerName
+      ? `${list.ownerName}'s trade list`
+      : "Pokémon Pocket trade list");
+
+  // The share moment is when a name is worth the most, so that's where it's
+  // asked for. Returning to this same URL keeps the panel they were reading.
+  const nameReturnTo = created
+    ? `/l/${list.slug}?created=1`
+    : `/l/${list.slug}`;
+  const askForName = isOwner && !list.ownerName;
 
   // Version the OG image URL on updated_at. Discord's media proxy caches by URL
   // and never revalidates, so an edited list needs a brand new image URL for the
@@ -103,6 +128,13 @@ export const ListPage = ({
               </button>
             </div>
             <OgPreview src={ogImagePath} />
+            {askForName ? (
+              <NamePrompt
+                csrfToken={accountCsrf}
+                returnTo={nameReturnTo}
+                idPrefix="share"
+              />
+            ) : null}
             {canClaim ? (
               <div className="nudge" data-nudge>
                 <p className="nudge-copy">
@@ -127,13 +159,18 @@ export const ListPage = ({
           </section>
         ) : (
           <header className="list-head">
-            <h1 className="list-head-title">
-              {list.title ?? "Pokémon Pocket trade list"}
-            </h1>
+            {list.ownerName && list.title ? (
+              <p className="list-head-owner text-tertiary">
+                {`Shared by ${list.ownerName}`}
+              </p>
+            ) : null}
+            <h1 className="list-head-title">{headTitle}</h1>
             <p className="list-head-hint">
               {isOwner || builtHere
                 ? "This page has the cards you're looking for and the cards you have up for trade."
-                : "This page has a list of cards your buddy is looking for and a list of the cards he has to trade."}
+                : list.ownerName
+                  ? `These are the cards ${list.ownerName} is looking for, and the ones they have up for trade.`
+                  : "This page has a list of cards your buddy is looking for and a list of the cards he has to trade."}
             </p>
             <CountBadge wantCount={wantCount} haveCount={haveCount} />
           </header>
@@ -191,6 +228,19 @@ export const ListPage = ({
               </div>
             ) : null}
             {!created ? <OgPreview src={ogImagePath} /> : null}
+            {askForName && !created ? (
+              <NamePrompt
+                csrfToken={accountCsrf}
+                returnTo={nameReturnTo}
+                idPrefix="owner"
+              />
+            ) : null}
+            {list.ownerName ? (
+              <p className="owner-name-note text-tertiary">
+                Shared as <strong>{list.ownerName}</strong> ·{" "}
+                <a href="/account">Change name</a>
+              </p>
+            ) : null}
           </div>
         ) : null}
 

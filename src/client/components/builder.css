@@ -585,6 +585,17 @@
   color: var(--color-danger);
 }
 
+.friend-hint {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* A name is prose, not a code — drop the digit treatment .friend-input carries. */
+#display-name-input {
+  font-family: var(--font-body);
+  letter-spacing: normal;
+}
+
 .builder-error {
   color: var(--color-danger);
   font-size: 0.9375rem;

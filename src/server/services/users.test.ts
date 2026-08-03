@@ -15,7 +15,13 @@ mock.module("./database", () => ({
 }));
 
 import { db } from "./database";
-import { backfillUserFriendId, getUsers, saveUserFriendId } from "./users";
+import {
+  backfillUserFriendId,
+  getUsers,
+  saveUserDisplayName,
+  saveUserFriendId,
+  setUserFriendId,
+} from "./users";
 
 const createUser = async (email: string): Promise<string> => {
   const id = randomUUID();
@@ -107,6 +113,53 @@ describe("saveUserFriendId", () => {
     await saveUserFriendId(userId, "5555666677778888");
 
     expect(await friendIdOf(userId)).toBe("5555666677778888");
+  });
+});
+
+describe("setUserFriendId", () => {
+  test("writes exactly what the account form asked for, blank included", async () => {
+    const userId = await createUser("explicit@test.com");
+    await saveUserFriendId(userId, "1111222233334444");
+
+    await setUserFriendId(userId, null);
+
+    expect(await friendIdOf(userId)).toBeNull();
+  });
+});
+
+describe("saveUserDisplayName", () => {
+  const nameOf = async (id: string): Promise<string | null> => {
+    const rows =
+      (await db`SELECT display_name FROM users WHERE id = ${id}`) as {
+        display_name: string | null;
+      }[];
+    return rows[0].display_name;
+  };
+
+  test("stores the normalized name", async () => {
+    const userId = await createUser("named@test.com");
+
+    expect(await saveUserDisplayName(userId, "  Ash   Ketchum ")).toBe(
+      "Ash Ketchum",
+    );
+    expect(await nameOf(userId)).toBe("Ash Ketchum");
+  });
+
+  test("clears the name when the field comes back blank", async () => {
+    const userId = await createUser("cleared@test.com");
+    await saveUserDisplayName(userId, "Alex");
+
+    expect(await saveUserDisplayName(userId, "  ")).toBeNull();
+    expect(await nameOf(userId)).toBeNull();
+  });
+
+  test("clamps a name the column could not hold", async () => {
+    const userId = await createUser("longname@test.com");
+
+    const saved = await saveUserDisplayName(userId, "A".repeat(50));
+
+    expect(saved).toBe("A".repeat(24));
+    expect(await nameOf(userId)).toBe("A".repeat(24));
   });
 });
 

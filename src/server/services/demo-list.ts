@@ -36,6 +36,7 @@ export const buildDemoList = (): TradeList => ({
   slug: "demo",
   userId: null,
   title: null,
+  ownerName: null,
   friendId: null,
   createdAt: new Date(0),
   updatedAt: new Date(0),

@@ -70,6 +70,13 @@ export const list = {
 
     const isOwner = ctx.user?.id != null && tradeList.userId === ctx.user.id;
 
+    // Only the owner is offered the inline "add your name" form, so only the
+    // owner needs a token for it.
+    let accountCsrf: string | undefined;
+    if (isOwner && !tradeList.ownerName && ctx.sessionId) {
+      accountCsrf = await createCsrfToken(ctx.sessionId, "POST", "/account");
+    }
+
     // A guest returning to a list they built: the page can tell them it's
     // theirs and what an account would add. Only worth a lookup for an
     // unclaimed list viewed by someone carrying a claim token.
@@ -89,6 +96,7 @@ export const list = {
         isOwner={isOwner}
         user={ctx.user}
         csrfToken={logoutCsrf}
+        accountCsrf={accountCsrf}
       />,
     );
   },

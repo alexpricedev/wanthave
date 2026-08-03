@@ -17,7 +17,12 @@ const BG = "#0c0b0e";
 const WANT = "#e5b35b";
 const HAVE = "#7fcbd9";
 const MUTED = "#6f6a7a";
+const NAME = "#b5b0ba";
 const PLACEHOLDER_BG = "#1b1a20";
+
+// The owner's name, set opposite the wordmark on the footer line.
+const NAME_SIZE = 26;
+const NAME_GAP = 24; // clearance the name leaves around the count badge
 
 // Card geometry. Cards run left to right from a vertical label and bleed off
 // the right edge. A list with both wants and haves gets two rows (WANT above
@@ -84,6 +89,12 @@ const textPath = (
 
 const advance = (font: opentype.Font, text: string, size: number): number =>
   font.getAdvanceWidth(text, size);
+
+// Display names are user input and the faces here are latin subsets, so a name
+// in another script would set as a row of tofu. Draw one only when every
+// character has a glyph — the page's meta title carries the name regardless.
+const canSet = (font: opentype.Font, text: string): boolean =>
+  [...text].every((char) => font.charToGlyphIndex(char) > 0);
 
 const LABEL_INK_PAD = 1; // breathing room around the trimmed glyph box
 
@@ -480,6 +491,28 @@ export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
     textPath(forque, ".trade", markSize, mx, FOOTER_BASELINE, "#ffffff"),
   );
 
+  // The owner's name closes the footer line opposite the wordmark, so the
+  // unfurl says whose list this is without the viewer clicking through. It is
+  // subordinate to both: dropped rather than crowded if the count badge grows
+  // into the space it needs.
+  const nameParts: string[] = [];
+  if (list.ownerName && canSet(mono, list.ownerName)) {
+    const nameWidth = advance(mono, list.ownerName, NAME_SIZE);
+    const nameLeft = CANVAS_W - ROW_START_PAD - nameWidth;
+    if (nameLeft >= pillLeft + badgeWidth + pillPadX + NAME_GAP) {
+      nameParts.push(
+        textPath(
+          mono,
+          list.ownerName,
+          NAME_SIZE,
+          nameLeft,
+          FOOTER_BASELINE,
+          NAME,
+        ),
+      );
+    }
+  }
+
   const baseSvg = `<svg width="${CANVAS_W}" height="${CANVAS_H}" xmlns="http://www.w3.org/2000/svg">
     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#141216"/><stop offset="1" stop-color="${BG}"/>
@@ -488,6 +521,7 @@ export const renderOgImage = async (list: TradeList): Promise<OgRender> => {
     ${pill}
     ${badgeParts.join("")}
     ${markParts.join("")}
+    ${nameParts.join("")}
   </svg>`;
 
   // Palette-quantized: two full rows of card art are ~1.5MB as a truecolour PNG
