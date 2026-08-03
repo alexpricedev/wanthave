@@ -1,0 +1,22 @@
+/* Maps our design tokens onto @alexpricedev/billet-dialog's own. The package
+   ships a dark default that is close but not ours, and this is the only place
+   the two systems meet — see its README "Theming" section. */
+[data-bd-root] {
+  --bd-surface: var(--color-ground);
+  --bd-border: var(--color-edge);
+  --bd-fg: var(--color-bone);
+  --bd-muted: var(--color-text-secondary);
+  --bd-accent: var(--color-primary);
+  --bd-accent-hover: var(--color-primary-hover);
+  --bd-accent-fg: var(--color-on-primary);
+  --bd-danger: var(--color-danger);
+  --bd-danger-hover: color-mix(in srgb, var(--color-danger) 82%, #fff);
+  --bd-danger-fg: var(--color-void);
+  --bd-font: var(--font-body);
+  --bd-radius: var(--radius);
+  --bd-radius-sm: var(--radius-sm);
+  --bd-shadow: var(--shadow);
+
+  /* Our own modals sit at 200; the package defaults to the top of the stack. */
+  --bd-z: 200;
+}
