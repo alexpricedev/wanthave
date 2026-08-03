@@ -73,3 +73,64 @@ describe("Builder friend ID prefill", () => {
     expect(friendInput(host)?.value).toBe("1111 2222 3333 4444");
   });
 });
+
+describe("Builder submit button label", () => {
+  const originalFetch = globalThis.fetch;
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    document.body.innerHTML = "";
+    sessionStorage.clear();
+  });
+
+  // Mount straight onto the details step in the given mode, then click submit
+  // against a fetch that never settles so the in-flight label stays on screen.
+  const mountAndSubmit = async (
+    config: BuilderConfig,
+  ): Promise<HTMLButtonElement | null> => {
+    globalThis.fetch = Object.assign(() => new Promise<Response>(() => {}), {
+      preconnect: originalFetch.preconnect,
+    });
+
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    render(
+      h(Builder, {
+        ...config,
+        initial: {
+          wants: [{ card: CARD, quantity: 1 }],
+          haves: [],
+          friendId: "",
+        },
+      }),
+      host,
+    );
+
+    const submit = () =>
+      host.querySelector<HTMLButtonElement>("button.builder-submit");
+    submit()?.click();
+    await Promise.resolve();
+    submit()?.click();
+    await Promise.resolve();
+
+    return submit();
+  };
+
+  test("says Creating… while a new list is in flight", async () => {
+    const button = await mountAndSubmit(baseConfig);
+
+    expect(button?.disabled).toBe(true);
+    expect(button?.textContent).toBe("Creating…");
+  });
+
+  test("says Saving… while an edit is in flight", async () => {
+    const button = await mountAndSubmit({
+      ...baseConfig,
+      mode: "edit",
+      slug: "abc123",
+    });
+
+    expect(button?.disabled).toBe(true);
+    expect(button?.textContent).toBe("Saving…");
+  });
+});
