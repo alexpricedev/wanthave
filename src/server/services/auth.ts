@@ -8,6 +8,8 @@ export interface User {
   email: string;
   role: "user" | "admin";
   friend_id: string | null;
+  // The name shown on this user's shared lists (see utils/display-name).
+  display_name: string | null;
   created_at: Date;
 }
 
@@ -34,7 +36,7 @@ export const findOrCreateUser = async (email: string): Promise<User> => {
 
   // First try to find existing user
   const existing = await db`
-    SELECT id, email, role, friend_id, created_at
+    SELECT id, email, role, friend_id, display_name, created_at
     FROM users
     WHERE email = ${normalizedEmail}
   `;
@@ -48,7 +50,7 @@ export const findOrCreateUser = async (email: string): Promise<User> => {
   const newUser = await db`
     INSERT INTO users (id, email)
     VALUES (${userId}, ${normalizedEmail})
-    RETURNING id, email, role, friend_id, created_at
+    RETURNING id, email, role, friend_id, display_name, created_at
   `;
 
   return newUser[0] as User;
@@ -118,7 +120,7 @@ export const verifyMagicLink = async (
   };
 
   const userResults = await db`
-    SELECT id, email, role, friend_id, created_at
+    SELECT id, email, role, friend_id, display_name, created_at
     FROM users
     WHERE id = ${tokenData.user_id}
   `;
@@ -132,6 +134,7 @@ export const verifyMagicLink = async (
     email: string;
     role: "user" | "admin";
     friend_id: string | null;
+    display_name: string | null;
     created_at: string;
   };
 
@@ -146,6 +149,7 @@ export const verifyMagicLink = async (
     email: userData.email,
     role: userData.role,
     friend_id: userData.friend_id,
+    display_name: userData.display_name,
     created_at: new Date(userData.created_at),
   };
 

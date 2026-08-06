@@ -21,11 +21,16 @@ const rows = (kind: "want" | "have", count: number): ListCardRow[] =>
     position: i,
   }));
 
-const buildList = (wants: number, haves: number): TradeList => ({
+const buildList = (
+  wants: number,
+  haves: number,
+  ownerName: string | null = null,
+): TradeList => ({
   id: "id",
   slug: "slug",
   userId: null,
   title: null,
+  ownerName,
   friendId: null,
   createdAt: new Date(0),
   updatedAt: new Date(0),
@@ -61,6 +66,26 @@ describe("renderOgImage", () => {
       // Art is mocked away here, so every drawn card is a placeholder — the
       // render must report itself incomplete so the caller skips the cache.
       expect(render.complete).toBe(false);
+    });
+  }
+
+  // The owner's name is drawn on the footer line. Pixels aren't worth
+  // asserting, but every one of these must produce a frame rather than throw
+  // or come out a different size: the name is user input, and the widest
+  // allowed name has to coexist with the widest possible count badge.
+  const names: [string, string][] = [
+    ["a short name", "Alex"],
+    ["the longest allowed name", "Wolfgang Von Trapp III.."],
+    ["a name the latin face can't set", "アレックス"],
+    ["a name of punctuation and spacing", "  x  —  y  "],
+  ];
+
+  for (const [label, ownerName] of names) {
+    test(`renders with ${label}`, async () => {
+      const render = await renderOgImage(buildList(60, 60, ownerName));
+      const meta = await sharp(render.png).metadata();
+      expect(meta.width).toBe(1200);
+      expect(meta.height).toBe(630);
     });
   }
 });

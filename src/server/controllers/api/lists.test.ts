@@ -80,7 +80,7 @@ const CARDS = [{ cardId: "a1-036", kind: "want", quantity: 1 }];
 const signIn = async (): Promise<User> => {
   const [user] = (await connection`
     INSERT INTO users (email) VALUES ('owner@test.com')
-    RETURNING id, email, role, friend_id, created_at
+    RETURNING id, email, role, friend_id, display_name, created_at
   `) as User[];
   mockContext = {
     ...guestContext,
@@ -97,6 +97,13 @@ const friendIdOf = async (userId: string): Promise<string | null> => {
     SELECT friend_id FROM users WHERE id = ${userId}
   `) as { friend_id: string | null }[];
   return rows[0].friend_id;
+};
+
+const displayNameOf = async (userId: string): Promise<string | null> => {
+  const rows = (await connection`
+    SELECT display_name FROM users WHERE id = ${userId}
+  `) as { display_name: string | null }[];
+  return rows[0].display_name;
 };
 
 const post = (body: unknown) =>
@@ -186,6 +193,57 @@ describe("Lists API", () => {
     await post({ cards: CARDS, friendId: "" });
 
     expect(await friendIdOf(user.id)).toBe("1234567890123456");
+  });
+
+  test("saves the name from the builder's details step", async () => {
+    const user = await signIn();
+
+    const response = await post({ cards: CARDS, displayName: " Alex " });
+
+    expect(response.status).toBe(201);
+    expect(await displayNameOf(user.id)).toBe("Alex");
+  });
+
+  test("saves the name when editing too", async () => {
+    const user = await signIn();
+    const created = (await (await post({ cards: CARDS })).json()) as {
+      slug: string;
+    };
+
+    await put(created.slug, { cards: CARDS, displayName: "Ash" });
+
+    expect(await displayNameOf(user.id)).toBe("Ash");
+  });
+
+  test("rejects an unusable name before the list is written", async () => {
+    const user = await signIn();
+
+    const response = await post({
+      cards: CARDS,
+      displayName: "A".repeat(30),
+    });
+
+    expect(response.status).toBe(400);
+    expect(await displayNameOf(user.id)).toBeNull();
+    // Nothing was created, so the user still has every card on screen to retry
+    // with.
+    expect(await connection`SELECT id FROM trade_list`).toHaveLength(0);
+  });
+
+  test("leaves the stored name alone when the field isn't sent", async () => {
+    const user = await signIn();
+    await post({ cards: CARDS, displayName: "Alex" });
+
+    await post({ cards: CARDS });
+
+    expect(await displayNameOf(user.id)).toBe("Alex");
+  });
+
+  test("ignores a name from a guest — there's no account to put it on", async () => {
+    const response = await postAnon({ cards: CARDS, displayName: "Alex" });
+
+    expect(response.response.status).toBe(201);
+    expect(await connection`SELECT id FROM users`).toHaveLength(0);
   });
 
   test("does not touch accounts for anonymous lists", async () => {

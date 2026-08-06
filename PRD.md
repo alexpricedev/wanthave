@@ -98,6 +98,7 @@ Page is mobile-first (Discord mobile is the dominant context). No login required
 
 Creating an account allows:
 
+- **A name on your links** — an optional display name, stored once on the account and used on every list the user shares. It leads the public page's meta title ("Alex—B4 wants"), so a Discord embed says whose list it is before anything else, and it's set opposite the wordmark on the OG image. Not a handle: names aren't unique, nothing resolves a list by name, and leaving it blank shares anonymously. It's asked for at the share moment (an inline prompt on a fresh link and on the list index), offered as a field in the builder's details step, and editable at `/account` — where a change re-renders the images on links already posted.
 - **Permanent links** — account-owned links never expire
 - Saving multiple named lists (e.g. "B4 wants", "Spare EXs")
 - Editing a list **in place** — the existing link and OG image update, so a pinned Discord post stays current
@@ -160,5 +161,6 @@ The OG image is the product's ad, utility, and brand in one frame. It must commu
 | Link retention | Anonymous: 90-day expiry with converting expired page. Account: forever |
 | Trade costs (Shinedust) | Out of scope for MVP |
 | Account nudge | Once, immediately after first link, framed as permanence |
+| Display name | Optional, non-unique, account-level. Leads the meta title; asked for at the share moment |
 | Multiple anon lists | Allowed implicitly; each link standalone |
 | Name & domain | **wanthave** at wanthave.trade; wanthave.io as defensive redirect |

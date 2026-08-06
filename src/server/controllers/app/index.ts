@@ -1,3 +1,4 @@
+export { account } from "./account";
 export { cardImage } from "./card-image";
 export { feedback } from "./feedback";
 export { home } from "./home";

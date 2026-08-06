@@ -26,10 +26,12 @@ import {
   groupByRarity,
   isExpired,
   MAX_CARDS_PER_SECTION,
+  refreshOgImagesForUser,
   sanitizeCards,
   setCachedOgImage,
   updateTradeList,
 } from "./lists";
+import { saveUserDisplayName } from "./users";
 
 describe("sanitizeCards", () => {
   test("drops unknown ids and dedupes across sections", () => {
@@ -245,6 +247,69 @@ describe("update / claim / delete", () => {
     expect(await deleteList(created.list.slug, other.id)).toBe(false);
     expect(await deleteList(created.list.slug, user.id)).toBe(true);
     expect(await getListsByUser(user.id)).toHaveLength(0);
+  });
+});
+
+describe("owner name", () => {
+  beforeEach(async () => {
+    await cleanupTestData(connection);
+  });
+
+  test("comes back with the list, live from the account", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    await saveUserDisplayName(user.id, "Alex");
+    const created = await createTradeList({
+      cards: [{ cardId: "a1-036", kind: "want", quantity: 1 }],
+      userId: user.id,
+    });
+    if (!created.ok) throw new Error("setup failed");
+    expect(created.list.ownerName).toBe("Alex");
+
+    const loaded = await getTradeListBySlug(created.list.slug);
+    expect(loaded?.ownerName).toBe("Alex");
+
+    // Renaming reaches lists that already exist — the name isn't snapshotted.
+    await saveUserDisplayName(user.id, "Ash");
+    expect((await getTradeListBySlug(created.list.slug))?.ownerName).toBe(
+      "Ash",
+    );
+  });
+
+  test("is null for an anonymous list", async () => {
+    const created = await createTradeList({
+      cards: [{ cardId: "a1-036", kind: "want", quantity: 1 }],
+    });
+    if (!created.ok) throw new Error("setup failed");
+
+    const loaded = await getTradeListBySlug(created.list.slug);
+    expect(loaded?.ownerName).toBeNull();
+  });
+
+  test("refreshOgImagesForUser drops the cached image and re-versions the list", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    const other = await findOrCreateUser(randomEmail());
+    const mine = await createTradeList({
+      cards: [{ cardId: "a1-036", kind: "want", quantity: 1 }],
+      userId: user.id,
+    });
+    const theirs = await createTradeList({
+      cards: [{ cardId: "a1-001", kind: "have", quantity: 1 }],
+      userId: other.id,
+    });
+    if (!mine.ok || !theirs.ok) throw new Error("setup failed");
+    await setCachedOgImage(mine.list.slug, new Uint8Array([1, 2, 3]));
+    await setCachedOgImage(theirs.list.slug, new Uint8Array([4, 5, 6]));
+    const before = (await getTradeListBySlug(mine.list.slug))?.updatedAt;
+
+    await refreshOgImagesForUser(user.id);
+
+    expect(await getCachedOgImage(mine.list.slug)).toBeNull();
+    const after = (await getTradeListBySlug(mine.list.slug))?.updatedAt;
+    // The meta tag versions the image URL on updated_at, so an unfurl already
+    // in a channel only refetches if this moves.
+    expect(after?.getTime()).toBeGreaterThanOrEqual(before?.getTime() ?? 0);
+    // Someone else's lists are untouched.
+    expect(await getCachedOgImage(theirs.list.slug)).not.toBeNull();
   });
 });
 

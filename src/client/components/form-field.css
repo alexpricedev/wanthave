@@ -14,4 +14,11 @@
   textarea {
     width: 100%;
   }
+
+  /* Explains what a field is for, under the control it belongs to. */
+  .field-hint {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
 }

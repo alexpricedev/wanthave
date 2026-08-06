@@ -1,0 +1,53 @@
+/* "Add your name" — the onboarding prompt that follows a signed-in user from
+   the share panel to the owner bar to their list index. Unscoped: it appears on
+   several pages, and it should look identical on each. */
+.name-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-edge);
+}
+
+.name-prompt-row {
+  display: flex;
+  gap: 0.5rem;
+
+  @media (width <= 640px) {
+    flex-direction: column;
+  }
+}
+
+/* The mono/letterspaced treatment .friend-input carries is for digits — a name
+   reads as a name in the body face. */
+.name-prompt .friend-input {
+  flex: 1;
+  font-family: var(--font-body);
+  letter-spacing: normal;
+  min-width: 0;
+}
+
+.name-prompt-btn {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  font-size: 0.9375rem;
+}
+
+.name-prompt-hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+/* On the list index it stands alone rather than closing a panel, so it needs
+   its own edges. */
+[data-page="lists"] .name-prompt {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--color-edge-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-ground);
+}

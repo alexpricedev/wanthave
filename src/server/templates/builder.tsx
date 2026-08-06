@@ -14,6 +14,10 @@ export interface BuilderClientConfig {
     friendId: string;
     title: string;
   };
+  // Present only for signed-in users: the details step offers to name them, so
+  // their first shared link already says who it's from. Empty until they set
+  // one.
+  account?: { displayName: string };
 }
 
 interface BuilderCard {

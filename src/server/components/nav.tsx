@@ -11,6 +11,7 @@ export const Nav = ({ page, user, csrfToken }: NavProps) => {
   const navLinks = [
     ...(user ? [{ href: "/new", label: "Build", name: "new" }] : []),
     ...(user ? [{ href: "/lists", label: "My lists", name: "lists" }] : []),
+    ...(user ? [{ href: "/account", label: "Account", name: "account" }] : []),
   ];
 
   return (

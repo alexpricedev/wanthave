@@ -1,0 +1,41 @@
+[data-page="account"] {
+  .account-page {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .account-head {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      margin: 0 0 0.5rem;
+    }
+
+    .lead {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  /* Scoped to the page section: an unscoped `form` also caught the nav's
+     logout form and drew it as a card. */
+  .account-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--color-ground);
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius);
+  }
+
+  .account-page button[type="submit"] {
+    align-self: flex-start;
+  }
+
+  .account-footnote {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+}

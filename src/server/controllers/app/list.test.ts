@@ -25,11 +25,24 @@ const ownerContext: SessionContext = {
     email: "owner@example.com",
     role: "user",
     friend_id: null,
+    display_name: null,
     created_at: new Date(),
   },
   isGuest: false,
   isAuthenticated: true,
   requiresSetCookie: false,
+};
+
+const namedOwnerContext: SessionContext = {
+  ...ownerContext,
+  user: {
+    id: "user-1",
+    email: "owner@example.com",
+    role: "user",
+    friend_id: null,
+    display_name: "Alex",
+    created_at: new Date(),
+  },
 };
 
 let mockList: TradeList | null = null;
@@ -67,6 +80,7 @@ const buildList = (): TradeList => {
     slug: "abcdefghijk",
     userId: null,
     title: null,
+    ownerName: null,
     friendId: "1234567890123456",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -234,6 +248,95 @@ describe("list.index", () => {
     const html = await (await list.index(req)).text();
 
     expect(html).not.toContain("You made this list");
+  });
+
+  test("leads the meta title with the owner's name", async () => {
+    mockList = { ...buildList(), userId: "user-1", ownerName: "Alex" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+
+    // The name is the first thing in the tag, ahead of the list's own title —
+    // in a Discord embed those first words are what identify the post.
+    expect(html).toContain("<title>Alex—Pokémon Pocket trade list");
+    expect(html).toContain('property="og:title" content="Alex—');
+    expect(html).toContain("Alex is looking for 1 card");
+    expect(html).toContain("Alex&#x27;s trade list");
+    // A visitor is told whose list it is instead of "your buddy".
+    expect(html).toContain("These are the cards Alex is looking for");
+    expect(html).not.toContain("your buddy");
+  });
+
+  test("puts the name ahead of a named list's title", async () => {
+    mockList = {
+      ...buildList(),
+      userId: "user-1",
+      ownerName: "Alex",
+      title: "B4 wants",
+    };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+
+    expect(html).toContain("<title>Alex—B4 wants—wanthave</title>");
+    expect(html).toContain("Shared by Alex");
+  });
+
+  test("leaves the title unchanged when the owner has no name", async () => {
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).toContain("<title>Pokémon Pocket trade list—LF 1 · FT 1");
+  });
+
+  test("asks an unnamed owner for their name at the share moment", async () => {
+    mockContext = ownerContext;
+    mockList = { ...buildList(), userId: "user-1" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk?created=1",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+
+    expect(html).toContain("Add your name to this link");
+    expect(html).toContain('action="/account"');
+    // Saving returns to the same panel they were reading.
+    expect(html).toContain('name="return_to" value="/l/abcdefghijk?created=1"');
+  });
+
+  test("shows a named owner what their links say instead of the prompt", async () => {
+    mockContext = namedOwnerContext;
+    mockList = { ...buildList(), userId: "user-1", ownerName: "Alex" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+
+    expect(html).not.toContain("Add your name to this link");
+    expect(html).toContain("Shared as <strong>Alex</strong>");
+  });
+
+  test("never asks a visitor for a name", async () => {
+    mockList = { ...buildList(), userId: "user-2" };
+    const req = createBunRequest(
+      "http://localhost:3000/l/abcdefghijk",
+      {},
+      { slug: "abcdefghijk" },
+    );
+    const html = await (await list.index(req)).text();
+    expect(html).not.toContain("Add your name");
   });
 
   test("renders the expired page (200, never 404)", async () => {

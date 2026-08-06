@@ -61,11 +61,17 @@ export interface TradeListRow {
   expires_at: string | null;
 }
 
+// A row read back with the owner's display name joined on.
+type OwnedTradeListRow = TradeListRow & { owner_name: string | null };
+
 export interface TradeList {
   id: string;
   slug: string;
   userId: string | null;
   title: string | null;
+  // Display name of the account that owns this list, when it has one. Read
+  // live rather than snapshotted, so renaming updates every list at once.
+  ownerName: string | null;
   friendId: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -122,7 +128,11 @@ export const sanitizeCards = (
   return out;
 };
 
-const hydrate = (row: TradeListRow, cardRows: ListCardRow[]): TradeList => {
+const hydrate = (
+  row: TradeListRow,
+  cardRows: ListCardRow[],
+  ownerName: string | null = null,
+): TradeList => {
   const wants = cardRows
     .filter((c) => c.kind === "want")
     .sort((a, b) => a.position - b.position);
@@ -134,6 +144,7 @@ const hydrate = (row: TradeListRow, cardRows: ListCardRow[]): TradeList => {
     slug: row.slug,
     userId: row.user_id,
     title: row.title,
+    ownerName,
     friendId: row.friend_id,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
@@ -226,12 +237,16 @@ export const createTradeList = async (
         const [row] = (await tx`
           INSERT INTO trade_list (slug, user_id, title, friend_id, expires_at, claim_token_hash)
           VALUES (${slug}, ${userId}, ${title}, ${friendId}, ${expiresAt}, ${claimTokenHash})
-          RETURNING id, slug, user_id, title, friend_id, created_at, updated_at, expires_at
-        `) as TradeListRow[];
+          RETURNING id, slug, user_id, title, friend_id, created_at, updated_at, expires_at,
+            (SELECT display_name FROM users WHERE id = user_id) AS owner_name
+        `) as OwnedTradeListRow[];
         await insertCards(tx, row.id, cards);
         return row;
       });
-      return { ok: true, list: hydrate(list, loadCardRows(cardsToRaw(cards))) };
+      return {
+        ok: true,
+        list: hydrate(list, loadCardRows(cardsToRaw(cards)), list.owner_name),
+      };
     } catch (error) {
       if (isUniqueViolation(error)) continue;
       throw error;
@@ -259,10 +274,15 @@ const isUniqueViolation = (error: unknown): boolean =>
 export const getTradeListBySlug = async (
   slug: string,
 ): Promise<TradeList | null> => {
+  // The owner's display name comes along for the ride: it leads the page's
+  // meta title, so the unfurl says whose list this is.
   const rows = (await db`
-    SELECT id, slug, user_id, title, friend_id, created_at, updated_at, expires_at
-    FROM trade_list WHERE slug = ${slug}
-  `) as TradeListRow[];
+    SELECT l.id, l.slug, l.user_id, l.title, l.friend_id,
+      l.created_at, l.updated_at, l.expires_at, u.display_name AS owner_name
+    FROM trade_list l
+    LEFT JOIN users u ON u.id = l.user_id
+    WHERE l.slug = ${slug}
+  `) as (TradeListRow & { owner_name: string | null })[];
   if (rows.length === 0) return null;
 
   const cardRows = (await db`
@@ -270,7 +290,7 @@ export const getTradeListBySlug = async (
     FROM trade_list_card WHERE list_id = ${rows[0].id}
   `) as RawCardRow[];
 
-  return hydrate(rows[0], loadCardRows(cardRows));
+  return hydrate(rows[0], loadCardRows(cardRows), rows[0].owner_name);
 };
 
 // Update an account-owned list in place (edit keeps the same slug/link). Returns
@@ -296,8 +316,9 @@ export const updateTradeList = async (
       SET friend_id = ${friendId}, title = ${title},
           updated_at = CURRENT_TIMESTAMP, og_image = NULL
       WHERE slug = ${slug} AND user_id = ${userId}
-      RETURNING id, slug, user_id, title, friend_id, created_at, updated_at, expires_at
-    `) as TradeListRow[];
+      RETURNING id, slug, user_id, title, friend_id, created_at, updated_at, expires_at,
+        (SELECT display_name FROM users WHERE id = user_id) AS owner_name
+    `) as OwnedTradeListRow[];
     if (rows.length === 0) return null;
     await tx`DELETE FROM trade_list_card WHERE list_id = ${rows[0].id}`;
     await insertCards(tx, rows[0].id, cards);
@@ -305,7 +326,7 @@ export const updateTradeList = async (
   });
 
   if (!updated) return null;
-  return hydrate(updated, loadCardRows(cardsToRaw(cards)));
+  return hydrate(updated, loadCardRows(cardsToRaw(cards)), updated.owner_name);
 };
 
 export interface ClaimedList {
@@ -422,6 +443,18 @@ export const getCachedOgImage = async (
   `) as { og_image: Uint8Array | null }[];
   if (rows.length === 0 || !rows[0].og_image) return null;
   return rows[0].og_image;
+};
+
+// A user renaming themselves changes what every list of theirs unfurls as: the
+// name is drawn on the OG image, and the meta tag's ?v= token is updated_at.
+// Dropping the cached PNG and bumping the timestamp is what makes a rename
+// reach an already-pinned Discord post instead of stopping at the HTML.
+export const refreshOgImagesForUser = async (userId: string): Promise<void> => {
+  await db`
+    UPDATE trade_list
+    SET og_image = NULL, updated_at = CURRENT_TIMESTAMP
+    WHERE user_id = ${userId}
+  `;
 };
 
 export const setCachedOgImage = async (

@@ -8,11 +8,14 @@ import {
   ANON_TTL_DAYS,
   type CardInput,
   createTradeList,
+  refreshOgImagesForUser,
   updateTradeList,
 } from "../../services/lists";
 import { setSessionCookie } from "../../services/sessions";
-import { saveUserFriendId } from "../../services/users";
+import type { User } from "../../services/users";
+import { saveUserDisplayName, saveUserFriendId } from "../../services/users";
 import { computeHMAC, generateSecureToken } from "../../utils/crypto";
+import { validateDisplayName } from "../../utils/display-name";
 
 // Legacy: anonymous list creation used to drop the newest list's slug here, and
 // login claimed that one list. Nothing writes it any more — auth/callback still
@@ -52,6 +55,9 @@ interface CreateBody {
   cards?: unknown;
   friendId?: unknown;
   title?: unknown;
+  // Account-level. Sent only by the builder's signed-in details step; absent
+  // means "leave the stored name alone", not "clear it".
+  displayName?: unknown;
 }
 
 // Coerce the untrusted JSON body's cards into CardInput[]. Full validation
@@ -76,6 +82,25 @@ const parseCards = (raw: unknown): CardInput[] => {
 
 const asString = (v: unknown): string | null =>
   typeof v === "string" ? v : null;
+
+// The builder's name field writes to the account, not the list. Checked before
+// anything is saved so a name we'd reject never costs the user their cards, and
+// only written when it actually changed — a rename re-renders every OG image
+// the user owns.
+const displayNameError = (user: User | null, raw: unknown): string | null => {
+  if (!user || typeof raw !== "string") return null;
+  const result = validateDisplayName(raw);
+  return result.ok ? null : result.error;
+};
+
+const applyDisplayName = async (user: User, raw: unknown): Promise<void> => {
+  if (typeof raw !== "string") return;
+  const result = validateDisplayName(raw);
+  if (!result.ok || result.name === user.display_name) return;
+
+  await saveUserDisplayName(user.id, result.name);
+  await refreshOgImagesForUser(user.id);
+};
 
 // The builder is a long-lived page: a CSRF token minted when it loaded goes
 // stale after ~15-30 minutes, and until now that was a dead end — the 403 body
@@ -141,6 +166,11 @@ export const listsApi = {
       return Response.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
+    const nameError = displayNameError(ctx.user, body.displayName);
+    if (nameError) {
+      return Response.json({ error: nameError }, { status: 400 });
+    }
+
     const friendId = asString(body.friendId);
     const claimToken = ctx.user ? null : deviceClaimToken(req);
     const cards = parseCards(body.cards);
@@ -172,9 +202,11 @@ export const listsApi = {
       },
     });
 
-    // Keep the friend ID on the account so the next list prefills it.
+    // Keep the friend ID and name on the account so the next list prefills
+    // them.
     if (ctx.user) {
       await saveUserFriendId(ctx.user.id, friendId);
+      await applyDisplayName(ctx.user, body.displayName);
     }
 
     // Re-set on every anonymous create so an active guest's claim window keeps
@@ -214,6 +246,11 @@ export const listsApi = {
       return Response.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
+    const nameError = displayNameError(ctx.user, body.displayName);
+    if (nameError) {
+      return Response.json({ error: nameError }, { status: 400 });
+    }
+
     const friendId = asString(body.friendId);
     const updated = await updateTradeList(slug, ctx.user.id, {
       cards: parseCards(body.cards),
@@ -226,6 +263,7 @@ export const listsApi = {
     }
 
     await saveUserFriendId(ctx.user.id, friendId);
+    await applyDisplayName(ctx.user, body.displayName);
 
     return Response.json({ slug: updated.slug }, { status: 200 });
   },

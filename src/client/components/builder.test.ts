@@ -260,3 +260,83 @@ describe("Builder expired-token recovery", () => {
     expect(alert?.classList.contains("builder-error--warning")).toBe(false);
   });
 });
+
+describe("Builder display name field", () => {
+  const originalFetch = globalThis.fetch;
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    document.body.innerHTML = "";
+    sessionStorage.clear();
+  });
+
+  const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+  const mount = (account?: BuilderConfig["account"]): HTMLElement => {
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    render(
+      h(Builder, {
+        ...baseConfig,
+        account,
+        initial: {
+          wants: [{ card: CARD, quantity: 1 }],
+          haves: [],
+          friendId: "",
+        },
+      }),
+      host,
+    );
+    host.querySelector<HTMLButtonElement>("button.builder-submit")?.click();
+    return host;
+  };
+
+  const nameInput = (host: HTMLElement): HTMLInputElement | null =>
+    host.querySelector<HTMLInputElement>("#display-name-input");
+
+  test("offers the field to a signed-in user, prefilled", async () => {
+    const host = mount({ displayName: "Alex" });
+    await flush();
+
+    expect(nameInput(host)?.value).toBe("Alex");
+  });
+
+  test("is not shown to a guest — there's no account to save it to", async () => {
+    const host = mount(undefined);
+    await flush();
+
+    expect(nameInput(host)).toBeNull();
+  });
+
+  test("sends the name with the list, and omits it entirely for a guest", async () => {
+    const bodies: string[] = [];
+    globalThis.fetch = Object.assign(
+      (_url: string, init: RequestInit): Promise<Response> => {
+        bodies.push(init.body as string);
+        return new Promise<Response>(() => {});
+      },
+      { preconnect: originalFetch.preconnect },
+    ) as typeof globalThis.fetch;
+
+    const host = mount({ displayName: "" });
+    await flush();
+    const input = nameInput(host) as HTMLInputElement;
+    input.value = " Alex ";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    await flush();
+    host.querySelector<HTMLButtonElement>("button.builder-submit")?.click();
+    await flush();
+
+    expect(JSON.parse(bodies[0]).displayName).toBe("Alex");
+
+    document.body.innerHTML = "";
+    const guestHost = mount(undefined);
+    await flush();
+    guestHost
+      .querySelector<HTMLButtonElement>("button.builder-submit")
+      ?.click();
+    await flush();
+
+    expect(JSON.parse(bodies[1])).not.toHaveProperty("displayName");
+  });
+});
