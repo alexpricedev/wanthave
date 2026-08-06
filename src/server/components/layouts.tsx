@@ -207,7 +207,8 @@ function SiteFooter() {
         Made by{" "}
         <a href="https://chptrs.tech" target="_blank" rel="noopener noreferrer">
           CHPTRS
-        </a>
+        </a>{" "}
+        (TCG_Pro)
       </span>
     </footer>
   );
