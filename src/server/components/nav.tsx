@@ -11,17 +11,7 @@ export const Nav = ({ page, user, csrfToken }: NavProps) => {
   const navLinks = [
     ...(user ? [{ href: "/new", label: "Build", name: "new" }] : []),
     ...(user ? [{ href: "/lists", label: "My lists", name: "lists" }] : []),
-    // Labelled with the name once it's set: the nav is where the user checks
-    // what their links say about them.
-    ...(user
-      ? [
-          {
-            href: "/account",
-            label: user.display_name ?? "Account",
-            name: "account",
-          },
-        ]
-      : []),
+    ...(user ? [{ href: "/account", label: "Account", name: "account" }] : []),
   ];
 
   return (
