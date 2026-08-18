@@ -20,6 +20,7 @@ import {
   claimListsByToken,
   createTradeList,
   deleteList,
+  duplicateList,
   getCachedOgImage,
   getListsByUser,
   getTradeListBySlug,
@@ -247,6 +248,93 @@ describe("update / claim / delete", () => {
     expect(await deleteList(created.list.slug, other.id)).toBe(false);
     expect(await deleteList(created.list.slug, user.id)).toBe(true);
     expect(await getListsByUser(user.id)).toHaveLength(0);
+  });
+});
+
+describe("duplicateList", () => {
+  beforeEach(async () => {
+    await cleanupTestData(connection);
+  });
+
+  test("copies the cards and friend ID into a new list, leaving the original", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    const created = await createTradeList({
+      cards: [
+        { cardId: "a1-001", kind: "want", quantity: 2 },
+        { cardId: "a1-002", kind: "want", quantity: 1 },
+        { cardId: "a1-003", kind: "have", quantity: 3 },
+      ],
+      friendId: "1111222233334444",
+      title: "Supporters",
+      userId: user.id,
+    });
+    if (!created.ok) throw new Error("setup failed");
+
+    const result = await duplicateList(created.list.slug, user.id);
+    if (!result?.ok) throw new Error("duplicate failed");
+
+    const copy = result.list;
+    expect(copy.slug).not.toBe(created.list.slug);
+    expect(copy.title).toBe("Supporters (copy)");
+    expect(copy.friendId).toBe("1111222233334444");
+    expect(copy.userId).toBe(user.id);
+    expect(copy.expiresAt).toBeNull();
+    expect(copy.wants.map((c) => [c.card.id, c.quantity])).toEqual([
+      ["a1-001", 2],
+      ["a1-002", 1],
+    ]);
+    expect(copy.haves.map((c) => [c.card.id, c.quantity])).toEqual([
+      ["a1-003", 3],
+    ]);
+
+    // Persisted, not just returned — and the original is untouched.
+    const reread = await getTradeListBySlug(copy.slug);
+    expect(reread?.wants).toHaveLength(2);
+    const original = await getTradeListBySlug(created.list.slug);
+    expect(original?.title).toBe("Supporters");
+    expect(await getListsByUser(user.id)).toHaveLength(2);
+  });
+
+  test("leaves an untitled list untitled", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    const created = await createTradeList({
+      cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      userId: user.id,
+    });
+    if (!created.ok) throw new Error("setup failed");
+
+    const result = await duplicateList(created.list.slug, user.id);
+    if (!result?.ok) throw new Error("duplicate failed");
+    expect(result.list.title).toBeNull();
+  });
+
+  test("keeps the copy's title within the builder's 80-character field", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    const created = await createTradeList({
+      cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      title: "T".repeat(80),
+      userId: user.id,
+    });
+    if (!created.ok) throw new Error("setup failed");
+
+    const result = await duplicateList(created.list.slug, user.id);
+    if (!result?.ok) throw new Error("duplicate failed");
+    expect(result.list.title).toBe(`${"T".repeat(73)} (copy)`);
+    expect(result.list.title?.length).toBe(80);
+  });
+
+  test("refuses a list that isn't the user's, or doesn't exist", async () => {
+    const user = await findOrCreateUser(randomEmail());
+    const other = await findOrCreateUser(randomEmail());
+    const created = await createTradeList({
+      cards: [{ cardId: "a1-001", kind: "want", quantity: 1 }],
+      userId: user.id,
+    });
+    if (!created.ok) throw new Error("setup failed");
+
+    expect(await duplicateList(created.list.slug, other.id)).toBeNull();
+    expect(await duplicateList("nosuchslug1", user.id)).toBeNull();
+    expect(await getListsByUser(other.id)).toHaveLength(0);
   });
 });
 

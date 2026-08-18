@@ -5,13 +5,18 @@ import { SETS } from "../../services/cards";
 import { createCsrfToken } from "../../services/csrf";
 import {
   deleteList,
+  duplicateList,
   getListsByUser,
   getTradeListBySlug,
   type ListCardRow,
 } from "../../services/lists";
 import { BuilderPage } from "../../templates/builder";
+import type { ListsState } from "../../templates/lists";
 import { Lists } from "../../templates/lists";
 import { redirect, render } from "../../utils/response";
+import { stateHelpers } from "../../utils/state";
+
+const { getFlash, setFlash } = stateHelpers<ListsState>();
 
 const setDtos = SETS.map((s) => ({
   code: s.code,
@@ -59,11 +64,17 @@ export const lists = {
     );
 
     const deleteCsrfTokens: Record<string, string> = {};
+    const duplicateCsrfTokens: Record<string, string> = {};
     for (const l of summaries) {
       deleteCsrfTokens[l.slug] = await createCsrfToken(
         ctx.sessionId,
         "POST",
         `/lists/${l.slug}/delete`,
+      );
+      duplicateCsrfTokens[l.slug] = await createCsrfToken(
+        ctx.sessionId,
+        "POST",
+        `/lists/${l.slug}/duplicate`,
       );
     }
 
@@ -77,7 +88,9 @@ export const lists = {
         user={ctx.user}
         logoutCsrf={logoutCsrf}
         deleteCsrfTokens={deleteCsrfTokens}
+        duplicateCsrfTokens={duplicateCsrfTokens}
         accountCsrf={accountCsrf}
+        state={getFlash(req)}
       />,
     );
   },
@@ -129,6 +142,42 @@ export const lists = {
         csrfToken={logoutCsrf}
       />,
     );
+  },
+
+  // Copy a list into a new one. Lands back on /lists — the copy is the newest
+  // row, and the flash links straight to editing it.
+  async duplicate<T extends `${string}:slug${string}`>(
+    req: BunRequest<T>,
+  ): Promise<Response> {
+    const authRedirect = await requireAuth(req);
+    if (authRedirect) return authRedirect;
+
+    const ctx = await getSessionContext(req);
+    if (!ctx.user) return redirect("/login");
+
+    const { slug } = req.params;
+    const csrf = await csrfProtection(req, {
+      method: "POST",
+      path: `/lists/${slug}/duplicate`,
+    });
+    if (csrf) return csrf;
+
+    const result = await duplicateList(slug, ctx.user.id);
+    // Gone or not theirs — same silent bounce as trying to edit someone
+    // else's list.
+    if (!result) return redirect("/lists");
+
+    if (!result.ok) {
+      setFlash(req, { state: "error", error: result.error });
+      return redirect("/lists");
+    }
+
+    setFlash(req, {
+      state: "copied",
+      slug: result.list.slug,
+      title: result.list.title,
+    });
+    return redirect("/lists");
   },
 
   async destroy<T extends `${string}:slug${string}`>(

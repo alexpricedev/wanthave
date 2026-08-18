@@ -25,6 +25,9 @@ export const appRoutes = {
   }),
   "/lists": createRouteHandler({ GET: lists.index }),
   "/lists/:slug/edit": lists.edit<"/lists/:slug/edit">,
+  "/lists/:slug/duplicate": createRouteHandler({
+    POST: lists.duplicate<"/lists/:slug/duplicate">,
+  }),
   "/lists/:slug/delete": createRouteHandler({
     POST: lists.destroy<"/lists/:slug/delete">,
   }),
