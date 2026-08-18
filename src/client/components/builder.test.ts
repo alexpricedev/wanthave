@@ -340,3 +340,45 @@ describe("Builder display name field", () => {
     expect(JSON.parse(bodies[1])).not.toHaveProperty("displayName");
   });
 });
+
+describe("Builder picker clear", () => {
+  const originalFetch = globalThis.fetch;
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    document.body.innerHTML = "";
+    sessionStorage.clear();
+  });
+
+  const flush = () => new Promise((resolve) => setTimeout(resolve, 250));
+
+  test("returns focus to the search box so the next query can be typed", async () => {
+    globalThis.fetch = Object.assign(
+      (): Promise<Response> =>
+        Promise.resolve(
+          new Response(JSON.stringify({ cards: [CARD] }), {
+            headers: { "content-type": "application/json" },
+          }),
+        ),
+      { preconnect: originalFetch.preconnect },
+    ) as typeof globalThis.fetch;
+
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    render(h(Builder, baseConfig), host);
+
+    const search = host.querySelector<HTMLInputElement>("#card-search-input");
+    if (!search) throw new Error("search input missing");
+    search.value = "chari";
+    search.dispatchEvent(new Event("input", { bubbles: true }));
+    await flush();
+
+    const clear = host.querySelector<HTMLButtonElement>("button.sort-clear");
+    if (!clear) throw new Error("clear button missing");
+    clear.click();
+    await flush();
+
+    expect(search.value).toBe("");
+    expect(document.activeElement).toBe(search);
+  });
+});
