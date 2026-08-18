@@ -356,6 +356,7 @@ export function Builder(config: BuilderConfig) {
   const [cards, setCards] = useState<CardDto[]>([]);
   const [loading, setLoading] = useState(false);
   const cardCache = useRef<Map<string, CardDto[]>>(new Map());
+  const searchInput = useRef<HTMLInputElement | null>(null);
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -637,6 +638,7 @@ export function Builder(config: BuilderConfig) {
           onClick={() => {
             setQuery("");
             setActiveSet("all");
+            searchInput.current?.focus();
           }}
         >
           Clear
@@ -836,6 +838,7 @@ export function Builder(config: BuilderConfig) {
               Search cards
             </label>
             <input
+              ref={searchInput}
               id="card-search-input"
               type="search"
               class="search-input"
