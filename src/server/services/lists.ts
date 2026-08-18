@@ -329,6 +329,43 @@ export const updateTradeList = async (
   return hydrate(updated, loadCardRows(cardsToRaw(cards)), updated.owner_name);
 };
 
+// The builder's title input caps at 80 characters, so a copy's title has to
+// fit there too — otherwise re-editing the copy carries a value the field
+// itself would refuse.
+const MAX_TITLE_LENGTH = 80;
+
+const COPY_SUFFIX = " (copy)";
+
+// Untitled stays untitled: a bare "(copy)" says less than the date already on
+// the row.
+const copyTitle = (title: string | null): string | null => {
+  if (!title) return null;
+  const room = MAX_TITLE_LENGTH - COPY_SUFFIX.length;
+  return `${title.length > room ? title.slice(0, room).trimEnd() : title}${COPY_SUFFIX}`;
+};
+
+// Copy a list the user owns into a brand-new one: its own slug and link, the
+// original untouched. Cards (with quantities and order) and the friend ID come
+// across. Returns null when the list is gone or isn't theirs.
+export const duplicateList = async (
+  slug: string,
+  userId: string,
+): Promise<CreateResult | null> => {
+  const source = await getTradeListBySlug(slug);
+  if (!source || source.userId !== userId) return null;
+
+  return createTradeList({
+    cards: [...source.wants, ...source.haves].map((c) => ({
+      cardId: c.card.id,
+      kind: c.kind,
+      quantity: c.quantity,
+    })),
+    friendId: source.friendId,
+    title: copyTitle(source.title),
+    userId,
+  });
+};
+
 export interface ClaimedList {
   slug: string;
   friendId: string | null;

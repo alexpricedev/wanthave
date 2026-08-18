@@ -1,17 +1,28 @@
 import { CsrfField } from "../components/csrf-field";
+import { Flash } from "../components/flash";
 import { Layout } from "../components/layouts";
 import { NamePrompt } from "../components/name-prompt";
 import { CountBadge } from "../components/trade";
 import type { ListSummary } from "../services/lists";
 import type { User } from "../services/users";
 
+export interface ListsState {
+  state?: "copied" | "error";
+  // The copy's slug and title, so the confirmation can point at it.
+  slug?: string;
+  title?: string | null;
+  error?: string;
+}
+
 interface ListsProps {
   lists: ListSummary[];
   user: User;
   logoutCsrf?: string;
   deleteCsrfTokens: Record<string, string>;
+  duplicateCsrfTokens: Record<string, string>;
   // Only minted when the user hasn't named themselves yet — see the prompt.
   accountCsrf?: string;
+  state?: ListsState;
 }
 
 const fmtDate = (d: Date): string =>
@@ -26,7 +37,9 @@ export const Lists = ({
   user,
   logoutCsrf,
   deleteCsrfTokens,
+  duplicateCsrfTokens,
   accountCsrf,
+  state,
 }: ListsProps) => (
   <Layout
     title="Your lists—wanthave"
@@ -44,6 +57,23 @@ export const Lists = ({
           </a>
         )}
       </header>
+
+      {state?.state === "copied" && state.slug && (
+        <Flash type="success">
+          <span>
+            Copied to <strong>{state.title ?? "Untitled list"}</strong>. The
+            copy has its own link —{" "}
+            <a href={`/lists/${state.slug}/edit`}>edit it</a> to change what's
+            in it.
+          </span>
+        </Flash>
+      )}
+
+      {state?.state === "error" && state.error && (
+        <Flash type="error">
+          <span>{state.error}</span>
+        </Flash>
+      )}
 
       {/* The landing page after signing in or claiming lists — and the last
           quiet moment to put a name on links that are already out there. */}
@@ -88,6 +118,12 @@ export const Lists = ({
                 <a className="btn-ghost" href={`/lists/${l.slug}/edit`}>
                   Edit
                 </a>
+                <form method="post" action={`/lists/${l.slug}/duplicate`}>
+                  <CsrfField token={duplicateCsrfTokens[l.slug] ?? null} />
+                  <button type="submit" className="btn-ghost">
+                    Duplicate
+                  </button>
+                </form>
                 <form
                   method="post"
                   action={`/lists/${l.slug}/delete`}
