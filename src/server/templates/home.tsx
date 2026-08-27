@@ -1,4 +1,5 @@
 import { Layout } from "@server/components/layouts";
+import { LATEST_SET } from "@server/services/cards";
 import {
   DEMO_HAVES,
   DEMO_OG_PATH,
@@ -112,7 +113,7 @@ export const Home = ({ user, csrfToken }: HomeProps) => (
         </div>
         <p className="home-banner">
           <span className="home-banner-tag">New</span>
-          Rulers of the Skies is live
+          {`${LATEST_SET.name ?? LATEST_SET.code} is live`}
         </p>
       </div>
 

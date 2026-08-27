@@ -20,6 +20,7 @@ mock.module("../../services/card-images", () => ({
   getCardImage: async () => ({ status: "absent" }),
 }));
 
+import { LATEST_SET } from "../../services/cards";
 import { home } from "./home";
 
 describe("Home Controller", () => {
@@ -53,6 +54,17 @@ describe("Home Controller", () => {
       const html = await (await home.index(request)).text();
 
       expect(html).toContain('src="/og/demo.png?v=');
+    });
+
+    // The banner is the one bit of copy that goes stale the day a set drops,
+    // so it reads from the catalogue rather than a hardcoded name.
+    test("banner announces the newest set in the catalogue", async () => {
+      const request = createBunRequest("http://localhost:3000/", {
+        method: "GET",
+      });
+      const html = await (await home.index(request)).text();
+
+      expect(html).toContain(`${LATEST_SET.name ?? LATEST_SET.code} is live`);
     });
   });
 

@@ -115,6 +115,12 @@ src/
 
 ---
 
+## Runbooks
+
+- [Adding a new set](docs/adding-a-set.md) — the monthly card drop: catalogue rebuild, art mirror, showcase refresh.
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please open issues or PRs.

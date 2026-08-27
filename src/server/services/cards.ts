@@ -74,6 +74,12 @@ const CARDS: Card[] = catalog.cards;
 const CARD_BY_ID = new Map(CARDS.map((c) => [c.id, c]));
 const SET_BY_CODE = new Map(SETS.map((s) => [s.code, s]));
 
+// Newest set — the catalogue is built oldest-first, so the tail is the set that
+// just dropped. Copy that mentions "the new set" reads from here rather than
+// hardcoding a name, so adding a set to the catalogue updates the marketing
+// copy in the same commit.
+export const LATEST_SET: CardSet = SETS[SETS.length - 1] as CardSet;
+
 export const getCardById = (id: string): Card | undefined => CARD_BY_ID.get(id);
 
 export const isValidCardId = (id: string): boolean => CARD_BY_ID.has(id);

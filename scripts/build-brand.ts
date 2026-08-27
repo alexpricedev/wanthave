@@ -101,8 +101,8 @@ const buildIcons = async (): Promise<void> => {
 // as, and the two can't drift apart.
 // Drawn from the newest set, same as the home page hero — refresh both when a
 // set drops (and re-run this script).
-const WANT_HEROES = ["b4-188", "b4-187", "b4-185"];
-const HAVE_HEROES = ["b4-227", "b4-231"];
+const WANT_HEROES = ["b4a-087", "b4a-088", "b4a-090"];
+const HAVE_HEROES = ["b4a-105", "b4a-108"];
 
 const vLabel = async (
   text: string,
