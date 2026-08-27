@@ -331,6 +331,13 @@ function ListItem({
 
 export function Builder(config: BuilderConfig) {
   const initial = config.initial ?? null;
+  // Sets arrive oldest-first, so the tail is whatever just dropped. Naming it
+  // in the placeholder keeps the example list title current without an edit
+  // here every time a set lands.
+  const latestSetName =
+    config.sets[config.sets.length - 1]?.name ??
+    config.sets[config.sets.length - 1]?.code ??
+    "New set";
   const [wants, setWants] = useState<Item[]>(initial?.wants ?? []);
   const [haves, setHaves] = useState<Item[]>(initial?.haves ?? []);
   const [friendId, setFriendId] = useState<string>(
@@ -728,7 +735,7 @@ export function Builder(config: BuilderConfig) {
                 id="list-title-input"
                 type="text"
                 class="friend-input"
-                placeholder="Rulers of the Skies Wants, All Spares"
+                placeholder={`${latestSetName} Wants, All Spares`}
                 maxLength={80}
                 value={title}
                 onInput={(e) => setTitle((e.target as HTMLInputElement).value)}

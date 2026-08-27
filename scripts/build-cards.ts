@@ -73,7 +73,7 @@ const typeFromImage = (image: string | undefined): string | null =>
 const SET_ORDER = [
   "a1", "a1a", "a2", "a2a", "a2b", "a3", "a3a", "a3b",
   "a4", "a4a", "a4b", "b1", "b1a", "b2", "b2a", "b2b", "b3", "b3a", "b3b",
-  "b4",
+  "b4", "b4a",
 ];
 
 // English set names, sourced from the flibustier/pokemon-tcg-pocket-database
@@ -99,7 +99,8 @@ const SET_NAMES: Record<string, string> = {
   b3: "Pulsing Aura",
   b3a: "Paradox Drive",
   b3b: "Everyday Wonders",
-  b4: "Rulers of the Skies",
+  b4: "Ruler of the Skies",
+  b4a: "Team Rocket’s Ambition",
 };
 
 // a1 → A1, a1a → A1a, b2b → B2b (uppercase leading letter only)
