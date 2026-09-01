@@ -259,10 +259,14 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
 
-    // The name is the first thing in the tag, ahead of the list's own title —
-    // in a Discord embed those first words are what identify the post.
-    expect(html).toContain("<title>Alex—Pokémon Pocket trade list");
-    expect(html).toContain('property="og:title" content="Alex—');
+    // The name is attributed in the tag: in a Discord embed the title is what
+    // identifies the post, so "whose list is this" belongs in it.
+    expect(html).toContain(
+      "<title>Pokémon Pocket trade list by Alex on wanthave",
+    );
+    expect(html).toContain(
+      'property="og:title" content="Pokémon Pocket trade list by Alex on wanthave"',
+    );
     expect(html).toContain("Alex is looking for 1 card");
     expect(html).toContain("Alex&#x27;s trade list");
     // A visitor is told whose list it is instead of "your buddy".
@@ -284,7 +288,7 @@ describe("list.index", () => {
     );
     const html = await (await list.index(req)).text();
 
-    expect(html).toContain("<title>Alex—B4 wants—wanthave</title>");
+    expect(html).toContain("<title>B4 wants by Alex on wanthave</title>");
     expect(html).toContain("Shared by Alex");
   });
 
@@ -295,7 +299,7 @@ describe("list.index", () => {
       { slug: "abcdefghijk" },
     );
     const html = await (await list.index(req)).text();
-    expect(html).toContain("<title>Pokémon Pocket trade list—LF 1 · FT 1");
+    expect(html).toContain("<title>Pokémon Pocket trade list on wanthave");
   });
 
   test("asks an unnamed owner for their name at the share moment", async () => {

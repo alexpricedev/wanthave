@@ -56,17 +56,32 @@ export const ListPage = ({
   const wantCount = list.wants.length;
   const haveCount = list.haves.length;
 
-  // The owner's name leads the title: in a Discord channel the first words of
-  // the embed are what identify the post, and "whose list is this" beats
-  // anything else we could put there.
-  const owner = list.ownerName ? `${list.ownerName}—` : "";
-  const title = list.title
-    ? `${owner}${list.title}—wanthave`
-    : `${owner}Pokémon Pocket trade list—LF ${wantCount} · FT ${haveCount}`;
+  // The title reads as a sentence in a Discord embed, so the parts are joined
+  // with words rather than dashes.
+  const by = list.ownerName ? ` by ${list.ownerName}` : "";
+  const title = `${list.title ?? "Pokémon Pocket trade list"}${by} on wanthave`;
   const cardsWanted = `${wantCount} card${wantCount === 1 ? "" : "s"}`;
-  const description = list.ownerName
-    ? `${list.ownerName} is looking for ${cardsWanted}, with ${haveCount} up for trade. Built with wanthave.trade.`
-    : `Looking for ${cardsWanted}, ${haveCount} up for trade. Built with wanthave.trade.`;
+  const cardsHeld = `${haveCount} card${haveCount === 1 ? "" : "s"}`;
+  // An empty side reads as a negative in a share preview ("with 0 up for
+  // trade"), so a zero count drops out of the sentence entirely.
+  const who = list.ownerName ?? "";
+  const summary =
+    wantCount > 0 && haveCount > 0
+      ? who
+        ? `${who} is looking for ${cardsWanted}, with ${haveCount} up for trade.`
+        : `Looking for ${cardsWanted}, ${haveCount} up for trade.`
+      : wantCount > 0
+        ? who
+          ? `${who} is looking for ${cardsWanted}.`
+          : `Looking for ${cardsWanted}.`
+        : haveCount > 0
+          ? who
+            ? `${who} has ${cardsHeld} up for trade.`
+            : `${cardsHeld} up for trade.`
+          : who
+            ? `${who}'s Pokémon Pocket trade list.`
+            : "A Pokémon Pocket trade list.";
+  const description = `${summary} Built with wanthave.trade.`;
   const headTitle =
     list.title ??
     (list.ownerName
