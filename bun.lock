@@ -6,6 +6,7 @@
       "name": "billet",
       "dependencies": {
         "@alexpricedev/billet-dialog": "^0.1.0",
+        "@alexpricedev/log-digest": "^0.1.0",
         "@types/opentype.js": "^1.3.10",
         "opentype.js": "^2.0.0",
         "resend": "^6.9.4",
@@ -29,6 +30,8 @@
   },
   "packages": {
     "@alexpricedev/billet-dialog": ["@alexpricedev/billet-dialog@0.1.0", "", {}, "sha512-gqImJ1CeGfLREgpIm6EzMJGlSXiNvGsI52g3L55ql9BuzkqGRI77/aF7dXpMXiT02Oz0UXeM10Uksdp7T6Rlow=="],
+
+    "@alexpricedev/log-digest": ["@alexpricedev/log-digest@0.1.0", "", {}, "sha512-Ej/W6Hsaq1DvHP1CmSKSSzBjGM9idfzkr7mtVuOytOzZfnoWbm3Uc6/NryPM/PjnONVkvnBNntEelXRMkBF9Cw=="],
 
     "@biomejs/biome": ["@biomejs/biome@2.0.5", "", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "2.0.5", "@biomejs/cli-darwin-x64": "2.0.5", "@biomejs/cli-linux-arm64": "2.0.5", "@biomejs/cli-linux-arm64-musl": "2.0.5", "@biomejs/cli-linux-x64": "2.0.5", "@biomejs/cli-linux-x64-musl": "2.0.5", "@biomejs/cli-win32-arm64": "2.0.5", "@biomejs/cli-win32-x64": "2.0.5" }, "bin": { "biome": "bin/biome" } }, "sha512-MztFGhE6cVjf3QmomWu83GpTFyWY8KIcskgRf2AqVEMSH4qI4rNdBLdpAQ11TNK9pUfLGz3IIOC1ZYwgBePtig=="],
 
