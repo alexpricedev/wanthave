@@ -86,6 +86,30 @@ export class EmailService {
     await this.provider.send(message);
   }
 
+  // Send a pre-rendered operational email — no template, body supplied by the
+  // caller. From and reply-to follow the same env conventions as every other
+  // sender here. Used by the memory probe's daily digest.
+  async sendOperational(data: {
+    to: EmailAddress;
+    subject: string;
+    html: string;
+    text: string;
+  }): Promise<void> {
+    const fromEmail = process.env.FROM_EMAIL as string;
+    const fromName = process.env.FROM_NAME as string;
+    const replyTo = process.env.REPLY_TO_EMAIL;
+
+    await this.provider.send({
+      to: data.to,
+      from: { email: fromEmail, name: fromName },
+      ...(replyTo ? { replyTo: { email: replyTo } } : {}),
+      headers: { "X-Entity-Ref-ID": crypto.randomUUID() },
+      subject: data.subject,
+      html: data.html,
+      text: data.text,
+    });
+  }
+
   private renderFeedbackTemplate(data: FeedbackEmailData): string {
     const appName = (process.env.APP_NAME as string).toUpperCase();
 

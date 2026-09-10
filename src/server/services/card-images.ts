@@ -95,3 +95,12 @@ export const getPlaceholderImageBytes = async (): Promise<Uint8Array> => {
   );
   return placeholder;
 };
+
+// Exact size of the in-memory art cache. Read by the memory probe: Bun does not
+// populate `arrayBuffers` in process.memoryUsage() and under-reports `external`,
+// so the only trustworthy measure of what this Map holds is summing it directly.
+export const cardImageCacheStats = (): { entries: number; bytes: number } => {
+  let bytes = 0;
+  for (const value of memoryCache.values()) bytes += value.byteLength;
+  return { entries: memoryCache.size, bytes };
+};
