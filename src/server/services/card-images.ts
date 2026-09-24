@@ -3,8 +3,10 @@
 // the OG renderer local bytes to composite. Art lives in our own S3 bucket
 // (populated by scripts/sync-card-art.ts) rather than being proxied from a
 // community CDN, so a new set's images are available the day the set is.
-// Images are immutable, so once read they're cached on disk and in memory
-// forever and the bucket is hit at most once per card per boot.
+// Images are immutable, so once read they're cached on disk forever and the
+// bucket is hit at most once per card per boot. The in-memory tier in front of
+// that disk cache is bounded (see MAX_CACHE_BYTES) — it saves a file read, not
+// a bucket read, so it can be evicted freely.
 
 import sharp from "sharp";
 import { artObjectKey, getCardById } from "./cards";
@@ -22,7 +24,72 @@ export type CardImage =
   | { status: "error" };
 
 const CACHE_DIR = ".cache/cards";
-const memoryCache = new Map<string, Uint8Array>();
+
+// The memory cache is a bound on what art costs us, not a bound on what art we
+// can serve: every entry is also on disk, so an eviction costs a local file read
+// on the next request, never a bucket round-trip. Without a cap the Map grows to
+// the whole catalogue — ~3600 cards at ~48KB each, about 175MB resident — and
+// since art is reached by browsing as well as by unfurling, a crawler walking
+// /img/card/:id is enough to get there.
+const MAX_CACHE_BYTES = 32 * 1024 * 1024;
+
+// A Map that evicts its least recently used entries to stay under a byte
+// budget. Exported so the eviction rule can be tested on its own, without
+// standing up a bucket or writing megabytes to disk.
+export class ByteCappedCache {
+  private readonly entries = new Map<string, Uint8Array>();
+  private total = 0;
+
+  constructor(private readonly maxBytes: number) {}
+
+  get size(): number {
+    return this.entries.size;
+  }
+
+  get bytes(): number {
+    return this.total;
+  }
+
+  // Reading counts as use: Map iterates in insertion order, so re-inserting on
+  // every hit leaves the least recently used key at the front and makes
+  // eviction a walk from there.
+  get(id: string): Uint8Array | undefined {
+    const value = this.entries.get(id);
+    if (!value) return undefined;
+    this.entries.delete(id);
+    this.entries.set(id, value);
+    return value;
+  }
+
+  set(id: string, value: Uint8Array): void {
+    const existing = this.entries.get(id);
+    if (existing) this.total -= existing.byteLength;
+    this.entries.delete(id);
+    this.entries.set(id, value);
+    this.total += value.byteLength;
+
+    for (const [oldest, evicted] of this.entries) {
+      if (this.total <= this.maxBytes) break;
+      // Never evict what was just stored — the caller is about to use it. An
+      // entry larger than the whole budget therefore stays, alone, rather than
+      // the cache thrashing itself empty on every write.
+      if (oldest === id) break;
+      this.entries.delete(oldest);
+      this.total -= evicted.byteLength;
+    }
+  }
+
+  clear(): void {
+    this.entries.clear();
+    this.total = 0;
+  }
+
+  values(): IterableIterator<Uint8Array> {
+    return this.entries.values();
+  }
+}
+
+const memoryCache = new ByteCappedCache(MAX_CACHE_BYTES);
 const inflight = new Map<string, Promise<CardImage>>();
 
 const cachePath = (id: string): string => `${CACHE_DIR}/${id}.webp`;
