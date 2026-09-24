@@ -1,3 +1,4 @@
+import sharp from "sharp";
 import { runMigrations } from "./database/migrate";
 import { seedIfEmpty } from "./database/seed";
 import { adminRoutes } from "./routes/admin";
@@ -16,6 +17,18 @@ import {
 } from "./utils/security-headers";
 
 validateEnv();
+
+// libvips keeps an operation cache whose defaults (50MB / 20 files / 100 items)
+// are tuned for a batch image tool, not a web server rendering one OG image per
+// unfurl. Every render here builds its own SVGs and composites them once, so no
+// two operations are ever identical and the cache runs at a 0% hit rate — with
+// the stock settings it sat pinned at 100 items for the life of the process,
+// holding buffers nothing would ever ask for again. Capping it did not measurably
+// move RSS, so this is about not paying for a cache we never hit rather than
+// about reclaiming a known quantity. `files: 0` because every input we hand
+// sharp is already a Buffer.
+sharp.cache({ memory: 16, items: 20, files: 0 });
+
 await runMigrations();
 await seedIfEmpty();
 await initAssets();
