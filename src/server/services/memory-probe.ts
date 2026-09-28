@@ -1,7 +1,9 @@
-// Temporary diagnostic: samples resident memory on an interval and emails one
-// summarised digest a day. Built to settle a specific question — whether the
-// service's ~600MB RSS is a fixed baseline allocated at boot or a curve that
-// ramps as the card-art cache fills — and meant to be deleted once it has.
+// Temporary diagnostic: when MEMORY_PROBE=true, samples resident memory on an
+// interval and emails one summarised digest a day. Built to settle a specific
+// question — whether the service's ~600MB RSS is a fixed baseline allocated at
+// boot or a curve that ramps as the card-art cache fills — and meant to be
+// deleted once it has. Off everywhere it hasn't been switched on for an
+// investigation.
 //
 // Everything here measures directly rather than trusting the runtime's own
 // accounting: Bun never populates `arrayBuffers` in process.memoryUsage() and
@@ -370,11 +372,13 @@ export const memoryDigestSink: DigestSink = {
 };
 
 /**
- * Begin sampling and schedule the daily digest. Always on — this is a
- * short-lived diagnostic, and the way to turn it off is to delete the module
- * and its call in main.ts once the investigation is settled.
+ * Begin sampling and schedule the daily digest. Off unless MEMORY_PROBE=true —
+ * this is a short-lived diagnostic, so it stays dark until someone turns it on,
+ * and the module goes away once the investigation is settled.
  */
 export const startMemoryProbe = (): void => {
+  if (process.env.MEMORY_PROBE !== "true") return;
+
   boot = {
     ...collect(),
     at: new Date(),

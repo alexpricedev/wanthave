@@ -6,7 +6,7 @@ import {
   EmailService,
   setEmailService,
 } from "./email";
-import { memoryDigestSink } from "./memory-probe";
+import { memoryDigestSink, startMemoryProbe } from "./memory-probe";
 
 const MB = 1024 * 1024;
 
@@ -133,5 +133,60 @@ describe("memoryDigestSink", () => {
     await memoryDigestSink.send(payload([unrelated]));
 
     expect(sent).toHaveLength(0);
+  });
+});
+
+describe("startMemoryProbe", () => {
+  const realSetInterval = globalThis.setInterval;
+  const realSetTimeout = globalThis.setTimeout;
+  let timers: number;
+  let savedFlag: string | undefined;
+
+  beforeEach(() => {
+    timers = 0;
+    savedFlag = process.env.MEMORY_PROBE;
+    // Stub both so an enabled probe leaves no live timer behind in the suite.
+    globalThis.setInterval = (() => {
+      timers += 1;
+      return 0 as unknown as Timer;
+    }) as unknown as typeof setInterval;
+    globalThis.setTimeout = (() => {
+      timers += 1;
+      return 0 as unknown as Timer;
+    }) as unknown as typeof setTimeout;
+  });
+
+  afterEach(() => {
+    globalThis.setInterval = realSetInterval;
+    globalThis.setTimeout = realSetTimeout;
+    if (savedFlag === undefined) {
+      delete process.env.MEMORY_PROBE;
+    } else {
+      process.env.MEMORY_PROBE = savedFlag;
+    }
+  });
+
+  test("does nothing when MEMORY_PROBE is unset", () => {
+    delete process.env.MEMORY_PROBE;
+
+    startMemoryProbe();
+
+    expect(timers).toBe(0);
+  });
+
+  test('does nothing when MEMORY_PROBE is not exactly "true"', () => {
+    process.env.MEMORY_PROBE = "1";
+
+    startMemoryProbe();
+
+    expect(timers).toBe(0);
+  });
+
+  test("schedules sampling when MEMORY_PROBE=true", () => {
+    process.env.MEMORY_PROBE = "true";
+
+    startMemoryProbe();
+
+    expect(timers).toBeGreaterThan(0);
   });
 });
