@@ -17,6 +17,14 @@
  *
  * Run: `bun run scripts/build-cards.ts` (requires .cache/flib.json and
  * .cache/chase.json). The output JSON is checked in; not part of the runtime.
+ *
+ * Refetch the inputs first — .cache is gitignored, so they won't be there:
+ *   curl -sSL -o .cache/flib.json  https://raw.githubusercontent.com/flibustier/pokemon-tcg-pocket-database/main/dist/cards.json
+ *   curl -sSL -o .cache/chase.json https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/main/data/v4/cards.json
+ * Set names and release dates come from that same flibustier repo's
+ * dist/sets.json. chase-manning moved its feed from main/v4.json into
+ * data/v4/cards.json (same shape); a 404 there silently costs every card its
+ * energy `type`, so check the file parses as an array before building.
  */
 
 // flimsylion card — set + number is the join key; rarity is the precise code.
@@ -73,7 +81,7 @@ const typeFromImage = (image: string | undefined): string | null =>
 const SET_ORDER = [
   "a1", "a1a", "a2", "a2a", "a2b", "a3", "a3a", "a3b",
   "a4", "a4a", "a4b", "b1", "b1a", "b2", "b2a", "b2b", "b3", "b3a", "b3b",
-  "b4", "b4a",
+  "b4", "b4a", "b4b",
 ];
 
 // English set names, sourced from the flibustier/pokemon-tcg-pocket-database
@@ -101,6 +109,7 @@ const SET_NAMES: Record<string, string> = {
   b3b: "Everyday Wonders",
   b4: "Ruler of the Skies",
   b4a: "Team Rocket’s Ambition",
+  b4b: "Deluxe Pack: Mega",
 };
 
 // a1 → A1, a1a → A1a, b2b → B2b (uppercase leading letter only)

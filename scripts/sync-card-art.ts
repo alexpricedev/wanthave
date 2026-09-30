@@ -31,7 +31,7 @@ import {
 // is the one manual step this mirror costs us — and it's a deliberate one, since
 // an unpinned "latest" would silently change art under us.
 const RELEASE =
-  "https://github.com/flibustier/pokemon-tcg-pocket-database/releases/download/2.10.0/dist.zip";
+  "https://github.com/flibustier/pokemon-tcg-pocket-database/releases/download/2.11.0/dist.zip";
 
 const IMAGE_PATH = /\/cards-by-set\/([^/]+)\/(\d+)\.webp$/;
 

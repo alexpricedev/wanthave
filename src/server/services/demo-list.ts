@@ -7,14 +7,14 @@ import { renderOgImage } from "./og";
 // shiny (✵) cards up for trade — showing off the rarities slang search
 // resolves. Drawn from the newest set so the page shows what people are
 // actually hunting right now — refresh these when a set drops.
-export const DEMO_WANTS = ["b4a-087"]; // ★2 Team Rocket’s Boss (rainbow)
+export const DEMO_WANTS = ["b4b-420"]; // ★2 Mega Rayquaza ex (rainbow)
 export const DEMO_HAVES = [
-  "b4a-105", // ✵2 Mega Charizard Y ex (shiny)
-  "b4a-088", // ★2 Team Rocket’s Moltres ex (rainbow)
-  "b4a-108", // ✵2 Mega Mawile ex (shiny)
-  "b4a-090", // ★2 Team Rocket’s Zapdos ex (rainbow)
-  "b4a-107", // ✵2 Mimikyu ex (shiny)
-  "b4a-089", // ★2 Team Rocket’s Articuno ex (rainbow)
+  "b4b-427", // ✵2 Mega Diancie ex (shiny)
+  "b4b-411", // ★2 Mega Charizard X ex (rainbow)
+  "b4b-426", // ✵2 Dedenne ex (shiny)
+  "b4b-416", // ★2 Mega Gardevoir ex (rainbow)
+  "b4b-419", // ★2 Mega Gengar ex (rainbow)
+  "b4b-412", // ★2 Mega Charizard Y ex (rainbow)
 ];
 
 // Version the URL by what it draws, so swapping the showcased cards busts every
