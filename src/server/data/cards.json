@@ -126,6 +126,12 @@
       "prefix": "b4a",
       "name": "Team Rocket’s Ambition",
       "count": 107
+    },
+    {
+      "code": "B4b",
+      "prefix": "b4b",
+      "name": "Deluxe Pack: Mega",
+      "count": 426
     }
   ],
   "cards": [
@@ -39282,7 +39288,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39294,7 +39300,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39306,7 +39312,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39318,7 +39324,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39330,7 +39336,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39342,7 +39348,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39354,7 +39360,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39366,7 +39372,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39378,7 +39384,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39390,7 +39396,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39402,7 +39408,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39414,7 +39420,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39426,7 +39432,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39438,7 +39444,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39450,7 +39456,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39462,7 +39468,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39474,7 +39480,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39486,7 +39492,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39498,7 +39504,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39510,7 +39516,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39522,7 +39528,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39534,7 +39540,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39546,7 +39552,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39558,7 +39564,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39570,7 +39576,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39582,7 +39588,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39594,7 +39600,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39606,7 +39612,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39618,7 +39624,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39630,7 +39636,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39642,7 +39648,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39654,7 +39660,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39666,7 +39672,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39678,7 +39684,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39690,7 +39696,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39702,7 +39708,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39714,7 +39720,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39726,7 +39732,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39738,7 +39744,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39750,7 +39756,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39762,7 +39768,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39774,7 +39780,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39786,7 +39792,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39798,7 +39804,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39810,7 +39816,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39822,7 +39828,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39834,7 +39840,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39846,7 +39852,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39858,7 +39864,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39870,7 +39876,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39882,7 +39888,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39894,7 +39900,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39906,7 +39912,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39918,7 +39924,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39930,7 +39936,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39942,7 +39948,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39954,7 +39960,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39966,7 +39972,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39978,7 +39984,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -39990,7 +39996,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40002,7 +40008,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40014,7 +40020,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40026,7 +40032,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40038,7 +40044,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40050,7 +40056,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40062,7 +40068,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40074,7 +40080,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40086,7 +40092,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40098,7 +40104,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40110,7 +40116,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40122,7 +40128,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40134,7 +40140,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40146,7 +40152,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40158,7 +40164,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40170,7 +40176,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40182,7 +40188,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40194,7 +40200,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40206,7 +40212,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40218,7 +40224,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40230,7 +40236,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40242,7 +40248,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40254,7 +40260,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40266,7 +40272,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40278,7 +40284,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40290,7 +40296,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40302,7 +40308,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40314,7 +40320,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40326,7 +40332,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40338,7 +40344,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40350,7 +40356,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40362,7 +40368,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40374,7 +40380,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40386,7 +40392,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40398,7 +40404,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40410,7 +40416,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40422,7 +40428,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40434,7 +40440,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40446,7 +40452,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40458,7 +40464,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40470,7 +40476,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40482,7 +40488,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40494,7 +40500,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40506,7 +40512,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40518,7 +40524,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40530,7 +40536,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40542,7 +40548,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40554,7 +40560,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40566,7 +40572,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40578,7 +40584,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40590,7 +40596,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40602,7 +40608,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40614,7 +40620,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40626,7 +40632,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40638,7 +40644,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40650,7 +40656,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40662,7 +40668,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40674,7 +40680,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40686,7 +40692,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40698,7 +40704,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40710,7 +40716,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40722,7 +40728,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40734,7 +40740,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40746,7 +40752,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40758,7 +40764,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40770,7 +40776,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40782,7 +40788,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40794,7 +40800,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40806,7 +40812,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40818,7 +40824,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40830,7 +40836,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40842,7 +40848,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40854,7 +40860,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40866,7 +40872,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40878,7 +40884,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40890,7 +40896,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40902,7 +40908,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40914,7 +40920,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40926,7 +40932,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40938,7 +40944,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40950,7 +40956,7 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40962,7 +40968,7 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40974,7 +40980,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40986,7 +40992,7 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -40998,7 +41004,7 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41142,7 +41148,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41154,7 +41160,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41166,7 +41172,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41178,7 +41184,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41190,7 +41196,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41202,7 +41208,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41214,7 +41220,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41226,7 +41232,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41238,7 +41244,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41250,7 +41256,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41262,7 +41268,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41274,7 +41280,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41286,7 +41292,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41298,7 +41304,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41310,7 +41316,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41322,7 +41328,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41334,7 +41340,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41346,7 +41352,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41358,7 +41364,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41370,7 +41376,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41382,7 +41388,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41394,7 +41400,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41406,7 +41412,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41418,7 +41424,7 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41430,7 +41436,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41442,7 +41448,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41454,7 +41460,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41466,7 +41472,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41478,7 +41484,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41490,7 +41496,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41502,7 +41508,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41514,7 +41520,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41526,7 +41532,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Dragon",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41538,7 +41544,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41598,7 +41604,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Grass",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41610,7 +41616,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41622,7 +41628,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41634,7 +41640,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41646,7 +41652,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41658,7 +41664,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41670,7 +41676,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41682,7 +41688,7 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41694,7 +41700,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41706,7 +41712,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41718,7 +41724,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41730,7 +41736,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41742,7 +41748,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41754,7 +41760,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41766,7 +41772,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Lightning",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41778,7 +41784,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41790,7 +41796,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41802,7 +41808,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41814,7 +41820,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41826,7 +41832,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41838,7 +41844,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41850,7 +41856,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41862,7 +41868,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41874,7 +41880,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Metal",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41886,7 +41892,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41898,7 +41904,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41910,7 +41916,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41922,7 +41928,7 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41934,7 +41940,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fire",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41946,7 +41952,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41958,7 +41964,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Water",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41970,7 +41976,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Psychic",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41982,7 +41988,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -41994,7 +42000,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Fighting",
       "pack": "Ruler of the Skies"
     },
     {
@@ -42006,7 +42012,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Darkness",
       "pack": "Ruler of the Skies"
     },
     {
@@ -42018,7 +42024,7 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
+      "type": "Colorless",
       "pack": "Ruler of the Skies"
     },
     {
@@ -42030,8 +42036,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Grass",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-002",
@@ -42042,8 +42048,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Grass",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-003",
@@ -42054,8 +42060,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Grass",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-004",
@@ -42066,8 +42072,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Grass",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-005",
@@ -42078,8 +42084,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Grass",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-006",
@@ -42090,8 +42096,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-007",
@@ -42102,8 +42108,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-008",
@@ -42114,8 +42120,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-009",
@@ -42126,8 +42132,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-010",
@@ -42138,8 +42144,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-011",
@@ -42150,8 +42156,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-012",
@@ -42162,8 +42168,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-013",
@@ -42174,8 +42180,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-014",
@@ -42186,8 +42192,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-015",
@@ -42198,8 +42204,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-016",
@@ -42210,8 +42216,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-017",
@@ -42222,8 +42228,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-018",
@@ -42234,8 +42240,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-019",
@@ -42246,8 +42252,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-020",
@@ -42258,8 +42264,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-021",
@@ -42270,8 +42276,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-022",
@@ -42282,8 +42288,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-023",
@@ -42294,8 +42300,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-024",
@@ -42306,8 +42312,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-025",
@@ -42318,8 +42324,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-026",
@@ -42330,8 +42336,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-027",
@@ -42342,8 +42348,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-028",
@@ -42354,8 +42360,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-029",
@@ -42366,8 +42372,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-030",
@@ -42378,8 +42384,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-031",
@@ -42390,8 +42396,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-032",
@@ -42402,8 +42408,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-033",
@@ -42414,8 +42420,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-034",
@@ -42426,8 +42432,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-035",
@@ -42438,8 +42444,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fighting",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-036",
@@ -42450,8 +42456,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fighting",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-037",
@@ -42462,8 +42468,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fighting",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-038",
@@ -42474,8 +42480,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-039",
@@ -42486,8 +42492,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-040",
@@ -42498,8 +42504,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-041",
@@ -42510,8 +42516,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-042",
@@ -42522,8 +42528,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-043",
@@ -42534,8 +42540,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-044",
@@ -42546,8 +42552,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-045",
@@ -42558,8 +42564,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-046",
@@ -42570,8 +42576,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-047",
@@ -42582,8 +42588,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-048",
@@ -42594,8 +42600,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-049",
@@ -42606,8 +42612,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-050",
@@ -42618,8 +42624,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-051",
@@ -42630,8 +42636,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-052",
@@ -42642,8 +42648,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-053",
@@ -42654,8 +42660,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-054",
@@ -42666,8 +42672,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-055",
@@ -42678,8 +42684,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-056",
@@ -42690,8 +42696,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-057",
@@ -42702,8 +42708,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Dragon",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-058",
@@ -42714,8 +42720,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-059",
@@ -42726,8 +42732,8 @@
       "rarity": "d4",
       "ex": true,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-060",
@@ -42738,8 +42744,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-061",
@@ -42750,8 +42756,8 @@
       "rarity": "d2",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-062",
@@ -42762,8 +42768,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-063",
@@ -42774,8 +42780,8 @@
       "rarity": "d3",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-064",
@@ -42786,8 +42792,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-065",
@@ -42798,8 +42804,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-066",
@@ -42810,8 +42816,8 @@
       "rarity": "d1",
       "ex": false,
       "fa": false,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-067",
@@ -42823,7 +42829,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-068",
@@ -42835,7 +42841,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-069",
@@ -42847,7 +42853,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-070",
@@ -42859,7 +42865,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-071",
@@ -42871,7 +42877,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-072",
@@ -42883,7 +42889,7 @@
       "ex": false,
       "fa": false,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-073",
@@ -42894,8 +42900,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-074",
@@ -42906,8 +42912,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-075",
@@ -42918,8 +42924,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-076",
@@ -42930,8 +42936,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-077",
@@ -42942,8 +42948,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-078",
@@ -42954,8 +42960,8 @@
       "rarity": "s1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-079",
@@ -42966,8 +42972,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-080",
@@ -42978,8 +42984,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-081",
@@ -42990,8 +42996,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-082",
@@ -43002,8 +43008,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-083",
@@ -43014,8 +43020,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-084",
@@ -43026,8 +43032,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-085",
@@ -43039,7 +43045,7 @@
       "ex": false,
       "fa": true,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-086",
@@ -43051,7 +43057,7 @@
       "ex": false,
       "fa": true,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-087",
@@ -43063,7 +43069,7 @@
       "ex": false,
       "fa": true,
       "type": "Trainer",
-      "pack": "Team Rocket"
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-088",
@@ -43074,8 +43080,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-089",
@@ -43086,8 +43092,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-090",
@@ -43098,8 +43104,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-091",
@@ -43110,8 +43116,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-092",
@@ -43122,8 +43128,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Darkness",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-093",
@@ -43134,8 +43140,8 @@
       "rarity": "s2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-095",
@@ -43146,8 +43152,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-096",
@@ -43158,8 +43164,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-097",
@@ -43170,8 +43176,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-098",
@@ -43182,8 +43188,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Water",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-099",
@@ -43194,8 +43200,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-100",
@@ -43206,8 +43212,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-101",
@@ -43218,8 +43224,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-102",
@@ -43230,8 +43236,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-103",
@@ -43242,8 +43248,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-104",
@@ -43254,8 +43260,8 @@
       "rarity": "sh1",
       "ex": false,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Colorless",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-105",
@@ -43266,8 +43272,8 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Fire",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-106",
@@ -43278,8 +43284,8 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Lightning",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-107",
@@ -43290,8 +43296,8 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
-      "type": null,
-      "pack": "Team Rocket"
+      "type": "Psychic",
+      "pack": "Team Rocket's Ambition"
     },
     {
       "id": "b4a-108",
@@ -43302,8 +43308,5120 @@
       "rarity": "sh2",
       "ex": true,
       "fa": true,
+      "type": "Metal",
+      "pack": "Team Rocket's Ambition"
+    },
+    {
+      "id": "b4b-001",
+      "name": "Bulbasaur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 1,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
       "type": null,
-      "pack": "Team Rocket"
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-002",
+      "name": "Ivysaur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 2,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-003",
+      "name": "Mega Venusaur ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 3,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-004",
+      "name": "Caterpie",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 4,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-005",
+      "name": "Metapod",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 5,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-006",
+      "name": "Butterfree",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 6,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-007",
+      "name": "Scyther",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 7,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-008",
+      "name": "Mega Pinsir ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 8,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-009",
+      "name": "Celebi",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 9,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-010",
+      "name": "Treecko",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 10,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-011",
+      "name": "Grovyle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 11,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-012",
+      "name": "Mega Sceptile ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 12,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-013",
+      "name": "Budew",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 13,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-014",
+      "name": "Combee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 14,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-015",
+      "name": "Vespiquen ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 15,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-016",
+      "name": "Cottonee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 16,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-017",
+      "name": "Whimsicott ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 17,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-018",
+      "name": "Petilil",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 18,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-019",
+      "name": "Lilligant",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 19,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-020",
+      "name": "Durant",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 20,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-021",
+      "name": "Sprigatito",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 21,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-022",
+      "name": "Floragato",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 22,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-023",
+      "name": "Meowscarada ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 23,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-024",
+      "name": "Smoliv",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 24,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-025",
+      "name": "Dolliv",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 25,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-026",
+      "name": "Arboliva",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 26,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-027",
+      "name": "Teal Mask Ogerpon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 27,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-028",
+      "name": "Teal Mask Ogerpon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 28,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-029",
+      "name": "Charmander",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 29,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-030",
+      "name": "Charmeleon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 30,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-031",
+      "name": "Mega Charizard X ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 31,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-032",
+      "name": "Mega Charizard Y ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 32,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-033",
+      "name": "Growlithe",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 33,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-034",
+      "name": "Ponyta",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 34,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-035",
+      "name": "Rapidash ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 35,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-036",
+      "name": "Cyndaquil",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 36,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-037",
+      "name": "Quilava",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 37,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-038",
+      "name": "Typhlosion ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 38,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-039",
+      "name": "Torchic",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 39,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-040",
+      "name": "Combusken",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 40,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-041",
+      "name": "Mega Blaziken ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 41,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-042",
+      "name": "Numel",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 42,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-043",
+      "name": "Mega Camerupt ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 43,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-044",
+      "name": "Victini",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 44,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-045",
+      "name": "Blacephalon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 45,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-046",
+      "name": "Fuecoco",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 46,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-047",
+      "name": "Crocalor",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 47,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-048",
+      "name": "Skeledirge",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 48,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-049",
+      "name": "Charcadet",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 49,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-050",
+      "name": "Armarouge ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 50,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-051",
+      "name": "Hearthflame Mask Ogerpon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 51,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-052",
+      "name": "Squirtle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 52,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-053",
+      "name": "Wartortle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 53,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-054",
+      "name": "Mega Blastoise ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 54,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-055",
+      "name": "Alolan Vulpix",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 55,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-056",
+      "name": "Alolan Ninetales ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 56,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-057",
+      "name": "Slowpoke",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 57,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-058",
+      "name": "Mega Slowbro ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 58,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-059",
+      "name": "Magikarp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 59,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-060",
+      "name": "Mega Gyarados ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 60,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-061",
+      "name": "Vaporeon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 61,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-062",
+      "name": "Mudkip",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 62,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-063",
+      "name": "Marshtomp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 63,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-064",
+      "name": "Mega Swampert ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 64,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-065",
+      "name": "Carvanha",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 65,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-066",
+      "name": "Mega Sharpedo ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 66,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-067",
+      "name": "Wailmer",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 67,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-068",
+      "name": "Wailord ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 68,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-069",
+      "name": "Feebas",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 69,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-070",
+      "name": "Milotic ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 70,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-071",
+      "name": "Froakie",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 71,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-072",
+      "name": "Frogadier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 72,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-073",
+      "name": "Greninja ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 73,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-074",
+      "name": "Sobble",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 74,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-075",
+      "name": "Drizzile",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 75,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-076",
+      "name": "Inteleon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 76,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-077",
+      "name": "Iron Bundle ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 77,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-078",
+      "name": "Frigibax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 78,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-079",
+      "name": "Arctibax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 79,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-080",
+      "name": "Baxcalibur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 80,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-081",
+      "name": "Chien-Pao ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 81,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-082",
+      "name": "Pikachu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 82,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-083",
+      "name": "Raichu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 83,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-084",
+      "name": "Magnemite",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 84,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-085",
+      "name": "Magneton",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 85,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-086",
+      "name": "Magnezone ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 86,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-087",
+      "name": "Jolteon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 87,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-088",
+      "name": "Mareep",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 88,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-089",
+      "name": "Flaaffy",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 89,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-090",
+      "name": "Mega Ampharos ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 90,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-091",
+      "name": "Electrike",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 91,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-092",
+      "name": "Mega Manectric ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 92,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-093",
+      "name": "Rotom ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 93,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-094",
+      "name": "Helioptile",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 94,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-095",
+      "name": "Heliolisk",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 95,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-096",
+      "name": "Dedenne ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 96,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-097",
+      "name": "Yamper",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 97,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-098",
+      "name": "Toxel",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 98,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-099",
+      "name": "Toxtricity ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 99,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-100",
+      "name": "Tadbulb",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 100,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-101",
+      "name": "Bellibolt ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 101,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-102",
+      "name": "Iron Thorns",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 102,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-103",
+      "name": "Miraidon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 103,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-104",
+      "name": "Ralts",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 104,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-105",
+      "name": "Kirlia",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 105,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-106",
+      "name": "Mega Gardevoir ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 106,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-107",
+      "name": "Mega Altaria ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 107,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-108",
+      "name": "Wynaut",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 108,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-109",
+      "name": "Chingling",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 109,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-110",
+      "name": "Mime Jr.",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 110,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-111",
+      "name": "Meloetta",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 111,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-112",
+      "name": "Sylveon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 112,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-113",
+      "name": "Klefki",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 113,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-114",
+      "name": "Mega Diancie ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 114,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-115",
+      "name": "Mimikyu ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 115,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-116",
+      "name": "Indeedee ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 116,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-117",
+      "name": "Fidough",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 117,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-118",
+      "name": "Bramblin",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 118,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-119",
+      "name": "Brambleghast",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 119,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-120",
+      "name": "Flutter Mane ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 120,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-121",
+      "name": "Gimmighoul",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 121,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-122",
+      "name": "Onix",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 122,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-123",
+      "name": "Hitmonchan ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 123,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-124",
+      "name": "Trapinch",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 124,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-125",
+      "name": "Mega Lopunny ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 125,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-126",
+      "name": "Riolu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 126,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-127",
+      "name": "Mega Lucario ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 127,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-128",
+      "name": "Mega Gallade ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 128,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-129",
+      "name": "Roggenrola",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 129,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-130",
+      "name": "Boldore",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 130,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-131",
+      "name": "Gigalith ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 131,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-132",
+      "name": "Dwebble",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 132,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-133",
+      "name": "Crustle ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 133,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-134",
+      "name": "Rockruff",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 134,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-135",
+      "name": "Falinks",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 135,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-136",
+      "name": "Koraidon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 136,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-137",
+      "name": "Alolan Grimer",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 137,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-138",
+      "name": "Alolan Muk",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 138,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-139",
+      "name": "Gastly",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 139,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-140",
+      "name": "Haunter",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 140,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-141",
+      "name": "Mega Gengar ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 141,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-142",
+      "name": "Mega Sableye ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 142,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-143",
+      "name": "Mega Absol ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 143,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-144",
+      "name": "Darkrai",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 144,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-145",
+      "name": "Zorua",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 145,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-146",
+      "name": "Zoroark ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 146,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-147",
+      "name": "Skrelp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 147,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-148",
+      "name": "Dragalge ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 148,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-149",
+      "name": "Hoopa ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 149,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-150",
+      "name": "Zarude",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 150,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-151",
+      "name": "Bombirdier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 151,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-152",
+      "name": "Roaring Moon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 152,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-153",
+      "name": "Galarian Meowth",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 153,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-154",
+      "name": "Galarian Perrserker",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 154,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-155",
+      "name": "Mega Steelix ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 155,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-156",
+      "name": "Mega Scizor ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 156,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-157",
+      "name": "Mega Mawile ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 157,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-158",
+      "name": "Beldum",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 158,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-159",
+      "name": "Metang",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 159,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-160",
+      "name": "Mega Metagross ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 160,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-161",
+      "name": "Honedge",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 161,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-162",
+      "name": "Doublade",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 162,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-163",
+      "name": "Aegislash",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 163,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-164",
+      "name": "Aegislash",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 164,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-165",
+      "name": "Meltan",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 165,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-166",
+      "name": "Melmetal ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 166,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-167",
+      "name": "Corviknight ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 167,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-168",
+      "name": "Gholdengo ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 168,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-169",
+      "name": "Dratini",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 169,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-170",
+      "name": "Dragonair",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 170,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-171",
+      "name": "Vibrava",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 171,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-172",
+      "name": "Flygon ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 172,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-173",
+      "name": "Mega Rayquaza ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 173,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-174",
+      "name": "Axew",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 174,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-175",
+      "name": "Fraxure",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 175,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-176",
+      "name": "Haxorus",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 176,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-177",
+      "name": "Drampa",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 177,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-178",
+      "name": "Rattata",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 178,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-179",
+      "name": "Raticate",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 179,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-180",
+      "name": "Meowth",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 180,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-181",
+      "name": "Mega Kangaskhan ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 181,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-182",
+      "name": "Tauros ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 182,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-183",
+      "name": "Eevee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 183,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-184",
+      "name": "Skitty",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 184,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-185",
+      "name": "Delcatty",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 185,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-186",
+      "name": "Swablu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 186,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-187",
+      "name": "Buneary",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 187,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-188",
+      "name": "Munchlax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 188,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-189",
+      "name": "Lillipup",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 189,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-190",
+      "name": "Mega Audino ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 190,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-191",
+      "name": "Hisuian Zorua",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 191,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-192",
+      "name": "Hisuian Zoroark ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 192,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-193",
+      "name": "Ducklett",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 193,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-194",
+      "name": "Swanna ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 194,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-195",
+      "name": "Rookidee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 195,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-196",
+      "name": "Corvisquire",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 196,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-197",
+      "name": "Terapagos ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 197,
+      "rarity": "d4",
+      "ex": true,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-198",
+      "name": "Lucky Ice Pop",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 198,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-199",
+      "name": "Electric Generator",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 199,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-200",
+      "name": "Order Pad",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 200,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-201",
+      "name": "Quick-Grow Extract",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 201,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-202",
+      "name": "Field Blower",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 202,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-203",
+      "name": "Flame Patch",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 203,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-204",
+      "name": "Deceptive Needle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 204,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-205",
+      "name": "Lucky Egg",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 205,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-206",
+      "name": "Small Balloon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 206,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-207",
+      "name": "Ancient Booster Energy Capsule",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 207,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-208",
+      "name": "Future Booster Energy Capsule",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 208,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-209",
+      "name": "Protective Poncho",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 209,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-210",
+      "name": "Metal Core Barrier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 210,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-211",
+      "name": "Elegant Cape",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 211,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-212",
+      "name": "Iris",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 212,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-213",
+      "name": "Juliana",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 213,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-214",
+      "name": "Diantha",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 214,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-215",
+      "name": "Calem",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 215,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-216",
+      "name": "Puppy-Loving Girl",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 216,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-217",
+      "name": "Korrina",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 217,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-218",
+      "name": "Clemont",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 218,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-219",
+      "name": "Serena",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 219,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-220",
+      "name": "May",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 220,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-221",
+      "name": "Skyla",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 221,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-222",
+      "name": "Arven",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 222,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-223",
+      "name": "Wallace",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 223,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-224",
+      "name": "Wally",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 224,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-225",
+      "name": "Copycat",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 225,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-226",
+      "name": "Lisia",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 226,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-227",
+      "name": "Fragrant Forest",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 227,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-228",
+      "name": "Arena of Antiquity",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 228,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-229",
+      "name": "Soothing Shore",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 229,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-230",
+      "name": "Bounded Field",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 230,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-231",
+      "name": "Mesagoza",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 231,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-232",
+      "name": "Training Area",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 232,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-233",
+      "name": "Rainbow Cave",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 233,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-234",
+      "name": "Hiking Trail",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 234,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-235",
+      "name": "Starting Plains",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 235,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-236",
+      "name": "Peculiar Plaza",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 236,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-237",
+      "name": "Bulbasaur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 237,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-238",
+      "name": "Ivysaur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 238,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-239",
+      "name": "Caterpie",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 239,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-240",
+      "name": "Metapod",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 240,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-241",
+      "name": "Butterfree",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 241,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-242",
+      "name": "Scyther",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 242,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-243",
+      "name": "Celebi",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 243,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-244",
+      "name": "Treecko",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 244,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-245",
+      "name": "Grovyle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 245,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-246",
+      "name": "Budew",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 246,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-247",
+      "name": "Combee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 247,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-248",
+      "name": "Cottonee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 248,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-249",
+      "name": "Petilil",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 249,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-250",
+      "name": "Lilligant",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 250,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-251",
+      "name": "Durant",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 251,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-252",
+      "name": "Sprigatito",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 252,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-253",
+      "name": "Floragato",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 253,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-254",
+      "name": "Smoliv",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 254,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-255",
+      "name": "Dolliv",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 255,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-256",
+      "name": "Arboliva",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 256,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-257",
+      "name": "Teal Mask Ogerpon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 257,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-258",
+      "name": "Charmander",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 258,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-259",
+      "name": "Charmeleon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 259,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-260",
+      "name": "Growlithe",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 260,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-261",
+      "name": "Ponyta",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 261,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-262",
+      "name": "Cyndaquil",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 262,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-263",
+      "name": "Quilava",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 263,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-264",
+      "name": "Torchic",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 264,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-265",
+      "name": "Combusken",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 265,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-266",
+      "name": "Numel",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 266,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-267",
+      "name": "Victini",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 267,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-268",
+      "name": "Fuecoco",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 268,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-269",
+      "name": "Crocalor",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 269,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-270",
+      "name": "Skeledirge",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 270,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-271",
+      "name": "Charcadet",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 271,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-272",
+      "name": "Hearthflame Mask Ogerpon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 272,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-273",
+      "name": "Squirtle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 273,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-274",
+      "name": "Wartortle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 274,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-275",
+      "name": "Alolan Vulpix",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 275,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-276",
+      "name": "Slowpoke",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 276,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-277",
+      "name": "Magikarp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 277,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-278",
+      "name": "Mudkip",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 278,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-279",
+      "name": "Marshtomp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 279,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-280",
+      "name": "Carvanha",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 280,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-281",
+      "name": "Wailmer",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 281,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-282",
+      "name": "Feebas",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 282,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-283",
+      "name": "Froakie",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 283,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-284",
+      "name": "Frogadier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 284,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-285",
+      "name": "Sobble",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 285,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-286",
+      "name": "Drizzile",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 286,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-287",
+      "name": "Inteleon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 287,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-288",
+      "name": "Frigibax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 288,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-289",
+      "name": "Arctibax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 289,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-290",
+      "name": "Baxcalibur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 290,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-291",
+      "name": "Pikachu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 291,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-292",
+      "name": "Raichu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 292,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-293",
+      "name": "Magnemite",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 293,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-294",
+      "name": "Magneton",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 294,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-295",
+      "name": "Mareep",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 295,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-296",
+      "name": "Flaaffy",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 296,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-297",
+      "name": "Electrike",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 297,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-298",
+      "name": "Helioptile",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 298,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-299",
+      "name": "Heliolisk",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 299,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-300",
+      "name": "Yamper",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 300,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-301",
+      "name": "Toxel",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 301,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-302",
+      "name": "Tadbulb",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 302,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-303",
+      "name": "Iron Thorns",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 303,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-304",
+      "name": "Ralts",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 304,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-305",
+      "name": "Kirlia",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 305,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-306",
+      "name": "Wynaut",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 306,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-307",
+      "name": "Chingling",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 307,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-308",
+      "name": "Mime Jr.",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 308,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-309",
+      "name": "Meloetta",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 309,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-310",
+      "name": "Sylveon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 310,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-311",
+      "name": "Klefki",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 311,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-312",
+      "name": "Fidough",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 312,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-313",
+      "name": "Bramblin",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 313,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-314",
+      "name": "Brambleghast",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 314,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-315",
+      "name": "Gimmighoul",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 315,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-316",
+      "name": "Onix",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 316,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-317",
+      "name": "Trapinch",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 317,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-318",
+      "name": "Riolu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 318,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-319",
+      "name": "Roggenrola",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 319,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-320",
+      "name": "Boldore",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 320,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-321",
+      "name": "Dwebble",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 321,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-322",
+      "name": "Rockruff",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 322,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-323",
+      "name": "Falinks",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 323,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-324",
+      "name": "Alolan Grimer",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 324,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-325",
+      "name": "Alolan Muk",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 325,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-326",
+      "name": "Gastly",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 326,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-327",
+      "name": "Haunter",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 327,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-328",
+      "name": "Darkrai",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 328,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-329",
+      "name": "Zorua",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 329,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-330",
+      "name": "Skrelp",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 330,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-331",
+      "name": "Zarude",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 331,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-332",
+      "name": "Bombirdier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 332,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-333",
+      "name": "Roaring Moon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 333,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-334",
+      "name": "Galarian Meowth",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 334,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-335",
+      "name": "Galarian Perrserker",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 335,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-336",
+      "name": "Beldum",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 336,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-337",
+      "name": "Metang",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 337,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-338",
+      "name": "Honedge",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 338,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-339",
+      "name": "Doublade",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 339,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-340",
+      "name": "Aegislash",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 340,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-341",
+      "name": "Aegislash",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 341,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-342",
+      "name": "Meltan",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 342,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-343",
+      "name": "Dratini",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 343,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-344",
+      "name": "Dragonair",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 344,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-345",
+      "name": "Vibrava",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 345,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-346",
+      "name": "Axew",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 346,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-347",
+      "name": "Fraxure",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 347,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-348",
+      "name": "Haxorus",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 348,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-349",
+      "name": "Drampa",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 349,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-350",
+      "name": "Rattata",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 350,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-351",
+      "name": "Raticate",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 351,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-352",
+      "name": "Meowth",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 352,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-353",
+      "name": "Eevee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 353,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-354",
+      "name": "Skitty",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 354,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-355",
+      "name": "Delcatty",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 355,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-356",
+      "name": "Swablu",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 356,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-357",
+      "name": "Buneary",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 357,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-358",
+      "name": "Munchlax",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 358,
+      "rarity": "d3",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-359",
+      "name": "Lillipup",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 359,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-360",
+      "name": "Hisuian Zorua",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 360,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-361",
+      "name": "Ducklett",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 361,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-362",
+      "name": "Rookidee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 362,
+      "rarity": "d1",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-363",
+      "name": "Corvisquire",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 363,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-364",
+      "name": "Lucky Ice Pop",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 364,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-365",
+      "name": "Electric Generator",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 365,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-366",
+      "name": "Order Pad",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 366,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-367",
+      "name": "Quick-Grow Extract",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 367,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-368",
+      "name": "Field Blower",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 368,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-369",
+      "name": "Flame Patch",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 369,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-370",
+      "name": "Deceptive Needle",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 370,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-371",
+      "name": "Lucky Egg",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 371,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-372",
+      "name": "Small Balloon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 372,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-373",
+      "name": "Ancient Booster Energy Capsule",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 373,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-374",
+      "name": "Future Booster Energy Capsule",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 374,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-375",
+      "name": "Protective Poncho",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 375,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-376",
+      "name": "Metal Core Barrier",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 376,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-377",
+      "name": "Elegant Cape",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 377,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-378",
+      "name": "Iris",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 378,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-379",
+      "name": "Juliana",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 379,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-380",
+      "name": "Diantha",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 380,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-381",
+      "name": "Calem",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 381,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-382",
+      "name": "Puppy-Loving Girl",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 382,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-383",
+      "name": "Korrina",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 383,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-384",
+      "name": "Clemont",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 384,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-385",
+      "name": "Serena",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 385,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-386",
+      "name": "May",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 386,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-387",
+      "name": "Skyla",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 387,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-388",
+      "name": "Arven",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 388,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-389",
+      "name": "Wallace",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 389,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-390",
+      "name": "Wally",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 390,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-391",
+      "name": "Copycat",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 391,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-392",
+      "name": "Lisia",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 392,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-393",
+      "name": "Fragrant Forest",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 393,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-394",
+      "name": "Arena of Antiquity",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 394,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-395",
+      "name": "Soothing Shore",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 395,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-396",
+      "name": "Bounded Field",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 396,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-397",
+      "name": "Mesagoza",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 397,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-398",
+      "name": "Training Area",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 398,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-399",
+      "name": "Rainbow Cave",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 399,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-400",
+      "name": "Hiking Trail",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 400,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-401",
+      "name": "Starting Plains",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 401,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-402",
+      "name": "Peculiar Plaza",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 402,
+      "rarity": "d2",
+      "ex": false,
+      "fa": false,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-403",
+      "name": "Charmeleon",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 403,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-404",
+      "name": "Baxcalibur",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 404,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-405",
+      "name": "Meloetta",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 405,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-406",
+      "name": "Fidough",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 406,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-407",
+      "name": "Dratini",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 407,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-408",
+      "name": "Eevee",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 408,
+      "rarity": "s1",
+      "ex": false,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-409",
+      "name": "Mega Venusaur ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 409,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-410",
+      "name": "Mega Sceptile ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 410,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-411",
+      "name": "Mega Charizard X ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 411,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-412",
+      "name": "Mega Charizard Y ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 412,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-413",
+      "name": "Mega Blaziken ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 413,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-414",
+      "name": "Mega Blastoise ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 414,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-415",
+      "name": "Mega Gyarados ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 415,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-416",
+      "name": "Mega Gardevoir ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 416,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-417",
+      "name": "Mega Altaria ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 417,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-418",
+      "name": "Mega Lucario ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 418,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-419",
+      "name": "Mega Gengar ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 419,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-420",
+      "name": "Mega Rayquaza ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 420,
+      "rarity": "s2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-421",
+      "name": "Iris",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 421,
+      "rarity": "s2",
+      "ex": false,
+      "fa": true,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-422",
+      "name": "Elesa",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 422,
+      "rarity": "s2",
+      "ex": false,
+      "fa": true,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-423",
+      "name": "Arven",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 423,
+      "rarity": "s2",
+      "ex": false,
+      "fa": true,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-424",
+      "name": "Copycat",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 424,
+      "rarity": "s2",
+      "ex": false,
+      "fa": true,
+      "type": "Trainer",
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-426",
+      "name": "Dedenne ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 426,
+      "rarity": "sh2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
+    },
+    {
+      "id": "b4b-427",
+      "name": "Mega Diancie ex",
+      "set": "B4b",
+      "setPrefix": "b4b",
+      "number": 427,
+      "rarity": "sh2",
+      "ex": true,
+      "fa": true,
+      "type": null,
+      "pack": "Deluxe Pack Mega"
     }
   ]
 }
