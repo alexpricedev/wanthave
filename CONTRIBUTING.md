@@ -15,8 +15,9 @@ You'll need [Bun](https://bun.sh) and a PostgreSQL 16+ database.
 
 ```bash
 bun install
-cp .env.example .env      # then fill in DATABASE_URL and a CRYPTO_PEPPER
-bun run generate:pepper   # prints one to paste into .env
+cp .env.example .env            # then fill in DATABASE_URL and a CRYPTO_PEPPER
+cp .env.test.example .env.test  # point it at your test database
+bun run generate:pepper         # prints one to paste into .env
 createdb wanthave && createdb wanthave-test
 bun run dev               # client, server and CSS watchers on :3000
 ```

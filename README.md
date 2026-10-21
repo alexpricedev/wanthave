@@ -43,6 +43,7 @@ You'll need [Bun](https://bun.sh) 1.3+ and PostgreSQL 16+.
 ```bash
 bun install
 cp .env.example .env            # fill in DATABASE_URL, then generate a pepper
+cp .env.test.example .env.test  # point it at your test database
 bun run generate:pepper         # paste the output into CRYPTO_PEPPER
 createdb wanthave && createdb wanthave-test
 bun run dev
@@ -137,9 +138,11 @@ which is why page tests can assert on rendered HTML without a browser.
 bun run test
 ```
 
-Runs with the `NODE_ENV=test` environment in `.env.test` against a real
-PostgreSQL database (truncating between tests). Controller tests mock the service
-layer and assert on actual `Response` objects; client scripts run under happy-dom.
+Runs with the `NODE_ENV=test` environment from `.env.test` against a real
+PostgreSQL database (truncating between tests). Copy `.env.test.example` to
+`.env.test` and point `DATABASE_URL` at a throwaway database first. Controller
+tests mock the service layer and assert on actual `Response` objects; client
+scripts run under happy-dom.
 
 ## Deploy
 
