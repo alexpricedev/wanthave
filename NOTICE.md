@@ -13,10 +13,21 @@ two community datasets on set + card number:
 | [flibustier/pokemon-tcg-pocket-database](https://github.com/flibustier/pokemon-tcg-pocket-database) | MIT | Sets, names, numbers, rarity codes, packs |
 | [chase-manning/pokemon-tcg-pocket-cards](https://github.com/chase-manning/pokemon-tcg-pocket-cards) (now [PocketDecks](https://github.com/PocketDecks/pokemon-tcg-pocket-cards)) | AGPL-3.0 | `ex`, full-art and `type` attributes |
 
-The generated catalogue is a derivative of both, so redistribute it under those
-terms rather than the MIT licence. If you need an MIT-only catalogue, drop the
-AGPL-sourced fields (`type` is only used to identify Trainer cards) and rebuild
-with `bun run scripts/build-cards.ts`.
+The generated catalogue is a derivative of both, so the checked-in
+`cards.json` carries those upstream terms rather than the MIT licence. If you
+want an MIT-only catalogue, rebuild with an empty `.cache/chase.json`:
+
+```bash
+mkdir -p .cache && printf '[]' > .cache/chase.json   # after fetching flib.json
+bun run scripts/build-cards.ts
+```
+
+Every field has a flib-only fallback: `ex` and `fullart` are reproduced from the
+card name suffix and rarity code, and Trainer detection comes from the image
+filename (`cTR_`). Card ids and counts don't change. What you lose is the
+Pokémon energy type (null for ~3,300 cards) and the multi-pack label — `pack`
+falls back to the first pack listed upstream, so `Shared(Genetic Apex)` becomes
+a specific pack for ~1,450 cards. Neither field is displayed anywhere today.
 
 ## Card art
 
