@@ -1,6 +1,6 @@
 # Privacy Runbook
 
-Billet ships **privacy-clean by default**: no analytics, no advertising, no
+WantHave ships **privacy-clean by default**: no analytics, no advertising, no
 third-party trackers, and only strictly-necessary first-party cookies. Out of
 the box there is nothing to consent to and — under the GDPR/ePrivacy rules — no
 cookie banner is legally required.
@@ -13,7 +13,7 @@ default posture, the exact trigger for needing consent, and how to wire up the
 [`@alexpricedev/billet-cookie-consent`](https://github.com/alexpricedev/billet-cookie-consent)
 package plus a privacy policy when you cross that line.
 
-Billet is a framework. It cannot ship your privacy policy for you — the copy
+WantHave includes a UI framework. It cannot ship your privacy policy for you — the copy
 depends entirely on what *your* deployment collects. What it can do is stay clean
 by default and hand you the pattern.
 
@@ -21,7 +21,7 @@ by default and hand you the pattern.
 
 | Area | Default state | Where |
 |---|---|---|
-| Analytics | None. `analytics.ts` is a mock (`getVisitorStats()` returns a fake count); `/api/stats` is unused | [`src/server/services/analytics.ts`](../src/server/services/analytics.ts) |
+| Analytics | First-party only: three events (`page_viewed`, `og_fetched`, `list_created`) written to the `event` table. No third-party scripts, no cookies, no IP address stored | [`events.ts`](../src/server/services/events.ts) |
 | Cookies | Only strictly-necessary: `session_id` (auth) and `flash_*` (transient/OAuth state), all HMAC-signed, `HttpOnly`, `SameSite=Lax`, `Secure` in production | [`sessions.ts`](../src/server/services/sessions.ts), [`utils/flash.ts`](../src/server/utils/flash.ts) |
 | Client storage | None. No `localStorage`/`sessionStorage`/`IndexedDB` anywhere in `src/client/` | — |
 | Fonts | Self-hosted (`font-src 'self'`) — no Google Fonts, no external font CDN | [`security-headers.ts`](../src/server/utils/security-headers.ts) |
@@ -45,14 +45,14 @@ any of:
 - Any client code writing to `localStorage`/`sessionStorage`/`IndexedDB` for a
   non-essential purpose
 
-**Strictly-necessary cookies never need consent** — Billet's `session_id` and
+**Strictly-necessary cookies never need consent** — WantHave's `session_id` and
 `flash_*` stay banner-free. The rule is *behavioural*: what your site does before
 the user interacts, not whether a banner is on screen.
 
 ## 3. Wire up the consent banner
 
 Use [`@alexpricedev/billet-cookie-consent`](https://github.com/alexpricedev/billet-cookie-consent) —
-vanilla DOM, zero dependencies, scoped CSS tokens, designed to drop into Billet.
+vanilla DOM, zero dependencies, scoped CSS tokens, designed to drop into any server-rendered Bun app.
 The package README is the source of truth; adapt snippets to this repo's
 controller/template signatures. Read it first:
 
@@ -97,7 +97,7 @@ document.addEventListener("cc:consent-granted", (e) => {
 });
 
 // "Manage cookies" trigger — data attribute, never inline onclick, so it fits
-// Billet's server-JSX + islands model.
+// WantHave's server-JSX + islands model.
 for (const el of document.querySelectorAll<HTMLElement>("[data-cc-open-prefs]")) {
   el.addEventListener("click", () => CookieConsent.current()?.show());
 }
@@ -134,10 +134,10 @@ export const home = {
 {props.analytics && <script src="https://plausible.io/js/script.js" defer />}
 ```
 
-> Only import `parseConsent` once you have a real script to gate — Billet's
-> `noUnusedLocals` lint will reject an unused import. Defer §4 until then.
+> Only import `parseConsent` once you have a real script to gate — the
+> `noUnusedLocals` lint rule will reject an unused import. Defer §4 until then.
 
-**Theming** — the banner ships in its own default look. Map Billet's design
+**Theming** — the banner ships in its own default look. Map WantHave's design
 tokens onto the `--cc-*` variables on `[data-cc-root]` (in your global CSS) so it
 matches the site; nothing leaks out of that scope. See the package README's
 Theming section for the full token list.
@@ -173,7 +173,7 @@ specific partners (not vague categories), and update the date when it changes.
 
 GPC is a browser signal (`Sec-GPC: 1` header / `navigator.globalPrivacyControl`)
 that legally means "do not sell or share my data" in California, Colorado, and
-others. Billet does not read it because there is nothing to suppress by default.
+others. WantHave does not read it because there is nothing to suppress by default.
 
 Once you add tracking, honour it:
 
@@ -195,7 +195,7 @@ you add one:
   [`security-headers.ts`](../src/server/utils/security-headers.ts) — keep the
   default `connect-src 'self'` as tight as possible.
 - **Prefer self-hosting** fonts, libraries, and icons over CDN loads.
-- **Pin with Subresource Integrity** on stable URLs (as Billet already does for
+- **Pin with Subresource Integrity** on stable URLs (as WantHave already does for
   the Lottie script) so a compromised CDN can't swap the file.
 - **Gate non-essential scripts behind consent** (§3, Step 4).
 - **Re-audit periodically** — list every contacted domain in DevTools' network
@@ -208,7 +208,7 @@ you add one:
 ## 7. Data minimisation & logging
 
 Collect only what a specific purpose needs, keep it only as long as needed, and
-keep it out of logs. Billet's request path already logs no PII — preserve that:
+keep it out of logs. WantHave's request path already logs no PII — preserve that:
 
 - **Don't log IPs, user-agents, headers, or request bodies** in production. Use
   `log.*(category, message)` from [`services/logger.ts`](../src/server/services/logger.ts)
@@ -249,7 +249,7 @@ Then in a browser (or the `/browse` skill):
 Deliberately **not** shipped, and why:
 
 - **A bundled privacy policy page** — the copy is deployment-specific (what *you*
-  collect, under what basis). Billet stays clean by default and gives you §4 as
+  collect, under what basis). WantHave stays clean by default and gives you §4 as
   the template.
 - **A consent banner in the default build** — legally unnecessary with zero
   non-essential storage, and shipping one would train users to click through a

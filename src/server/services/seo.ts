@@ -1,8 +1,11 @@
 // Single source of truth for the site's public identity and SEO artefacts
 // (sitemap, structured data). Templates and controllers import from here so the
 // canonical host, name, and description can't drift across the codebase.
-
-export const SITE_URL = "https://wanthave.trade";
+//
+// Deploying your own instance? Set SITE_URL to your public origin — canonical
+// links, the sitemap and JSON-LD all derive from it. It defaults to the
+// upstream site so a local checkout renders sensible absolute URLs.
+export const SITE_URL = process.env.SITE_URL ?? "https://wanthave.trade";
 export const SITE_NAME = "WantHave";
 export const SITE_DESCRIPTION =
   "Build a Pokémon TCG Pocket trade list and share it as a link—it unfurls in Discord with an OG image showing what you're looking for.";

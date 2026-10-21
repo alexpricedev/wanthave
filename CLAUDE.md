@@ -1,14 +1,21 @@
 # CLAUDE.md - Development Context & Guidelines
 
-This file contains essential context and guidelines for Claude instances working on this project.
+Context and conventions for coding agents (Claude Code and friends) working on
+this project. Humans should read [README.md](README.md) first; this file covers
+the things that aren't obvious from the code.
 
 **Key workflow reminders:**
 
-- Never try to run the local dev server. The Human is always running it in another tab on port 3000.
-- Always test your work with the /browse skill to confirm it works as expected.
-- This project uses JSX for it's template engine but it is NOT a React (client) project.
-- When trying different approaches for a given problem, always go back and remove or refactor.
-- Use code comments sparingly. Save them for when the extra context is really needed.
+- `bun run dev` starts the client, server and CSS watchers together. Don't start
+  a second one on port 3000 — check whether one is already running first.
+- Verify UI work in a browser rather than trusting the render path: run the dev
+  server, exercise the flow, and confirm the HTML and the client script agree.
+- This project uses JSX for its template engine but it is NOT a React (client)
+  project.
+- When trying different approaches for a given problem, always go back and remove
+  or refactor the abandoned one.
+- Use code comments sparingly. Save them for when the extra context is really
+  needed.
 
 ## General codebase notes
 
@@ -32,8 +39,7 @@ ALWAYS check for TS errors and linting issues before finishing a work loop (`bun
 
 ### Code Quality Tools
 
-- **Biome**: Code linting for TypeScript
-- **Prettier**: Code formatting with consistent style
+- **Biome**: linting and formatting for TypeScript and CSS
 - **TypeScript**: Strict mode enabled for type safety
 
 ### No Web Components
@@ -141,6 +147,7 @@ NEVER try to roll your own lint or test commands.
 
 ```
 src/
+├── tools/                         # Offline tooling (card catalogue providers, build)
 ├── client/                        # Browser-side code
 │   ├── main.ts                    # Entry point — routes to page init functions
 │   ├── style.css                  # Global styles (CSS entry point)
@@ -148,9 +155,9 @@ src/
 │   │   ├── nav.css
 │   │   └── layout.css
 │   └── pages/                     # Page-specific JS & CSS (co-located)
-│       ├── home.ts / home.css
-│       ├── about.ts / about.css
-│       └── contact.ts / contact.css
+│       ├── new.ts / new.css
+│       ├── list.ts / list.css
+│       └── lists.ts / lists.css
 │
 ├── server/                        # Server-side code (Bun/TypeScript)
 │   ├── main.ts                    # Server entry point
@@ -170,8 +177,6 @@ src/
 │   │   ├── cli.ts / migrate.ts    # Migration tooling
 │   │   └── migrations/            # Numbered migration files
 │   └── test-utils/                # Test infrastructure (setup, factories, helpers)
-│
-└── types/                         # Global TypeScript type declarations
 ```
 
 ### Naming Conventions

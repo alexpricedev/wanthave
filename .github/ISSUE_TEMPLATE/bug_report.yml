@@ -1,0 +1,53 @@
+name: Bug report
+description: Something is broken or looks wrong
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please don't include your email, friend ID, or
+        anything else personal — and report security issues privately via
+        SECURITY.md instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what actually happened.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /new
+        2. Add two cards to "Looking for"
+        3. Click Share
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page or link
+      description: The path or public link where it happens, if there is one.
+  - type: dropdown
+    id: context
+    attributes:
+      label: Where did you see it?
+      multiple: true
+      options:
+        - The site itself (browser)
+        - A Discord embed / unfurl preview
+        - Another embed (Reddit, X, iMessage)
+        - Local development
+  - type: input
+    id: environment
+    attributes:
+      label: Browser / device
+      placeholder: Safari 18 on iPhone 15
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output or screenshots
+      description: Paste any errors or drag in images. Redact personal data.
+      render: shell

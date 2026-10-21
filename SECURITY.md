@@ -1,105 +1,44 @@
-# Security Features
+# Security policy
 
-## CSRF Protection
+## Reporting a vulnerability
 
-WantHave implements robust Cross-Site Request Forgery (CSRF) protection using the **synchronizer token pattern**.
+Please **don't open a public issue** for anything security-sensitive.
 
-### Key Features
-- **Per-session secrets** with HMAC-SHA256 tokens bound to method + path
-- **Origin/Referer validation** and SameSite cookies for defense in depth
-- **Rate limiting** on failed attempts (10 per minute per session)
-- **Timing-safe comparison** to prevent timing attacks
+- Preferred: [open a private security advisory](https://github.com/alexpricedev/wanthave/security/advisories/new)
+  on this repository (Security → Advisories → Report a vulnerability).
+- Or email **ops@chptrs.tech** with the details.
 
-### Usage
+Include what you did, what happened, and what you expected — a proof of concept
+or raw HTTP request is ideal. If you need to test against a live instance, use
+your own deployment or `localhost`, not the production site.
 
-#### 1. Controller Setup
-```typescript
-import { getAuthContext, requireAuth } from "../../middleware/auth";
-import { getSessionIdFromCookies } from "../../services/auth";
-import { createCsrfToken } from "../../services/csrf";
-import { csrfProtection } from "../../middleware/csrf";
+## What to expect
 
-// GET handler - generate token for forms
-async index(req: Request): Promise<Response> {
-  const auth = await getAuthContext(req);
-  let csrfToken: string | null = null;
-  
-  if (auth.isAuthenticated) {
-    const sessionId = getSessionIdFromCookies(req.headers.get("cookie"));
-    if (sessionId) {
-      csrfToken = await createCsrfToken(sessionId, "POST", "/examples");
-    }
-  }
-  
-  return render(<MyTemplate csrfToken={csrfToken} isAuthenticated={auth.isAuthenticated} />);
-}
+- An acknowledgement within a few days.
+- An assessment and, where warranted, a fix on `main`; coordinated disclosure
+  once a release is out.
+- Credit in the advisory if you'd like it, unless you prefer to stay anonymous.
 
-// POST handler - validate token
-async create(req: Request): Promise<Response> {
-  const authRedirect = await requireAuth(req);
-  if (authRedirect) return authRedirect;
+Please give us a reasonable window to ship a fix before publishing details.
 
-  const csrfResponse = await csrfProtection(req, {
-    method: "POST",
-    path: "/examples",
-  });
-  if (csrfResponse) return csrfResponse;
+## Scope
 
-  // Process request...
-}
-```
+In scope: this repository's application code and its deployed instance —
+authentication and session handling, CSRF, access control on lists and accounts,
+the card-image proxy, OG rendering, and anything that leaks another user's data.
 
-#### 2. Template with CsrfField Component
-```tsx
-import { CsrfField } from "../components/csrf-field";
+Out of scope:
 
-{isAuthenticated ? (
-  <form method="POST" action="/examples">
-    <CsrfField token={csrfToken} />
-    <input type="text" name="data" />
-    <button type="submit">Submit</button>
-  </form>
-) : (
-  <p>Please <a href="/login">log in</a> to access this feature.</p>
-)}
-```
+- Vulnerabilities in dependencies — report those upstream (we'll take the
+  version bump).
+- Missing hardening headers or DNS records on a deployment (see
+  [runbooks/SECURITY.md](runbooks/SECURITY.md) for the operator checklist).
+- Rate-limit or resource-exhaustion findings that require no amplification.
+- Reports about the Pokémon card data or artwork — those are third-party assets,
+  see [NOTICE.md](NOTICE.md).
 
-#### 3. AJAX Requests
-```javascript
-// Include token in X-CSRF-Token header
-const csrfToken = document.querySelector('[name="_csrf"]')?.value;
+## Safe harbour
 
-fetch('/api/examples', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': csrfToken,
-  },
-  body: JSON.stringify({ name: 'Example' }),
-});
-```
-
-### Protected Methods
-CSRF protection applies to: POST, PUT, PATCH, DELETE
-
-### What It Prevents
-- ✅ Cross-site form submissions from malicious sites
-- ✅ Cross-site AJAX requests without proper tokens  
-- ✅ Token reuse across sessions, methods, or paths
-- ✅ Replay attacks (time-bounded tokens)
-- ✅ Timing attacks (constant-time comparison)
-
-## Additional Security
-
-- **Session Management**: HMAC-protected IDs, secure cookies, 30-day expiration
-- **Input Validation**: Type-safe forms, parameterized queries, XSS prevention
-- **Environment Security**: Crypto pepper, environment isolation, no secret logging
-
-## HTTP Headers, CSP & Transport
-
-The defensive HTTP baseline — security headers on every response, an enforcing
-Content Security Policy, HSTS, `/.well-known/security.txt`, Subresource
-Integrity, and the deploy/DNS steps — lives in
-[`runbooks/SECURITY.md`](runbooks/SECURITY.md). Read it before your first deploy:
-the `security.txt` contact address needs setting, and TLS/HSTS-preload/CAA/DNSSEC
-are host- and registrar-level steps.
+We won't pursue legal action for research that stays within this policy: don't
+access, modify, or delete other people's data, don't run automated scans against
+production, and don't publicly disclose before we've shipped a fix.
