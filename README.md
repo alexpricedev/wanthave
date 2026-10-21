@@ -81,8 +81,11 @@ required one is missing. [`.env.example`](.env.example) documents every one.
 ## Card data and art
 
 The catalogue (`src/server/data/cards.json`, ~4,000 tradeable cards) is checked
-in, so the app runs without a card database. Rebuilding it for a new set is a
-short manual routine — [docs/adding-a-set.md](docs/adding-a-set.md).
+in, so the app runs without a card database. It's built from pluggable providers
+in `src/tools/cards/` — `CARD_SOURCE` picks the dataset, `CARD_ENRICHERS` layers
+optional fields on top (`CARD_ENRICHERS=` builds an MIT-only catalogue).
+Rebuilding for a new set is a short manual routine —
+[docs/adding-a-set.md](docs/adding-a-set.md).
 
 Card art is **not** in the repo. The app reads it from an S3-compatible bucket as
 `cards/<card-id>.webp` and caches it on disk after the first read. Point the
@@ -117,6 +120,7 @@ The artwork itself belongs to Nintendo / The Pokémon Company — see
 ```
 src/
 ├── client/            # Browser code: page controllers, CSS, Preact islands
+├── tools/             # Offline tooling: card catalogue providers and build
 └── server/
     ├── main.ts        # Boot: env validation, migrations, Bun.serve
     ├── routes/        # Thin route maps (views, API, admin)

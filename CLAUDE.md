@@ -147,6 +147,7 @@ NEVER try to roll your own lint or test commands.
 
 ```
 src/
+├── tools/                         # Offline tooling (card catalogue providers, build)
 ├── client/                        # Browser-side code
 │   ├── main.ts                    # Entry point — routes to page init functions
 │   ├── style.css                  # Global styles (CSS entry point)
