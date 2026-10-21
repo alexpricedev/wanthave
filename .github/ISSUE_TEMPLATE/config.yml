@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/alexpricedev/wanthave/security/advisories/new
+    about: Please report security issues privately, not as a public issue.
+  - name: How the product works
+    url: https://github.com/alexpricedev/wanthave/blob/main/PRD.md
+    about: The functional spec, including what's deliberately out of scope.

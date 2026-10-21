@@ -1,185 +1,177 @@
-# WantHave
+# wanthave
 
-Build a Pokémon TCG Pocket trade list and share it as a link — posted in Discord, it unfurls with an OG image showing the cards you're looking for. See [PRD.md](PRD.md) for the full spec.
+[![CI](https://github.com/alexpricedev/wanthave/actions/workflows/ci.yml/badge.svg)](https://github.com/alexpricedev/wanthave/actions/workflows/ci.yml)
 
----
+Build a Pokémon TCG Pocket trade list and share it as a single link. Post the
+link in Discord and it unfurls with an image of the cards you're looking for —
+no screenshots, no retyped shorthand, no separate friend-ID message.
 
-## What's Included
+[**wanthave.trade**](https://wanthave.trade) · [Functional spec](PRD.md) ·
+[Design system](DESIGN.md)
 
-Auth, security, database, testing, linting — these are the rails. They're solved so you can focus on your custom logic instead of tech choices and security fundamentals.
+![A trade-list unfurl showing three wanted cards and one card for trade](public/og-image.png)
 
-### Authentication
+## What it does
 
-A complete magic-link email auth flow: users enter their email, receive a login link, and get a session. No passwords to store, hash, or reset.
+- **Build a list in under two minutes, no account.** Two sections — *looking for*
+  and *for trade* — filled from a visual set browser or a search box that
+  understands community shorthand ("RR chsr EX", "shiny pika", "FA trainer").
+- **Only tradeable cards.** Rarity rules are enforced from the catalogue, and
+  lists are grouped by rarity so a viewer can see what matches at a glance.
+- **A shareable link that unfurls.** Every list gets a per-list 1200×630 OG
+  image, rendered with the real card art, deep lists fanned out like a hand.
+- **One-tap friend ID.** The 16-digit code is validated once and shown with a
+  copy button on the public page.
+- **Anonymous lists expire after 90 days — gracefully.** An expired link explains
+  itself and keeps the call to create your own; it never 404s.
+- **Accounts, when you want permanence.** An optional display name (it leads the
+  embed title), permanent links, multiple named lists, and in-place editing that
+  updates a link you already pinned in Discord.
 
-- **Magic-link login** with HMAC-protected tokens and expiry
-- **Session management** with 30-day sessions, automatic renewal, and secure cookie handling (HttpOnly, Secure, SameSite)
-- **Guest sessions** that auto-create for unauthenticated visitors — useful for carts, preferences, or any state you want before login
-- **Admin middleware** with role-based route protection and a dedicated `/admin` route namespace
-- **Pluggable email providers** — ships with a console provider for development; add Resend or any custom provider via a simple interface
+## Stack
 
-### Security
+Bun serves everything in one process: the HTTP server, the JSX templates
+(server-rendered, no hydration), and the assets. PostgreSQL through Bun's built-in
+`Bun.SQL` — no ORM. `sharp` renders OG images and resizes card art. The only
+client-side JavaScript is per-page islands written in Preact. Migrations run
+automatically at boot, and Biome + `tsc` gate the build.
 
-- **CSRF protection** using the synchronizer token pattern with timing-safe comparison and origin validation
-- **Rate limiting** middleware with configurable sliding-window limits per IP
-- **Session fixation prevention** — sessions are regenerated on login
-- **Environment validation** at startup — the server fails fast with clear error messages if required variables are missing
-- **Response hardening** — security headers on every response (nosniff, frame/clickjacking protection, an enforcing Content Security Policy, Permissions-Policy, HSTS in production), plus `/.well-known/security.txt` and Subresource Integrity on third-party scripts — see [runbooks/SECURITY.md](runbooks/SECURITY.md)
+## Quick start
 
-### Database
-
-PostgreSQL through Bun's built-in `Bun.SQL` — no ORM, no driver dependency.
-
-- **Auto-migrations on startup** — pending migrations run before the server accepts requests; if one fails, the server won't start
-- **Migration CLI** for manual operations (`migrate:up`, `migrate:status`, `migrate:create`)
-- **Seed script** scaffold for development data (`bun run seed`)
-- **Parameterised queries** throughout — no string concatenation, no SQL injection surface
-
-### Testing
-
-- **220+ tests across 28 files** covering controllers, services, middleware, utilities, and client scripts
-- **No browser simulation needed** — server-rendered templates are pure functions of props, testable with `renderToString()` and string assertions
-- **Real database testing** for services — tests run against PostgreSQL with table truncation for isolation
-- **Mock-based controller tests** that verify HTTP responses (status codes, headers, HTML content) without touching the database
-- **Client script tests** using happy-dom for DOM globals, with page lifecycle isolation
-
-Run the full suite: `bun run test`
-
-### Code Quality
-
-- **Biome** linting with zero-warning enforcement (`--max-warnings 0`) — no `any` types, no `console` statements, no unused variables
-- **TypeScript** strict mode with `noUnusedLocals` and `noUnusedParameters`
-- **Husky** pre-commit hooks that run lint and typecheck before every commit
-- **GitHub Actions CI** — lint, build, and the full test suite run on every PR (`.github/workflows/ci.yml`); gate merges behind them with required status checks (see [runbooks/CI.md](runbooks/CI.md))
-- **Structured logging** via `src/server/services/logger.ts` — replaces `console.*` with levelled output (info, warn, error)
-
-### Frontend
-
-- **React JSX as a template engine** — server-side only, no client-side React, no virtual DOM, no hydration
-- **Bun CSS bundler** with `@import` resolution, CSS nesting, and minification — no external CSS tooling needed
-- **Opt-in interactivity** — sprinkle in any client-side framework per page (ships with a Preact island example loaded via CDN import map)
-- **Page lifecycle system** — `registerPage()` / `PageController` pattern with `init()` and `cleanup()` for per-page JS
-- **Cookie-based flash messages** — HMAC-signed, single-use cookies for post-redirect-get feedback (success banners, validation errors)
-- **Accessibility baseline** — semantic landmarks, labelled form controls, a keyboard focus ring, reduced-motion support, announced flash messages, and captioned data tables out of the box — see [runbooks/ACCESSIBILITY.md](runbooks/ACCESSIBILITY.md)
-- **Privacy-clean by default** — no analytics, no trackers, no third-party cookies; only strictly-necessary first-party cookies, so no consent banner is legally required until you add tracking — see [runbooks/PRIVACY.md](runbooks/PRIVACY.md) for the consent-banner and privacy-policy pattern
-- **Asset cache-busting** in production — MD5-hashed filenames with immutable `Cache-Control` headers
-
----
-
-## Quick Start
-
-You'll need [Bun](https://bun.sh) and a local [PostgreSQL](https://www.postgresql.org/) instance running.
+You'll need [Bun](https://bun.sh) 1.3+ and PostgreSQL 16+.
 
 ```bash
 bun install
+cp .env.example .env            # fill in DATABASE_URL, then generate a pepper
+bun run generate:pepper         # paste the output into CRYPTO_PEPPER
+createdb wanthave && createdb wanthave-test
 bun run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) — migrations run automatically on startup.
+Open <http://localhost:3000>. Migrations apply automatically on startup, and an
+`admin@example.com` admin user is seeded into an empty database.
 
----
+Card art is served from object storage, so a fresh checkout renders placeholders
+until you configure a bucket and mirror the images — see
+[Card data and art](#card-data-and-art). Everything else works without it.
 
-## Project Structure
+## Configuration
+
+Environment variables are validated at startup; the server refuses to boot if a
+required one is missing. [`.env.example`](.env.example) documents every one.
+
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `DATABASE_URL` | yes | PostgreSQL connection string |
+| `CRYPTO_PEPPER` | yes | HMAC key for sessions, CSRF tokens and flash cookies. `bun run generate:pepper` |
+| `PORT` | yes | `3000` locally; most hosts inject it |
+| `APP_NAME` | yes | Used in mail and the wordmark |
+| `APP_URL` | yes | Origin used for links in email; must match the request origin exactly or CSRF validation rejects form posts |
+| `EMAIL_PROVIDER` | yes | `console` in development, `resend` in production |
+| `FROM_EMAIL`, `FROM_NAME` | yes | Sender identity — must be on a verified domain when using Resend |
+| `SITE_URL` | no | Public origin for canonical URLs, sitemap and JSON-LD. Defaults to `https://wanthave.trade`, so **set this when self-hosting** |
+| `RESEND_API_KEY` | with Resend | See [runbooks/EMAIL.md](runbooks/EMAIL.md) for SPF/DKIM/DMARC |
+| `REPLY_TO_EMAIL`, `FEEDBACK_TO_EMAIL` | no | Monitored reply address; where `/feedback` is delivered |
+| `SECURITY_CONTACT` | no | Sets the `/.well-known/security.txt` contact |
+| `SESSION_COOKIE_NAME` | no | Defaults to `session_id`; set it if several apps share `localhost` |
+| `MAINTENANCE_MODE`, `MAINTENANCE_RETRY_AFTER` | no | Serve a 503 with `Retry-After` everywhere but `/health` |
+| `S3_ENDPOINT`, `S3_REGION`, `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | for card art | See below |
+
+## Card data and art
+
+The catalogue (`src/server/data/cards.json`, ~4,000 tradeable cards) is checked
+in, so the app runs without a card database. Rebuilding it for a new set is a
+short manual routine — [docs/adding-a-set.md](docs/adding-a-set.md).
+
+Card art is **not** in the repo. The app reads it from an S3-compatible bucket as
+`cards/<card-id>.webp` and caches it on disk after the first read. Point the
+`S3_*` variables at a bucket and populate it:
+
+```bash
+bun run scripts/sync-card-art.ts            # new art only
+bun run scripts/sync-card-art.ts --dry-run  # report what's missing
+```
+
+The artwork itself belongs to Nintendo / The Pokémon Company — see
+[NOTICE.md](NOTICE.md) before you host it.
+
+## Scripts
+
+| Command | What it does |
+| --- | --- |
+| `bun run dev` | Client, server and CSS watchers on :3000 |
+| `bun run build` | Minified client JS and CSS into `dist/assets` |
+| `bun run start` | Production server (build first) |
+| `bun run test` | Full suite against the database in `.env.test` |
+| `bun run check` | Biome + `tsc --noEmit`, zero warnings allowed |
+| `bun run lint:write` | Apply Biome fixes |
+| `bun run migrate:up` / `:status` / `:create` | Migration CLI (they also run at boot) |
+| `bun run seed` | Seed the admin user into an empty database |
+| `bun run scripts/build-cards.ts` | Rebuild the card catalogue from the source datasets |
+| `bun run scripts/sync-card-art.ts` | Mirror card art into the bucket |
+| `bun run scripts/build-brand.ts` | Regenerate favicons, wordmark and the static OG image |
+
+## Project structure
 
 ```
 src/
-├── client/                     # Browser-side code
-│   ├── main.ts                 # Entry point — routes to page controllers
-│   ├── page-lifecycle.ts       # Page init/cleanup system
-│   ├── style.css               # Global styles (CSS entry point)
-│   ├── components/             # Shared CSS (nav, layout)
-│   └── pages/                  # Page-specific JS + CSS (co-located)
-│
-├── server/                     # Server-side code
-│   ├── main.ts                 # Server entry point
-│   ├── routes/
-│   │   ├── app.tsx             # View routes (HTML)
-│   │   ├── api.ts               # API routes (JSON)
-│   │   └── admin.tsx           # Admin routes (protected)
-│   ├── controllers/            # Route handlers
-│   │   ├── app/                # View controllers — return HTML
-│   │   ├── api/                # API controllers — return JSON
-│   │   └── auth/               # Auth controllers — login/logout
-│   ├── templates/               # Full-page JSX templates
-│   ├── components/             # Reusable server JSX components
-│   ├── services/                # Business logic & data access
-│   ├── middleware/              # Auth, CSRF, rate limiting, admin
-│   ├── utils/                   # Response helpers, crypto, env validation
-│   └── database/
-│       ├── cli.ts / migrate.ts  # Migration tooling
-│       ├── seed.ts              # Development seed data
-│       └── migrations/          # Numbered migration files
-│
-└── types/                       # Global TypeScript declarations
+├── client/            # Browser code: page controllers, CSS, Preact islands
+└── server/
+    ├── main.ts        # Boot: env validation, migrations, Bun.serve
+    ├── routes/        # Thin route maps (views, API, admin)
+    ├── controllers/   # Orchestration: service → template or JSON
+    ├── templates/     # Server-rendered JSX pages
+    ├── components/    # Shared JSX
+    ├── services/      # Business logic and data access
+    ├── middleware/    # Auth, CSRF, rate limiting
+    ├── database/      # Migrations and migration CLI
+    └── utils/         # Response helpers, crypto, env validation, headers
 ```
 
----
+Controllers never query the database; templates receive fully resolved props,
+which is why page tests can assert on rendered HTML without a browser.
 
-## Runbooks
+## Testing
 
-- [Adding a new set](docs/adding-a-set.md) — the monthly card drop: catalogue rebuild, art mirror, showcase refresh.
+```bash
+bun run test
+```
 
----
-
-## Contributing
-
-Contributions are welcome! Please open issues or PRs.
-
----
+Runs with the `NODE_ENV=test` environment in `.env.test` against a real
+PostgreSQL database (truncating between tests). Controller tests mock the service
+layer and assert on actual `Response` objects; client scripts run under happy-dom.
 
 ## Deploy
 
-WantHave is a single Bun process — no containers, no serverless adapters, no platform-specific runtime. Anywhere you can run `bun run start`, it'll work: Railway, Fly.io, Render, a VPS, or your own machine.
+Anywhere that can run `bun run start` works — Railway, Fly.io, Render, or a VPS.
+`railway.json` is included with the build and start commands preconfigured and a
+`/health` check.
 
-### Railway
+1. Push the repo to GitHub and connect it to your host.
+2. Add PostgreSQL and link it so `DATABASE_URL` is set.
+3. Set the required variables, plus `SITE_URL` and the `S3_*` group.
+4. Deploy — migrations run before the first request is served.
 
-A `railway.json` is included with build and start commands pre-configured. Deployments typically go live in under 60 seconds.
+Before you take real traffic, work through the operator checklists: TLS and
+headers ([runbooks/SECURITY.md](runbooks/SECURITY.md)), email deliverability
+([runbooks/EMAIL.md](runbooks/EMAIL.md)), indexing
+([runbooks/SEO.md](runbooks/SEO.md)), and merge protection
+([runbooks/CI.md](runbooks/CI.md)).
 
-1. Push to GitHub
-2. Create a new [Railway](https://railway.com?referralCode=XB1wns) project and connect your repo
-3. Add a **PostgreSQL** plugin and link it to your service — this auto-sets `DATABASE_URL`
-4. Set the remaining environment variables (see below)
-5. Deploy — Railway will build, run migrations, and start the server
+## Contributing
 
-> **Tip:** If you're using Claude Code with the [Railway MCP server](https://docs.railway.com/guides/mcp), you can ask Claude to set up the project, add PostgreSQL, and configure environment variables for you.
+Issues and PRs are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md), and
+note that participation is covered by the
+[Code of Conduct](CODE_OF_CONDUCT.md). Security issues should go through
+[SECURITY.md](SECURITY.md), not the issue tracker.
 
-### Environment Variables
+## Credits and licence
 
-| Variable | Required | Description |
-|---|---|---|
-| `DATABASE_URL` | Yes | PostgreSQL connection string — auto-set when you link Railway's PostgreSQL plugin to your service |
-| `CRYPTO_PEPPER` | Yes | Secret key for session tokens — run `bun run generate:pepper` to get one (see below) |
-| `APP_URL` | Yes | Your app's public URL — you'll get this from Railway after your first deploy (e.g. `https://my-app.up.railway.app`) |
-| `PORT` | No | Server port — auto-set by Railway, defaults to `3000` locally |
+Application code is MIT licensed ([LICENSE](LICENSE)). The card catalogue derives
+from community datasets under their own terms, the fonts have their own licences,
+and the card art belongs to The Pokémon Company — all documented in
+[NOTICE.md](NOTICE.md).
 
-> **Generating `CRYPTO_PEPPER`:** This is a secret key used to secure session tokens. Run `bun run generate:pepper` to get a value. Use a different value for each environment (development, production, etc).
-
-> **Email deliverability:** When sending real mail via Resend, follow [runbooks/EMAIL.md](runbooks/EMAIL.md) to set up SPF, DKIM, and DMARC — without it, magic links land in spam.
-
-> **SEO:** Before your first deploy, set `SITE_URL` (and the `Sitemap:` line in `public/robots.txt`) to your production domain — see [runbooks/SEO.md](runbooks/SEO.md) for the canonical-URL config, sitemap, indexing policy, and verification steps.
-
-> **Security:** The HTTP hardening (security headers, CSP, HSTS, SRI) works out of the box, but set `SECURITY_CONTACT` (the `security.txt` reporting address) and add the registrar-level records before launch — see [runbooks/SECURITY.md](runbooks/SECURITY.md) for that plus the TLS, HSTS-preload, CAA, and DNSSEC steps.
-
-> **Privacy:** The default site needs no cookie banner (zero non-essential storage). The moment you add analytics, ads, or embeds, you must add an opt-in consent banner and a privacy policy — see [runbooks/PRIVACY.md](runbooks/PRIVACY.md) for wiring up `@alexpricedev/billet-cookie-consent`, the required policy disclosures, and GPC handling.
-
-> **CI & merge protection:** CI runs on every PR, but check results are advisory until you require them. A fork doesn't inherit branch protection, so nothing stops an auto-merge (GitHub's or Conductor's) from merging a red build — enable required status checks once per repo. See [runbooks/CI.md](runbooks/CI.md).
-
-### Database
-
-WantHave uses PostgreSQL through Bun's built-in `Bun.SQL` — no ORM, no driver dependency. Migrations run automatically on server startup — pending migrations are applied before the server accepts requests. If a migration fails, the server won't start (fail-safe).
-
-A lightweight CLI is also available for manual operations:
-
-```bash
-bun run migrate:up       # Run pending migrations
-bun run migrate:status   # Show migration state
-bun run migrate:create   # Create a new migration file
-```
-
-If you don't need a database, remove the `src/server/database/` and `src/server/services/` directories and strip the DB-related routes. There's no framework coupling to undo.
-
----
-
-## License
-
-This project is not currently licensed for public use. All rights reserved.
+wanthave is an independent, unofficial tool. It is not affiliated with, endorsed
+by, or sponsored by Nintendo, Creatures Inc., GAME FREAK inc., or The Pokémon
+Company.

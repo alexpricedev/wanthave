@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: bun
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Bun's ecosystem is small enough that one grouped PR per week is easier
+      # to review than five, and CI catches anything that breaks.
+      all-dependencies:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
