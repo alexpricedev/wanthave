@@ -1,9 +1,10 @@
 # Security Runbook
 
-Billet ships a defensive HTTP baseline: a single set of security headers on
+WantHave ships a defensive HTTP baseline: a single set of security headers on
 **every** response, an enforcing Content Security Policy, HSTS in production,
 a `/.well-known/security.txt`, and Subresource Integrity on its one third-party
-script. Cookies and CSRF are covered separately in the root
+script. Cookies and CSRF are covered separately in
+[`CSRF.md`](CSRF.md), and how to report a vulnerability is in the root
 [`SECURITY.md`](../SECURITY.md).
 
 This runbook covers what's applied automatically, the one required config step,
@@ -47,7 +48,7 @@ client storage on sign-out — defence in depth beyond deleting the session cook
 ## 2. Set the security.txt contact (required before launch)
 
 [RFC 9116](https://www.rfc-editor.org/rfc/rfc9116) `security.txt` tells
-researchers how to report a vulnerability. Billet serves it dynamically at
+researchers how to report a vulnerability. WantHave serves it dynamically at
 `/.well-known/security.txt` from
 [`src/server/services/security-txt.ts`](../src/server/services/security-txt.ts)
 (controller: [`controllers/app/security-txt.ts`](../src/server/controllers/app/security-txt.ts),

@@ -1,18 +1,22 @@
-# Security Features
+# CSRF & session security
 
-## CSRF Protection
+How WantHave's request-forgery defences work, and the patterns to follow when
+adding a new mutating route. The HTTP header/CSP baseline is covered separately
+in [`SECURITY.md`](SECURITY.md).
 
-WantHave implements robust Cross-Site Request Forgery (CSRF) protection using the **synchronizer token pattern**.
+## CSRF protection
 
-### Key Features
+WantHave uses the **synchronizer token pattern**: a per-session secret issues
+HMAC-SHA256 tokens bound to the request method and path.
+
 - **Per-session secrets** with HMAC-SHA256 tokens bound to method + path
 - **Origin/Referer validation** and SameSite cookies for defense in depth
 - **Rate limiting** on failed attempts (10 per minute per session)
 - **Timing-safe comparison** to prevent timing attacks
 
-### Usage
+## Usage
 
-#### 1. Controller Setup
+### 1. Controller Setup
 ```typescript
 import { getAuthContext, requireAuth } from "../../middleware/auth";
 import { getSessionIdFromCookies } from "../../services/auth";
@@ -49,7 +53,7 @@ async create(req: Request): Promise<Response> {
 }
 ```
 
-#### 2. Template with CsrfField Component
+### 2. Template with CsrfField Component
 ```tsx
 import { CsrfField } from "../components/csrf-field";
 
@@ -64,7 +68,7 @@ import { CsrfField } from "../components/csrf-field";
 )}
 ```
 
-#### 3. AJAX Requests
+### 3. AJAX Requests
 ```javascript
 // Include token in X-CSRF-Token header
 const csrfToken = document.querySelector('[name="_csrf"]')?.value;
@@ -79,27 +83,26 @@ fetch('/api/examples', {
 });
 ```
 
-### Protected Methods
+## Protected methods
 CSRF protection applies to: POST, PUT, PATCH, DELETE
 
-### What It Prevents
+## What it prevents
 - ✅ Cross-site form submissions from malicious sites
 - ✅ Cross-site AJAX requests without proper tokens  
 - ✅ Token reuse across sessions, methods, or paths
 - ✅ Replay attacks (time-bounded tokens)
 - ✅ Timing attacks (constant-time comparison)
 
-## Additional Security
+## Additional security
 
 - **Session Management**: HMAC-protected IDs, secure cookies, 30-day expiration
 - **Input Validation**: Type-safe forms, parameterized queries, XSS prevention
 - **Environment Security**: Crypto pepper, environment isolation, no secret logging
 
-## HTTP Headers, CSP & Transport
+## HTTP headers, CSP & transport
 
-The defensive HTTP baseline — security headers on every response, an enforcing
-Content Security Policy, HSTS, `/.well-known/security.txt`, Subresource
-Integrity, and the deploy/DNS steps — lives in
-[`runbooks/SECURITY.md`](runbooks/SECURITY.md). Read it before your first deploy:
-the `security.txt` contact address needs setting, and TLS/HSTS-preload/CAA/DNSSEC
-are host- and registrar-level steps.
+The header and transport baseline — security headers on every response, an
+enforcing Content Security Policy, HSTS, `/.well-known/security.txt`, Subresource
+Integrity, and the deploy/DNS steps — lives in [`SECURITY.md`](SECURITY.md). Read
+it before your first deploy: the `security.txt` contact address needs setting,
+and TLS/HSTS-preload/CAA/DNSSEC are host- and registrar-level steps.

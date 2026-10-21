@@ -1,6 +1,6 @@
 # Accessibility Runbook
 
-Billet ships a WCAG-aligned baseline in the framework layer: semantic
+WantHave ships a WCAG-aligned baseline: semantic
 server-rendered HTML, programmatically labelled form controls, a keyboard focus
 ring, reduced-motion support, screen-reader-announced flash messages, and
 captioned data tables. Because everything renders on the server, assistive tech
@@ -13,7 +13,7 @@ following as you add pages, and how to verify it all. It's aligned to the
 [Website Specification — Accessibility](https://specification.website/accessibility)
 checklist (28 items).
 
-## 1. What Billet ships (the baseline)
+## 1. What WantHave ships (the baseline)
 
 These are handled in the framework layer and apply to every page automatically:
 
@@ -37,7 +37,7 @@ text, so there are no unnamed links or buttons.
 
 ## 2. Your responsibility (the design layer)
 
-Billet ships a placeholder dark theme. The moment you replace it with your own
+WantHave ships a placeholder dark theme. The moment you replace it with your own
 design language, these become yours to own — a framework can't decide them for
 you:
 
@@ -52,7 +52,7 @@ you:
   `--color-primary`. If you change the palette, confirm the ring stays clearly
   visible against every surface it can appear on. Never reintroduce
   `outline: none` without an equally visible replacement.
-- **Forced colours mode** — Billet is dark-only and does not yet ship a
+- **Forced colours mode** — WantHave is dark-only and does not yet ship a
   `forced-colors` media block. If your design relies on background colours to
   convey meaning (e.g. status pills), add
   [forced-colours](https://specification.website/spec/accessibility/forced-colors/)

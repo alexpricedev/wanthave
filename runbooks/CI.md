@@ -1,6 +1,6 @@
 # CI & merge protection Runbook
 
-Billet runs lint, type-check, build, and the full test suite on every pull
+WantHave runs lint, type-check, build, and the full test suite on every pull
 request via GitHub Actions ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml)).
 But **CI results only gate merges if you make the checks _required_** — that's a
 per-repository GitHub setting that a fork or new clone does **not** inherit.
@@ -23,10 +23,9 @@ Three jobs, chained so a failure short-circuits the rest:
 The job **names** above are exactly the check "contexts" GitHub sees — you'll
 reference them by name in §2.
 
-> **Rename the placeholder env.** The `Tests` job in `ci.yml` still ships with
-> template values (`APP_NAME: San Jose`, `POSTGRES_DB` / `DATABASE_URL` pointing
-> at `san-jose-test`). They're internally consistent so tests pass, but rename
-> them to your project for clarity.
+> **Forking this?** The `Tests` job's `POSTGRES_DB` / `DATABASE_URL` use a
+> throwaway database named `wanthave-test`. They're internally consistent, so
+> tests pass as-is — rename them if you prefer.
 
 ## 2. Require the checks before merge
 

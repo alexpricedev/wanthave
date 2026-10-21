@@ -1,3 +1,5 @@
+import { SITE_URL } from "./seo";
+
 export interface EmailAddress {
   email: string;
   name?: string;
@@ -201,7 +203,7 @@ export class EmailService {
 
   private renderMagicLinkTemplate(data: MagicLinkEmailData): string {
     const appName = (process.env.APP_NAME as string).toUpperCase();
-    const appUrl = process.env.APP_URL ?? "https://wanthave.app";
+    const appUrl = process.env.APP_URL ?? SITE_URL;
     const logoUrl = `${appUrl}/email-logo.png`;
 
     // Brand palette (from src/client/style.css :root), inlined as literal hex —
