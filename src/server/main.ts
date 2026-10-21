@@ -6,7 +6,6 @@ import { apiRoutes } from "./routes/api";
 import { appRoutes } from "./routes/app";
 import { initAssets } from "./services/assets";
 import { log } from "./services/logger";
-import { startMemoryProbe } from "./services/memory-probe";
 import { validateEnv } from "./utils/env";
 import { render500 } from "./utils/errors";
 import { handleFallback } from "./utils/fallback";
@@ -32,10 +31,6 @@ sharp.cache({ memory: 16, items: 20, files: 0 });
 await runMigrations();
 await seedIfEmpty();
 await initAssets();
-
-// Baseline is taken here, after boot allocation and before the first request,
-// so the digest can separate what startup holds from what traffic adds.
-startMemoryProbe();
 
 const server = Bun.serve({
   port: Number(process.env.PORT),
