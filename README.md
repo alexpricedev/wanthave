@@ -6,7 +6,7 @@ Build a Pokémon TCG Pocket trade list and share it as a single link. Post the
 link in Discord and it unfurls with an image of the cards you're looking for —
 no screenshots, no retyped shorthand, no separate friend-ID message.
 
-[**wanthave.trade**](https://wanthave.trade) · [Functional spec](PRD.md) ·
+[Functional spec](PRD.md) ·
 [Design system](DESIGN.md)
 
 ![A trade-list unfurl showing three wanted cards and one card for trade](public/og-image.png)
