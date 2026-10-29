@@ -1,4 +1,3 @@
-import type { BunRequest } from "bun";
 import { getSessionContext } from "../../middleware/auth";
 import { createCsrfToken } from "../../services/csrf";
 import { trackOgFetch } from "../../services/events";
@@ -13,6 +12,7 @@ import { renderOgImage } from "../../services/og";
 import { setSessionCookie } from "../../services/sessions";
 import { ListPage } from "../../templates/list";
 import { ListUnavailable } from "../../templates/list-unavailable";
+import type { SlugRequest } from "../../utils/request";
 import { render } from "../../utils/response";
 import { CLAIM_TOKEN_COOKIE } from "../api/lists";
 
@@ -29,9 +29,7 @@ const fallbackOg = async (): Promise<Response> => {
 };
 
 export const list = {
-  async index<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async index(req: SlugRequest): Promise<Response> {
     const ctx = await getSessionContext(req);
     if (ctx.requiresSetCookie && ctx.sessionId) {
       setSessionCookie(req, ctx.sessionId);
@@ -103,9 +101,7 @@ export const list = {
 
   // GET /l/:slug/og.png — the rendered unfurl image. Cached on the row after
   // first render (anon lists are immutable, so this renders once).
-  async og<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async og(req: SlugRequest): Promise<Response> {
     const { slug } = req.params;
     const startedAt = Date.now();
     const userAgent = req.headers.get("user-agent");

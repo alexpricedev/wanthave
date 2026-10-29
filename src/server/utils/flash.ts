@@ -20,8 +20,8 @@ const getFlashCookieOptions = (): FlashCookieOptions => ({
   maxAge: FLASH_COOKIE_MAX_AGE,
 });
 
-export const setFlashCookie = <T>(
-  req: BunRequest,
+export const setFlashCookie = <T, R extends string>(
+  req: BunRequest<R>,
   key: string,
   data: T,
 ): void => {
@@ -33,7 +33,10 @@ export const setFlashCookie = <T>(
   req.cookies.set(cookieName, signedValue, getFlashCookieOptions());
 };
 
-export const getFlashCookie = <T>(req: BunRequest, key: string): T => {
+export const getFlashCookie = <T, R extends string>(
+  req: BunRequest<R>,
+  key: string,
+): T => {
   const cookieName = `${FLASH_COOKIE_PREFIX}${key}`;
   const signedValue = req.cookies.get(cookieName);
 
