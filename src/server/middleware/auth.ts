@@ -36,8 +36,8 @@ const createGuestContext = async (): Promise<SessionContext> => {
   }
 };
 
-export const getSessionContext = async (
-  req: BunRequest,
+export const getSessionContext = async <R extends string>(
+  req: BunRequest<R>,
 ): Promise<SessionContext> => {
   try {
     const sessionId = getSessionIdFromRequest(req);
@@ -62,8 +62,8 @@ export const getSessionContext = async (
   }
 };
 
-export const requireAuth = async (
-  req: BunRequest,
+export const requireAuth = async <R extends string>(
+  req: BunRequest<R>,
 ): Promise<Response | null> => {
   const ctx = await getSessionContext(req);
 
@@ -77,8 +77,8 @@ export const requireAuth = async (
   return null;
 };
 
-export const redirectIfAuthenticated = async (
-  req: BunRequest,
+export const redirectIfAuthenticated = async <R extends string>(
+  req: BunRequest<R>,
 ): Promise<Response | null> => {
   const ctx = await getSessionContext(req);
 

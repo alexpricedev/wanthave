@@ -2,11 +2,11 @@ import type { BunRequest } from "bun";
 import { getFlashCookie, setFlashCookie } from "./flash";
 
 export const stateHelpers = <T>() => ({
-  getFlash: (req: BunRequest): T => {
-    return getFlashCookie<T>(req, "state");
+  getFlash: <R extends string>(req: BunRequest<R>): T => {
+    return getFlashCookie<T, R>(req, "state");
   },
 
-  setFlash: (req: BunRequest, state: T): void => {
-    setFlashCookie<T>(req, "state", state);
+  setFlash: <R extends string>(req: BunRequest<R>, state: T): void => {
+    setFlashCookie<T, R>(req, "state", state);
   },
 });

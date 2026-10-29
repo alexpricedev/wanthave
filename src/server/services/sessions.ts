@@ -33,18 +33,22 @@ export const SESSION_COOKIE_OPTIONS = {
   maxAge: 30 * 24 * 60 * 60,
 };
 
-export const getSessionIdFromRequest = (req: BunRequest): string | null => {
+export const getSessionIdFromRequest = <R extends string>(
+  req: BunRequest<R>,
+): string | null => {
   return req.cookies.get(SESSION_COOKIE_NAME) || null;
 };
 
-export const setSessionCookie = (
-  req: BunRequest,
+export const setSessionCookie = <R extends string>(
+  req: BunRequest<R>,
   rawSessionId: string,
 ): void => {
   req.cookies.set(SESSION_COOKIE_NAME, rawSessionId, SESSION_COOKIE_OPTIONS);
 };
 
-export const clearSessionCookie = (req: BunRequest): void => {
+export const clearSessionCookie = <R extends string>(
+  req: BunRequest<R>,
+): void => {
   req.cookies.delete(SESSION_COOKIE_NAME);
 };
 

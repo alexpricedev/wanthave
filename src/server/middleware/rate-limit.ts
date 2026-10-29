@@ -2,8 +2,8 @@ import type { BunRequest } from "bun";
 
 const requestLog = new Map<string, number[]>();
 
-export function rateLimit(
-  req: BunRequest,
+export function rateLimit<R extends string>(
+  req: BunRequest<R>,
   maxRequests = 10,
   windowMs = 5000,
 ): Response | null {

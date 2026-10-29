@@ -16,6 +16,7 @@ import type { User } from "../../services/users";
 import { saveUserDisplayName, saveUserFriendId } from "../../services/users";
 import { computeHMAC, generateSecureToken } from "../../utils/crypto";
 import { validateDisplayName } from "../../utils/display-name";
+import type { SlugRequest } from "../../utils/request";
 
 // Legacy: anonymous list creation used to drop the newest list's slug here, and
 // login claimed that one list. Nothing writes it any more — auth/callback still
@@ -44,7 +45,7 @@ const CLAIM_TOKEN_PATTERN = /^[A-Za-z0-9_-]{32}$/;
 
 // Reuse this device's existing token so every list it has built shares one, and
 // mint a fresh one for a first-time guest.
-const deviceClaimToken = (req: BunRequest): string => {
+const deviceClaimToken = <R extends string>(req: BunRequest<R>): string => {
   const existing = req.cookies.get(CLAIM_TOKEN_COOKIE);
   return existing && CLAIM_TOKEN_PATTERN.test(existing)
     ? existing
@@ -222,9 +223,7 @@ export const listsApi = {
     return Response.json({ slug: result.list.slug }, { status: 201 });
   },
 
-  async update<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async update(req: SlugRequest): Promise<Response> {
     const ctx = await getSessionContext(req);
     if (!ctx.isAuthenticated || !ctx.user || !ctx.sessionId) {
       return Response.json({ error: "Login required" }, { status: 403 });

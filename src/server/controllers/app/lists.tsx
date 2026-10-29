@@ -13,6 +13,7 @@ import {
 import { BuilderPage } from "../../templates/builder";
 import type { ListsState } from "../../templates/lists";
 import { Lists } from "../../templates/lists";
+import type { SlugRequest } from "../../utils/request";
 import { redirect, render } from "../../utils/response";
 import { stateHelpers } from "../../utils/state";
 
@@ -95,9 +96,7 @@ export const lists = {
     );
   },
 
-  async edit<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async edit(req: SlugRequest): Promise<Response> {
     const authRedirect = await requireAuth(req);
     if (authRedirect) return authRedirect;
 
@@ -146,9 +145,7 @@ export const lists = {
 
   // Copy a list into a new one. Lands back on /lists — the copy is the newest
   // row, and the flash links straight to editing it.
-  async duplicate<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async duplicate(req: SlugRequest): Promise<Response> {
     const authRedirect = await requireAuth(req);
     if (authRedirect) return authRedirect;
 
@@ -180,9 +177,7 @@ export const lists = {
     return redirect("/lists");
   },
 
-  async destroy<T extends `${string}:slug${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async destroy(req: SlugRequest): Promise<Response> {
     const authRedirect = await requireAuth(req);
     if (authRedirect) return authRedirect;
 

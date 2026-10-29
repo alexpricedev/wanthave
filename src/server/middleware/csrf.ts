@@ -59,8 +59,8 @@ export const isRecoverableCsrfFailure = (result: CsrfCheckResult): boolean =>
  * Validates CSRF token and Origin/Referer headers for state-changing requests,
  * reporting why the check failed so callers can offer recovery where it's safe
  */
-export const checkCsrf = async (
-  req: BunRequest,
+export const checkCsrf = async <R extends string>(
+  req: BunRequest<R>,
   options: CsrfOptions,
 ): Promise<CsrfCheckResult> => {
   const { method: expectedMethod, expectedOrigin } = options;
@@ -160,8 +160,8 @@ export const checkCsrf = async (
  * CSRF protection middleware
  * Returns null when the request may proceed, or the failure Response to return
  */
-export const csrfProtection = async (
-  req: BunRequest,
+export const csrfProtection = async <R extends string>(
+  req: BunRequest<R>,
   options: CsrfOptions,
 ): Promise<Response | null> => {
   const result = await checkCsrf(req, options);

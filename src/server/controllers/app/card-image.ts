@@ -1,16 +1,14 @@
-import type { BunRequest } from "bun";
 import {
   getCardImage,
   getPlaceholderImageBytes,
 } from "../../services/card-images";
 import { getCardById } from "../../services/cards";
+import type { IdRequest } from "../../utils/request";
 
 // GET /img/card/:id — same-origin card art proxy (keeps img-src 'self' and
 // feeds the OG renderer). Card art is immutable, so cache aggressively.
 export const cardImage = {
-  async show<T extends `${string}:id${string}`>(
-    req: BunRequest<T>,
-  ): Promise<Response> {
+  async show(req: IdRequest): Promise<Response> {
     const { id } = req.params;
     const image = await getCardImage(id);
     if (image.status === "ok") {

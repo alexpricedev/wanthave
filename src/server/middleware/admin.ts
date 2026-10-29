@@ -7,7 +7,9 @@ export type AdminResult =
   | { authorized: true; ctx: SessionContext }
   | { authorized: false; response: Response };
 
-export const requireAdmin = async (req: BunRequest): Promise<AdminResult> => {
+export const requireAdmin = async <R extends string>(
+  req: BunRequest<R>,
+): Promise<AdminResult> => {
   const ctx = await getSessionContext(req);
 
   if (!ctx.isAuthenticated) {
